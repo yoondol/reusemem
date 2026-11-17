@@ -241,7 +241,6 @@ pre { white-space: pre-wrap; overflow-wrap: anywhere; margin: 0.85rem 0 0; paddi
 .measure-name { color: #384f66; font-size: 0.81rem; line-height: 1.2; }
 .measure-track { height: 0.85rem; background: #ecf2f7; border-radius: 3px; overflow: hidden; }
 .measure-track span { display: block; height: 100%; width: var(--bar); border-radius: 3px; background: #819ab0; transition: width 320ms ease; }
-.measure.reference .measure-track span { background: #647c98; }
 .measure.ours .measure-track span { background: #198273; }
 .measure.ours .measure-name, .measure.ours .measure-value { color: #11574d; font-weight: 770; }
 .measure-value { text-align: right; white-space: nowrap; color: #263e55; font-size: 0.83rem; font-variant-numeric: tabular-nums; }
@@ -255,11 +254,32 @@ pre { white-space: pre-wrap; overflow-wrap: anywhere; margin: 0.85rem 0 0; paddi
 .resource-chart figcaption strong { color: #146052; font-size: 1.15rem; font-variant-numeric: tabular-nums; }
 .resource-chart .measures { --measure-name: 9rem; --measure-number: 5.15rem; }
 .resource-axis { margin-left: 9.48rem; margin-right: 5.63rem; }
+.storage-chart { display: flex; flex-direction: column; }
+.storage-saving { margin: auto 0; padding: 1.25rem 0 1.8rem; }
+.storage-saving > strong { font-size: clamp(3rem, 5vw, 4.7rem); line-height: 1; letter-spacing: -0.065em; font-weight: 760; color: #146052; }
+.storage-saving > strong span { font-size: 0.62em; margin-left: 0.08em; }
+.storage-saving p { margin-top: 0.5rem; font-size: 0.93rem; color: #475e74; }
+.scatter-axis-title, .scatter-x-title { font-size: 0.73rem; color: #475e74; }
+.scatter-axis-title { margin-bottom: 0.6rem; }
+.response-scatter { position: relative; padding-left: 2.15rem; }
+.scatter-field { height: 230px; position: relative; border-left: 1px solid #bdcad5; border-bottom: 1px solid #bdcad5; background: repeating-linear-gradient(to top, transparent 0, transparent calc(25% - 1px), #e8eef3 calc(25% - 1px), #e8eef3 25%); }
+.scatter-y { position: absolute; left: 0; top: -0.4rem; bottom: 1.12rem; display: flex; flex-direction: column; justify-content: space-between; text-align: right; width: 1.65rem; font-size: 0.68rem; color: var(--muted); }
+.scatter-x { display: flex; justify-content: space-between; margin-top: 0.3rem; color: var(--muted); font-size: 0.68rem; }
+.scatter-x-title { margin-top: 0.33rem; text-align: center; }
+.scatter-point { position: absolute; width: 0; height: 0; color: #4c657d; }
+.scatter-point::before { content: ""; position: absolute; width: 11px; height: 11px; border-radius: 50%; background: #819ab0; border: 2px solid #fff; box-shadow: 0 0 0 1px #819ab0; transform: translate(-50%, -50%); }
+.scatter-point.ours { color: #11574d; }
+.scatter-point.ours::before { width: 14px; height: 14px; background: #198273; box-shadow: 0 0 0 4px #dff0eb; }
+.scatter-point > span { position: absolute; left: 11px; bottom: 5px; white-space: nowrap; font-size: 0.76rem; line-height: 1.4; }
+.scatter-point small { display: block; font-size: 0.68rem; font-variant-numeric: tabular-nums; }
+.scatter-point.point-right > span { left: auto; right: 11px; bottom: 8px; text-align: right; }
+.chart-entered .scatter-point { animation: point-in 500ms ease both; }
+@keyframes point-in { from { opacity: 0; } to { opacity: 1; } }
 .chart-entered .bar, .chart-entered .measure-track span { animation: bar-in 600ms cubic-bezier(.2,.75,.25,1) both; transform-origin: left center; }
 @keyframes bar-in { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @media (prefers-reduced-motion: reduce) {
   .measure-track span { transition: none; }
-  .chart-entered .bar, .chart-entered .measure-track span { animation: none; }
+  .chart-entered .bar, .chart-entered .measure-track span, .chart-entered .scatter-point { animation: none; }
 }
 @media (max-width: 820px) {
   .sim-clips { grid-template-columns: repeat(2, minmax(0, 1fr)); }

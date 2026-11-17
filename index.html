@@ -8,8 +8,8 @@
   <meta property="og:description" content="One record of what the robot saw can guide different requests after the scene changes.">
   <meta property="og:image" content="https://yoondol.github.io/reusemem/assets/photo-08.jpg">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
-  <link rel="stylesheet" href="style.css?v=final-gallery">
-  <script src="page.js?v=final-gallery" defer></script>
+  <link rel="stylesheet" href="style.css?v=research-charts">
+  <script src="page.js?v=research-charts" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -388,8 +388,9 @@
             <p>Appearance sharing saves storage while keeping the order of all 2,048 observations.</p>
           </div>
           <div class="efficiency-grid">
-            <figure class="resource-chart">
-              <figcaption>Retained memory <strong>−33.7%</strong></figcaption>
+            <figure class="resource-chart storage-chart">
+              <figcaption>Retained memory</figcaption>
+              <div class="storage-saving"><strong>33.7<span>%</span></strong><p>less memory for the same recording</p></div>
               <ul class="measures">
             <li class="measure"><span class="measure-name">Separate appearances</span><div class="measure-track" aria-hidden="true"><span style="--bar:82.975000%"></span></div><span class="measure-value"><strong>66.38 MiB</strong></span></li>
             <li class="measure ours"><span class="measure-name">Shared appearances</span><div class="measure-track" aria-hidden="true"><span style="--bar:54.975000%"></span></div><span class="measure-value"><strong>43.98 MiB</strong></span></li>
@@ -397,15 +398,20 @@
               <div class="measure-axis resource-axis" aria-hidden="true"><span>0</span><span>40</span><span>80 MiB</span></div>
               <p class="note">Same ReuseMem policy and 2,048 temporal entries. Counts retained bank storage.</p>
             </figure>
-            <figure class="resource-chart">
-              <figcaption>Time to the first command <strong>175 ms</strong></figcaption>
-              <ul class="measures">
-            <li class="measure"><span class="measure-name">Uniform-Memory</span><div class="measure-track" aria-hidden="true"><span style="--bar:13.583333%"></span></div><span class="measure-value"><strong>163 ms</strong></span></li>
-            <li class="measure ours"><span class="measure-name">ReuseMem</span><div class="measure-track" aria-hidden="true"><span style="--bar:14.583333%"></span></div><span class="measure-value"><strong>175 ms</strong></span></li>
-            <li class="measure"><span class="measure-name">MemER (RoboMME)</span><div class="measure-track" aria-hidden="true"><span style="--bar:92.666667%"></span></div><span class="measure-value"><strong>1112 ms</strong></span></li>
-              </ul>
-              <div class="measure-axis resource-axis" aria-hidden="true"><span>0</span><span>600</span><span>1,200 ms</span></div>
-              <p class="note">New requests, RTX 5090, BF16, batch size one. <a href="https://arxiv.org/html/2611.21115v1#A3">Measurement details ↗</a></p>
+            <figure class="resource-chart response-chart">
+              <figcaption>Success and response time <strong>175 ms</strong></figcaption>
+              <p class="scatter-axis-title">All-goal success (%)</p>
+              <div class="response-scatter" role="img" aria-label="All-goal success versus time from a new request to the first command. Uniform-Memory, 163 milliseconds and 36 percent. ReuseMem, 175 milliseconds and 60.5 percent. MemER in RoboMME, 1112 milliseconds and 20 percent.">
+                <div class="scatter-y" aria-hidden="true"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div>
+                <div class="scatter-field" aria-hidden="true">
+                  <div class="scatter-point ours" style="left:14.583333%;bottom:60.5%"><span><b>ReuseMem</b><small>175 ms · 60.5%</small></span></div>
+                  <div class="scatter-point" style="left:13.583333%;bottom:36%"><span><b>Uniform-Memory</b><small>163 ms · 36.0%</small></span></div>
+                  <div class="scatter-point point-right" style="left:92.666667%;bottom:20%"><span><b>MemER (RoboMME)</b><small>1,112 ms · 20.0%</small></span></div>
+                </div>
+                <div class="scatter-x" aria-hidden="true"><span>0</span><span>600</span><span>1,200</span></div>
+              </div>
+              <p class="scatter-x-title">Time to the first command (ms)</p>
+              <p class="note">All-goal success across four tasks. New requests, RTX 5090, BF16, batch size one. <a href="https://arxiv.org/html/2611.21115v1#A3">Measurement details ↗</a></p>
             </figure>
           </div>
         </div>
