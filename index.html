@@ -8,8 +8,8 @@
   <meta property="og:description" content="One record of what the robot saw can guide different requests after the scene changes.">
   <meta property="og:image" content="https://yoondol.github.io/reusemem/assets/photo-08.jpg">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
-  <link rel="stylesheet" href="style.css?v=story">
-  <script src="page.js?v=story" defer></script>
+  <link rel="stylesheet" href="style.css?v=sim-videos">
+  <script src="page.js?v=sim-videos" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -150,30 +150,30 @@
       <section class="wrap section" id="simulation" aria-labelledby="sim-title">
         <div class="section-intro">
           <h2 id="sim-title">Simulation demonstrations</h2>
-          <p>Each pair of goals draws on the same observation history. The paper previews show Goal 1 on the left and Goal 2 on the right.</p>
+          <p>Each video shows one shared observation history, followed by two goals executed separately from the same starting scene. The demonstrations use a scripted controller in RoboMME.</p>
         </div>
         <div class="demo-grid sim-grid">
           <article class="demo-card">
             <figure class="poster sim-poster" data-media="button">
-              <img src="assets/sim-button.png" width="469" height="182" alt="Two target locations for a cube, one from before and one from after a button press." loading="lazy">
+              <img src="assets/sim-video-place-button.jpg" width="1920" height="1080" alt="RoboMME scene with a cube and targets used for the before-press and after-press goals." loading="lazy">
             </figure>
             <div class="card-copy"><h3>VideoPlaceButton</h3><p>Use the last placement before the button press or the first one after it.</p></div>
           </article>
           <article class="demo-card">
             <figure class="poster sim-poster" data-media="order">
-              <img src="assets/sim-order.png" width="469" height="182" alt="The green cube occupies its first recorded destination in one view and its second destination in the other." loading="lazy">
+              <img src="assets/sim-video-place-order.jpg" width="1920" height="1080" alt="RoboMME scene with several targets used for the first and second placement goals." loading="lazy">
             </figure>
             <div class="card-copy"><h3>VideoPlaceOrder</h3><p>Return the cube to its first or second distinct position in the recording.</p></div>
           </article>
           <article class="demo-card">
             <figure class="poster sim-poster" data-media="swap">
-              <img src="assets/sim-swap.png" width="469" height="182" alt="The blue cube is uncovered in the first view, and the red cube is uncovered in the second." loading="lazy">
+              <img src="assets/sim-video-unmask-swap.jpg" width="1920" height="1080" alt="RoboMME scene with covers that conceal the blue and red cubes." loading="lazy">
             </figure>
             <div class="card-copy"><h3>VideoUnmaskSwap</h3><p>Track identity through a cover swap, then uncover the requested blue or red object.</p></div>
           </article>
           <article class="demo-card">
             <figure class="poster sim-poster" data-media="highlight">
-              <img src="assets/sim-highlight.png" width="469" height="182" alt="The first highlighted object and the second highlighted object appear in separate target slots." loading="lazy">
+              <img src="assets/sim-pick-highlight.jpg" width="1920" height="1080" alt="RoboMME scene with the cubes and their two receiving slots." loading="lazy">
             </figure>
             <div class="card-copy"><h3>PickHighlight</h3><p>Move the first or second highlighted object after the cues disappear.</p></div>
           </article>

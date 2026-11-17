@@ -110,7 +110,6 @@ nav a:hover { color: var(--accent); text-decoration: underline; }
 .poster { position: relative; background: #dce3eb; overflow: hidden; }
 .poster img { width: 100%; aspect-ratio: 16/9; object-fit: cover; object-position: center 64%; }
 .real-grid .poster img, .real-grid .poster video { aspect-ratio: 16/10; }
-.sim-poster img { aspect-ratio: 469/182; object-fit: contain; }
 .poster video { width: 100%; aspect-ratio: 16/9; background: #142239; }
 .poster[data-kind]::after { content: attr(data-kind); position: absolute; left: 0.65rem; top: 0.65rem; pointer-events: none; color: var(--white); background: #192b41; border-radius: 3px; padding: 0.17rem 0.47rem; font-size: 0.69rem; font-weight: 650; }
 .card-copy { padding: 0.94rem 1.15rem 1.05rem; }
