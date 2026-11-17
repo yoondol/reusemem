@@ -3,7 +3,7 @@ const stages = {
     image: "assets/photo-07.jpg",
     alt: "The two closed cases have moved to new positions below the trays.",
     label: "Before the requests",
-    description: "The cases are closed and moved. Their contents and original positions are only visible in the earlier record.",
+    description: "The current view no longer shows what is inside either case.",
   },
   usb: {
     image: "assets/photo-08.jpg",

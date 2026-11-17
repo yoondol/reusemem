@@ -8,8 +8,8 @@
   <meta property="og:description" content="One record of what the robot saw can guide different requests after the scene changes.">
   <meta property="og:image" content="https://yoondol.github.io/reusemem/assets/photo-08.jpg">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
-  <link rel="stylesheet" href="style.css?v=gallery">
-  <script src="page.js?v=gallery" defer></script>
+  <link rel="stylesheet" href="style.css?v=research">
+  <script src="page.js?v=research" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -18,25 +18,33 @@
       <a class="wordmark" href="#main">ReuseMem</a>
       <nav aria-label="Sections">
         <a href="#demos">Demos</a><a href="#method">Method</a>
-        <a href="#results">Results</a><a href="#citation">Citation</a>
+        <a href="#results">Results</a><a href="#appendix">Appendix</a>
       </nav>
     </div>
   </header>
 
   <main id="main">
-    <section class="hero wrap" aria-labelledby="title">
-      <div class="hero-copy">
-        <h1 id="title"><span class="project-name">ReuseMem</span> <span class="title-line">One Memory,</span> <span class="title-line">Multiple Goals in</span> <span class="title-line">Robot Manipulation</span></h1>
+    <section class="hero" aria-labelledby="title">
+      <div class="hero-copy wrap">
+        <p class="project-name">ReuseMem</p>
+        <h1 id="title">One Memory, Multiple Goals <span>in Robot Manipulation</span></h1>
         <p class="authors"><span>Yoonseok Kang</span>, <span>Dayeon Jung</span>, <span>Seunghoon Jeon</span>, <span>Wonjib Kim</span>, and <span>Dongchul Park</span></p>
         <p class="affiliation">Chung-Ang University</p>
-        <p class="lead">The robot records what it sees before the goal is known, then draws on the same record to act on different requests as the scene changes.</p>
+        <p class="lead">A robot can see what’s inside a case before it knows what it will be asked to do. ReuseMem uses the same record to identify the case and later return it to its original position.</p>
         <div class="links">
           <a class="primary" href="https://arxiv.org/abs/2611.21115">Read the paper <span aria-hidden="true">↗</span></a>
           <a class="secondary" href="https://arxiv.org/pdf/2611.21115">PDF <span aria-hidden="true">↗</span></a>
         </div>
       </div>
-      <div class="case-panel" id="demo">
-        <h2>Which case holds the USB?</h2>
+    </section>
+
+    <section class="case-panel wrap" id="demo" aria-labelledby="case-title">
+      <div class="case-copy">
+        <h2 id="case-title">Which case holds the USB?</h2>
+        <p>The cases have moved and their contents are hidden. The earlier observation tells the robot which case to choose and where it began.</p>
+        <p id="goal-description" aria-live="polite">The current view no longer shows what is inside either case.</p>
+      </div>
+      <div class="case-view">
         <div class="compare">
           <figure>
             <img src="assets/photo-06.jpg" width="1280" height="960" alt="Open cases before any request. A USB drive is visible on the left and an SD card on the right.">
@@ -53,7 +61,6 @@
           <button type="button" data-stage="sd" aria-pressed="false">Move SD</button>
           <button type="button" data-stage="return" aria-pressed="false">Return USB</button>
         </div>
-        <p id="goal-description" aria-live="polite">The cases are closed and moved. Their contents and original positions are only visible in the earlier record.</p>
       </div>
     </section>
 
@@ -135,10 +142,10 @@
         <div><dt>Learn what helps the action</dt><dd>The Reader learns from how well retrieved evidence predicts expert actions across different current states.</dd></div>
         <div><dt>Reuse storage and computation</dt><dd>Repeated appearances share storage. Fixed memory projections are reused while an action is sampled.</dd></div>
       </dl>
-      <details>
-        <summary>View the full architecture</summary>
-        <figure class="paper-figure"><a href="assets/architecture.png"><img src="assets/architecture.png" alt="Architecture of the Writer, memory bank, Reader, current-scene fusion, and action expert." loading="lazy"></a></figure>
-      </details>
+      <figure class="paper-figure method-figure">
+        <a href="assets/architecture.png"><img src="assets/architecture.png" alt="Architecture of the Writer, memory bank, Reader, current-scene fusion, and action expert." loading="lazy"></a>
+        <figcaption>The Writer keeps the order of observations even when they share stored features. After a request arrives, the Reader retrieves evidence from this record and the action policy uses it alongside the current view.</figcaption>
+      </figure>
     </section>
 
     <div class="section-rule tinted">
@@ -162,6 +169,51 @@
         <p class="note">At 2,048 entries, feature sharing cuts retained memory from 66.38 to 43.98 MiB. A new request takes 175 ms from receipt to first dispatched command on an RTX 5090. <a href="https://arxiv.org/html/2611.21115v1#S4.SS5">Measurement details ↗</a></p>
       </section>
     </div>
+
+    <section class="wrap section" id="appendix" aria-labelledby="appendix-title">
+      <div class="section-intro">
+        <h2 id="appendix-title">Appendix</h2>
+        <p>How reuse is evaluated, how historical evidence affects behavior, and what the resource measurements cover.</p>
+      </div>
+      <div class="appendix-list">
+        <details>
+          <summary>Evaluation protocol and per-task results</summary>
+          <div class="detail-body">
+            <p>Each recording is fixed before the later requests are revealed. In the independent trials, every request starts from the same post-recording scene and memory. In the sequential trials, each request starts from the state left by the preceding action.</p>
+            <p>Simulation uses 50 common recordings per task and two requests per recording. Each real-world scenario uses 20 recordings and three requests. The policy receives camera observations, robot state, timestamps, and the revealed request. Evaluator labels for identities, origins, and cues are held out.</p>
+            <div class="table-scroll" tabindex="0" role="region" aria-label="Per-task simulation results">
+              <table>
+                <caption>ReuseMem simulation successes out of 50 recordings per task</caption>
+                <thead><tr><th scope="col">Task</th><th scope="col">Goal 1</th><th scope="col">Goal 2</th><th scope="col">All-goal</th><th scope="col">Sequence</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">VideoPlaceButton</th><td>44</td><td>45</td><td>40</td><td>38</td></tr>
+                  <tr><th scope="row">VideoPlaceOrder</th><td>42</td><td>40</td><td>34</td><td>34</td></tr>
+                  <tr><th scope="row">VideoUnmaskSwap</th><td>25</td><td>23</td><td>15</td><td>13</td></tr>
+                  <tr><th scope="row">PickHighlight</th><td>40</td><td>39</td><td>32</td><td>31</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note"><a href="https://arxiv.org/html/2611.21115v1#A2">Full task definitions, baselines, and counts ↗</a></p>
+          </div>
+        </details>
+        <details>
+          <summary>What changes when past evidence is removed?</summary>
+          <div class="detail-body">
+            <p>The memory intervention keeps the current scene, request, and correct outcome fixed. Removing relevant observations or substituting a mismatched recording hurts goal success more than removing unrelated observations. This tests whether the policy uses the past evidence to act.</p>
+            <figure class="paper-figure"><a href="assets/memory-interventions.png"><img src="assets/memory-interventions.png" alt="Goal success under memory interventions. Removing relevant history or supplying mismatched history reduces success more than removing unrelated observations." loading="lazy"></a><figcaption>Fig. 11 from the paper. The number of historical slots and current inputs are held fixed.</figcaption></figure>
+            <p class="note"><a href="https://arxiv.org/html/2611.21115v1#A2.SS4">Historical evidence and action use ↗</a></p>
+          </div>
+        </details>
+        <details>
+          <summary>Response time and storage accounting</summary>
+          <div class="detail-body">
+            <p>New-request response measures the time from receiving a request to dispatching its first command. The 175 ms mean uses one RTX 5090, BF16, and batch size one, with 200 calls after 20 warm-up calls. Models and memory were already loaded. Robot motion occurs after the measured interval.</p>
+            <p>The retained bank uses 43.98 MiB for 2,048 temporal entries and 1,331 appearance prototypes, compared with 66.38 MiB with separate per-entry appearances. The retained-bank figures exclude model weights and temporary workspace.</p>
+            <p class="note"><a href="https://arxiv.org/html/2611.21115v1#A3">Timing and storage breakdown ↗</a></p>
+          </div>
+        </details>
+      </div>
+    </section>
 
     <section class="wrap section" id="citation" aria-labelledby="citation-title">
       <div class="citation-heading">
