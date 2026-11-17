@@ -8,7 +8,7 @@
   <meta property="og:description" content="One record of what the robot saw can guide different requests after the scene changes.">
   <meta property="og:image" content="https://yoondol.github.io/reusemem/assets/photo-08.jpg">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
-  <link rel="stylesheet" href="style.css?v=sim-clips">
+  <link rel="stylesheet" href="style.css?v=sim-sequences">
   <script src="page.js?v=sim-clips" defer></script>
 </head>
 <body>
@@ -178,6 +178,16 @@
               <figcaption><strong>Goal 2</strong><span>Place the cube at the first target after the press.</span></figcaption>
             </figure>
             </div>
+            <details class="sim-sequence">
+              <summary>Watch the sequence <span>Goal 1 → Goal 2</span></summary>
+              <div class="sequence-body">
+                <video controls playsinline preload="none" poster="assets/simulation/video-place-button-sequence.jpg" aria-label="VideoPlaceButton, Sequence">
+                  <source src="assets/simulation/video-place-button-sequence.mp4" type="video/mp4">
+                  <a href="assets/simulation/video-place-button-sequence.mp4">Download sequence video</a>
+                </video>
+                <p>Both goals run in order without a reset. Goal 2 starts from the scene left by Goal 1.</p>
+              </div>
+            </details>
           </article>
           <article class="sim-task" id="video-place-order">
             <h3>VideoPlaceOrder</h3>
@@ -204,6 +214,16 @@
               <figcaption><strong>Goal 2</strong><span>Place the cube at the second recorded target.</span></figcaption>
             </figure>
             </div>
+            <details class="sim-sequence">
+              <summary>Watch the sequence <span>Goal 1 → Goal 2</span></summary>
+              <div class="sequence-body">
+                <video controls playsinline preload="none" poster="assets/simulation/video-place-order-sequence.jpg" aria-label="VideoPlaceOrder, Sequence">
+                  <source src="assets/simulation/video-place-order-sequence.mp4" type="video/mp4">
+                  <a href="assets/simulation/video-place-order-sequence.mp4">Download sequence video</a>
+                </video>
+                <p>Both goals run in order without a reset. Goal 2 starts from the scene left by Goal 1.</p>
+              </div>
+            </details>
           </article>
           <article class="sim-task" id="video-unmask-swap">
             <h3>VideoUnmaskSwap</h3>
@@ -230,6 +250,16 @@
               <figcaption><strong>Goal 2</strong><span>Uncover the red cube and set its cover aside.</span></figcaption>
             </figure>
             </div>
+            <details class="sim-sequence">
+              <summary>Watch the sequence <span>Goal 1 → Goal 2</span></summary>
+              <div class="sequence-body">
+                <video controls playsinline preload="none" poster="assets/simulation/video-unmask-swap-sequence.jpg" aria-label="VideoUnmaskSwap, Sequence">
+                  <source src="assets/simulation/video-unmask-swap-sequence.mp4" type="video/mp4">
+                  <a href="assets/simulation/video-unmask-swap-sequence.mp4">Download sequence video</a>
+                </video>
+                <p>Both goals run in order without a reset. Goal 2 starts from the scene left by Goal 1.</p>
+              </div>
+            </details>
           </article>
           <article class="sim-task" id="pick-highlight">
             <h3>PickHighlight</h3>
@@ -256,9 +286,19 @@
               <figcaption><strong>Goal 2</strong><span>Move the second highlighted cube to Slot B.</span></figcaption>
             </figure>
             </div>
+            <details class="sim-sequence">
+              <summary>Watch the sequence <span>Goal 1 → Goal 2</span></summary>
+              <div class="sequence-body">
+                <video controls playsinline preload="none" poster="assets/simulation/pick-highlight-sequence.jpg" aria-label="PickHighlight, Sequence">
+                  <source src="assets/simulation/pick-highlight-sequence.mp4" type="video/mp4">
+                  <a href="assets/simulation/pick-highlight-sequence.mp4">Download sequence video</a>
+                </video>
+                <p>Both goals run in order without a reset. Goal 2 starts from the scene left by Goal 1.</p>
+              </div>
+            </details>
           </article>
         </div>
-        <p class="note">The goal clips are separate executions from the same post-observation scene. The videos are scripted demonstrations in RoboMME.</p>
+        <p class="note">The goal clips start separately from the same post-observation scene. The sequence clips show both goals in one run. All videos are scripted RoboMME demonstrations.</p>
         <p class="note"><a href="assets/simulation.png">See the observation histories and goals in Fig. 6 ↗</a></p>
       </section>
     </div>

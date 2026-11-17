@@ -19,8 +19,8 @@ post-observation scene. Goal instructions appear in the web captions.
 | VideoUnmaskSwap | `video-unmask-swap` |
 | PickHighlight | `pick-highlight` |
 
-A Sequence demo should show both goals in one execution with no reset between
-them. Keep it distinct from the separate goal clips.
+Each row also has a collapsible sequence player with the `-sequence` suffix.
+It shows both goals in one execution with no reset between them.
 
 ## Adding the real-world demonstrations
 
