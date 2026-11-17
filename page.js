@@ -47,10 +47,6 @@ for (const button of stageButtons) {
 const videoSources = {
   case: "",
   toy: "",
-  button: "assets/sim-video-place-button.mp4",
-  order: "assets/sim-video-place-order.mp4",
-  swap: "assets/sim-video-unmask-swap.mp4",
-  highlight: "assets/sim-pick-highlight.mp4",
 };
 
 for (const poster of document.querySelectorAll("[data-media]")) {

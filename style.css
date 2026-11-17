@@ -192,3 +192,19 @@ pre { white-space: pre-wrap; overflow-wrap: anywhere; margin: 0.85rem 0 0; paddi
   .story-sequence { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .story-history { grid-column: 1 / -1; }
 }
+
+.sim-tasks { border-top: 1px solid var(--line); }
+.sim-task { padding-block: 1.35rem 1.55rem; border-bottom: 1px solid var(--line); }
+.sim-task h3 { color: var(--ink); margin-bottom: 0.86rem; font-size: 1.23rem; letter-spacing: -0.023em; }
+.sim-clips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.88rem; }
+.sim-clip { min-width: 0; }
+.sim-clip video { width: 100%; aspect-ratio: 16/9; background: #142239; border-radius: 7px; }
+.sim-clip figcaption { display: grid; gap: 0.19rem; margin-top: 0.64rem; line-height: 1.37; }
+.sim-clip figcaption strong { color: var(--ink); font-size: 0.86rem; }
+.sim-clip figcaption span { color: var(--muted); font-size: 0.88rem; }
+.sim-clip.goal-1 figcaption strong { color: #1e695a; }
+.sim-clip.goal-2 figcaption strong { color: #5e4791; }
+@media (max-width: 640px) {
+  .sim-clips { grid-template-columns: 1fr; gap: 1.05rem; }
+  .sim-task { padding-block: 1.1rem 1.3rem; }
+}

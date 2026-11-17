@@ -8,8 +8,8 @@
   <meta property="og:description" content="One record of what the robot saw can guide different requests after the scene changes.">
   <meta property="og:image" content="https://yoondol.github.io/reusemem/assets/photo-08.jpg">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
-  <link rel="stylesheet" href="style.css?v=sim-videos">
-  <script src="page.js?v=sim-videos" defer></script>
+  <link rel="stylesheet" href="style.css?v=sim-clips">
+  <script src="page.js?v=sim-clips" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -150,34 +150,115 @@
       <section class="wrap section" id="simulation" aria-labelledby="sim-title">
         <div class="section-intro">
           <h2 id="sim-title">Simulation demonstrations</h2>
-          <p>Each video shows one shared observation history, followed by two goals executed separately from the same starting scene. The demonstrations use a scripted controller in RoboMME.</p>
+          <p>Each row starts with one observation recording. Goal 1 and Goal 2 show two ways to use what the robot saw.</p>
         </div>
-        <div class="demo-grid sim-grid">
-          <article class="demo-card">
-            <figure class="poster sim-poster" data-media="button">
-              <img src="assets/sim-video-place-button.jpg" width="1920" height="1080" alt="RoboMME scene with a cube and targets used for the before-press and after-press goals." loading="lazy">
+        <div class="sim-tasks">
+          <article class="sim-task" id="video-place-button">
+            <h3>VideoPlaceButton</h3>
+            <div class="sim-clips">
+            <figure class="sim-clip observation">
+              <video controls playsinline preload="none" poster="assets/simulation/video-place-button-observation.jpg" aria-label="VideoPlaceButton, Observation">
+                <source src="assets/simulation/video-place-button-observation.mp4" type="video/mp4">
+                <a href="assets/simulation/video-place-button-observation.mp4">Download Observation video</a>
+              </video>
+              <figcaption><strong>Observation</strong><span>Watch the cube placements and the button press.</span></figcaption>
             </figure>
-            <div class="card-copy"><h3>VideoPlaceButton</h3><p>Use the last placement before the button press or the first one after it.</p></div>
+            <figure class="sim-clip goal-1">
+              <video controls playsinline preload="none" poster="assets/simulation/video-place-button-goal-1.jpg" aria-label="VideoPlaceButton, Goal 1">
+                <source src="assets/simulation/video-place-button-goal-1.mp4" type="video/mp4">
+                <a href="assets/simulation/video-place-button-goal-1.mp4">Download Goal 1 video</a>
+              </video>
+              <figcaption><strong>Goal 1</strong><span>Place the cube at the last target before the press.</span></figcaption>
+            </figure>
+            <figure class="sim-clip goal-2">
+              <video controls playsinline preload="none" poster="assets/simulation/video-place-button-goal-2.jpg" aria-label="VideoPlaceButton, Goal 2">
+                <source src="assets/simulation/video-place-button-goal-2.mp4" type="video/mp4">
+                <a href="assets/simulation/video-place-button-goal-2.mp4">Download Goal 2 video</a>
+              </video>
+              <figcaption><strong>Goal 2</strong><span>Place the cube at the first target after the press.</span></figcaption>
+            </figure>
+            </div>
           </article>
-          <article class="demo-card">
-            <figure class="poster sim-poster" data-media="order">
-              <img src="assets/sim-video-place-order.jpg" width="1920" height="1080" alt="RoboMME scene with several targets used for the first and second placement goals." loading="lazy">
+          <article class="sim-task" id="video-place-order">
+            <h3>VideoPlaceOrder</h3>
+            <div class="sim-clips">
+            <figure class="sim-clip observation">
+              <video controls playsinline preload="none" poster="assets/simulation/video-place-order-observation.jpg" aria-label="VideoPlaceOrder, Observation">
+                <source src="assets/simulation/video-place-order-observation.mp4" type="video/mp4">
+                <a href="assets/simulation/video-place-order-observation.mp4">Download Observation video</a>
+              </video>
+              <figcaption><strong>Observation</strong><span>Watch the cube visit three targets in order.</span></figcaption>
             </figure>
-            <div class="card-copy"><h3>VideoPlaceOrder</h3><p>Return the cube to its first or second distinct position in the recording.</p></div>
+            <figure class="sim-clip goal-1">
+              <video controls playsinline preload="none" poster="assets/simulation/video-place-order-goal-1.jpg" aria-label="VideoPlaceOrder, Goal 1">
+                <source src="assets/simulation/video-place-order-goal-1.mp4" type="video/mp4">
+                <a href="assets/simulation/video-place-order-goal-1.mp4">Download Goal 1 video</a>
+              </video>
+              <figcaption><strong>Goal 1</strong><span>Place the cube at the first recorded target.</span></figcaption>
+            </figure>
+            <figure class="sim-clip goal-2">
+              <video controls playsinline preload="none" poster="assets/simulation/video-place-order-goal-2.jpg" aria-label="VideoPlaceOrder, Goal 2">
+                <source src="assets/simulation/video-place-order-goal-2.mp4" type="video/mp4">
+                <a href="assets/simulation/video-place-order-goal-2.mp4">Download Goal 2 video</a>
+              </video>
+              <figcaption><strong>Goal 2</strong><span>Place the cube at the second recorded target.</span></figcaption>
+            </figure>
+            </div>
           </article>
-          <article class="demo-card">
-            <figure class="poster sim-poster" data-media="swap">
-              <img src="assets/sim-video-unmask-swap.jpg" width="1920" height="1080" alt="RoboMME scene with covers that conceal the blue and red cubes." loading="lazy">
+          <article class="sim-task" id="video-unmask-swap">
+            <h3>VideoUnmaskSwap</h3>
+            <div class="sim-clips">
+            <figure class="sim-clip observation">
+              <video controls playsinline preload="none" poster="assets/simulation/video-unmask-swap-observation.jpg" aria-label="VideoUnmaskSwap, Observation">
+                <source src="assets/simulation/video-unmask-swap-observation.mp4" type="video/mp4">
+                <a href="assets/simulation/video-unmask-swap-observation.mp4">Download Observation video</a>
+              </video>
+              <figcaption><strong>Observation</strong><span>Watch the cubes get covered and the covers swap places.</span></figcaption>
             </figure>
-            <div class="card-copy"><h3>VideoUnmaskSwap</h3><p>Track identity through a cover swap, then uncover the requested blue or red object.</p></div>
+            <figure class="sim-clip goal-1">
+              <video controls playsinline preload="none" poster="assets/simulation/video-unmask-swap-goal-1.jpg" aria-label="VideoUnmaskSwap, Goal 1">
+                <source src="assets/simulation/video-unmask-swap-goal-1.mp4" type="video/mp4">
+                <a href="assets/simulation/video-unmask-swap-goal-1.mp4">Download Goal 1 video</a>
+              </video>
+              <figcaption><strong>Goal 1</strong><span>Uncover the blue cube and set its cover aside.</span></figcaption>
+            </figure>
+            <figure class="sim-clip goal-2">
+              <video controls playsinline preload="none" poster="assets/simulation/video-unmask-swap-goal-2.jpg" aria-label="VideoUnmaskSwap, Goal 2">
+                <source src="assets/simulation/video-unmask-swap-goal-2.mp4" type="video/mp4">
+                <a href="assets/simulation/video-unmask-swap-goal-2.mp4">Download Goal 2 video</a>
+              </video>
+              <figcaption><strong>Goal 2</strong><span>Uncover the red cube and set its cover aside.</span></figcaption>
+            </figure>
+            </div>
           </article>
-          <article class="demo-card">
-            <figure class="poster sim-poster" data-media="highlight">
-              <img src="assets/sim-pick-highlight.jpg" width="1920" height="1080" alt="RoboMME scene with the cubes and their two receiving slots." loading="lazy">
+          <article class="sim-task" id="pick-highlight">
+            <h3>PickHighlight</h3>
+            <div class="sim-clips">
+            <figure class="sim-clip observation">
+              <video controls playsinline preload="none" poster="assets/simulation/pick-highlight-observation.jpg" aria-label="PickHighlight, Observation">
+                <source src="assets/simulation/pick-highlight-observation.mp4" type="video/mp4">
+                <a href="assets/simulation/pick-highlight-observation.mp4">Download Observation video</a>
+              </video>
+              <figcaption><strong>Observation</strong><span>Watch two cubes light up in turn, then see both cues disappear.</span></figcaption>
             </figure>
-            <div class="card-copy"><h3>PickHighlight</h3><p>Move the first or second highlighted object after the cues disappear.</p></div>
+            <figure class="sim-clip goal-1">
+              <video controls playsinline preload="none" poster="assets/simulation/pick-highlight-goal-1.jpg" aria-label="PickHighlight, Goal 1">
+                <source src="assets/simulation/pick-highlight-goal-1.mp4" type="video/mp4">
+                <a href="assets/simulation/pick-highlight-goal-1.mp4">Download Goal 1 video</a>
+              </video>
+              <figcaption><strong>Goal 1</strong><span>Move the first highlighted cube to Slot A.</span></figcaption>
+            </figure>
+            <figure class="sim-clip goal-2">
+              <video controls playsinline preload="none" poster="assets/simulation/pick-highlight-goal-2.jpg" aria-label="PickHighlight, Goal 2">
+                <source src="assets/simulation/pick-highlight-goal-2.mp4" type="video/mp4">
+                <a href="assets/simulation/pick-highlight-goal-2.mp4">Download Goal 2 video</a>
+              </video>
+              <figcaption><strong>Goal 2</strong><span>Move the second highlighted cube to Slot B.</span></figcaption>
+            </figure>
+            </div>
           </article>
         </div>
+        <p class="note">The goal clips are separate executions from the same post-observation scene. The videos are scripted demonstrations in RoboMME.</p>
         <p class="note"><a href="assets/simulation.png">See the observation histories and goals in Fig. 6 ↗</a></p>
       </section>
     </div>
