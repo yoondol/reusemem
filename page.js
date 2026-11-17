@@ -70,6 +70,27 @@ for (const poster of document.querySelectorAll("[data-media]")) {
   delete poster.dataset.kind;
 }
 
+const motionPreview = document.querySelector("[data-motion-preview]");
+if (motionPreview && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  let started = false;
+  const observer = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting || entry.intersectionRatio < 0.65) {
+      if (started) {
+        motionPreview.pause();
+        observer.disconnect();
+      }
+      return;
+    }
+    if (started) return;
+    started = true;
+    // The introductory clip plays at most once; controls remain available.
+    if (motionPreview.paused && motionPreview.currentTime === 0) {
+      motionPreview.play().catch(() => {});
+    }
+  }, { threshold: 0.65 });
+  observer.observe(motionPreview);
+}
+
 const copy = document.querySelector("#copy-citation");
 if (navigator.clipboard) {
   copy.hidden = false;

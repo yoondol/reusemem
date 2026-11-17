@@ -20,6 +20,8 @@ post-observation scene. Goal instructions appear in the web captions.
 | PickHighlight | `pick-highlight` |
 
 The fourth player shows both goals in one execution with no reset between them.
+The desktop gallery uses a 2×2 layout. Only the first observation can start
+automatically in view, muted and once, with reduced-motion settings respected.
 
 ## Adding the real-world demonstrations
 
