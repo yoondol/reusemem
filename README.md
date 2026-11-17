@@ -1,22 +1,28 @@
 # ReuseMem project page
 
-Buildless static site for the [ReuseMem paper](https://arxiv.org/abs/2611.21115).
-Open `index.html` directly, or serve the directory with `python3 -m http.server 8000`.
-For GitHub Pages, use this directory's contents at the root of a dedicated site
-repository. Links to local assets are relative and work at a repository subpath.
+Static site for the [ReuseMem paper](https://arxiv.org/abs/2611.21115), deployed
+at [yoondol.github.io/reusemem](https://yoondol.github.io/reusemem/) from the
+root of the main branch. Open `index.html` directly or run
+`python3 -m http.server 8000` from this directory.
 
-## Adding media
+## Adding the demonstration videos
 
-- Copy approved web images and videos into `assets/`. The current case and toy
-  photographs come from the same originals used for Figure 9. Architecture and
-  simulation figures come from the public manuscript.
-- Add video entries to `media` in `page.js`. Each entry is
-  `{ src: "assets/example.mp4", poster: "assets/example.jpg", caption: "…" }`.
-  The slots named `case`, `toy`, and `simulation` accept one or more entries.
-  Empty slots leave the photo-first page intact.
-- For the two physical scenarios, prioritize full runs with the actual time of
-  each request identifiable. Caption any playback speed or excerpt, and use the
-  photo timeline to explain task stages. For a held-out simulation clip, include
-  the task name and whether it shows the observation recording or policy rollout.
-- Match the current scene and request before adding a same-request,
-  different-history side-by-side comparison. This is optional.
+Place the finished MP4 files under `assets/` and set the six relative paths
+in `videoSources` in `page.js`. Until a path is set, that slot shows the
+corresponding photo or paper-figure preview. The interactive photo sequence
+alongside the title remains available.
+
+| Slot | Suggested file | What to include |
+| --- | --- | --- |
+| `case` | `real-case.mp4` | One continuous trial. Show the open USB and SD cases and their starting positions, then the closed and relocated cases. Show USB to left tray, SD to right tray, USB returned to its original position. |
+| `toy` | `real-toy.mp4` | One continuous trial. Show the toys' original positions, then relocation, brushing of the vacated position and brush parking, and the toy's return. |
+| `button` | `sim-video-place-button.mp4` | One history with the button event, then two goals showing the last destination before and the first destination after the press. |
+| `order` | `sim-video-place-order.mp4` | One history with ordered placements, then the first and second distinct destinations as separate goals. |
+| `swap` | `sim-video-unmask-swap.mp4` | One history with both cubes visible before occlusion and the covers swapping, then the requests to uncover blue and red. Show the cover being placed in the removal area. |
+| `highlight` | `sim-pick-highlight.mp4` | One history with both highlighting events and their disappearance, then the two requested transfers. |
+
+For simulation, show the common history once and label the two independent
+branches as reset to the same post-recording scene and memory. Use actual
+ReuseMem rollouts for goal branches. For real videos label the request
+transitions and any playback speed, keeping the no-reset sequence legible.
+The pages use existing Figure 9 photos and two goal panels cropped from Figure 6.

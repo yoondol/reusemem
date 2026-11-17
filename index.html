@@ -4,119 +4,166 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="ReuseMem learns to use one visual memory for multiple later manipulation goals.">
+  <meta property="og:title" content="ReuseMem: One Memory, Multiple Goals in Robot Manipulation">
+  <meta property="og:description" content="One record of what the robot saw can guide different requests after the scene changes.">
+  <meta property="og:image" content="https://yoondol.github.io/reusemem/assets/photo-08.jpg">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
   <link rel="stylesheet" href="style.css">
   <script src="page.js" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
-  <header class="top wrap">
-    <a class="wordmark" href="#main">ReuseMem</a>
-    <nav aria-label="Sections">
-      <a href="#demo">Demos</a>
-      <a href="#method">Method</a>
-      <a href="#results">Results</a>
-      <a href="#citation">Citation</a>
-    </nav>
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="wordmark" href="#main">ReuseMem</a>
+      <nav aria-label="Sections">
+        <a href="#demos">Demos</a><a href="#method">Method</a>
+        <a href="#results">Results</a><a href="#citation">Citation</a>
+      </nav>
+    </div>
   </header>
 
-  <main id="main" class="wrap">
-    <section class="intro" aria-labelledby="title">
-      <h1 id="title"><span>ReuseMem</span>One Memory, Multiple Goals<br class="title-break"> in Robot Manipulation</h1>
-      <p class="authors">Yoonseok Kang<span> · </span>Dayeon Jung<span> · </span>Seunghoon Jeon<span> · </span>Wonjib Kim<span> · </span>Dongchul Park</p>
-      <p class="affiliation">Chung-Ang University</p>
-      <p class="lead">A robot can record what it sees before it knows what it will be asked to do. ReuseMem learns to use the same observations for different requests, even as earlier actions change the scene.</p>
-      <div class="links">
-        <a class="primary" href="https://arxiv.org/abs/2611.21115">Read the paper <span aria-hidden="true">↗</span></a>
-        <a href="https://arxiv.org/pdf/2611.21115">PDF <span aria-hidden="true">↗</span></a>
-      </div>
-    </section>
-
-    <section class="story" id="demo" aria-labelledby="demo-title">
-      <div class="section-intro">
-        <h2 id="demo-title">Which case holds the USB?</h2>
-        <p>The robot sees what is inside each case and where each one starts. After the cases are closed and moved, that same record guides three requests.</p>
-      </div>
-      <div class="story-grid">
-        <figure class="scene">
-          <figcaption><strong>What the robot saw</strong><span>Before any request</span></figcaption>
-          <img src="assets/photo-06.jpg" width="1280" height="960" alt="Top view of two open cases on the desk. A USB drive is visible in the left case and an SD card in the right case.">
-          <p>The open cases reveal their contents and starting positions.</p>
-        </figure>
-        <div class="scene">
-          <div class="scene-heading"><strong>Where the robot acts now</strong><span>Three later requests</span></div>
-          <img id="goal-frame" src="assets/photo-07.jpg" width="1280" height="960" alt="Two closed cases have moved to new positions below the trays.">
-          <p id="goal-description" aria-live="polite">The cases are now closed and have moved. Choose a request to see its outcome.</p>
+  <main id="main">
+    <section class="hero wrap" aria-labelledby="title">
+      <div class="hero-copy">
+        <h1 id="title"><span class="project-name">ReuseMem</span><span class="title-line">One Memory,</span> <span class="title-line">Multiple Goals in</span> <span class="title-line">Robot Manipulation</span></h1>
+        <p class="authors"><span>Yoonseok Kang</span>, <span>Dayeon Jung</span>, <span>Seunghoon Jeon</span>, <span>Wonjib Kim</span>, and <span>Dongchul Park</span></p>
+        <p class="affiliation">Chung-Ang University</p>
+        <p class="lead">The robot records what it sees before the goal is known, then draws on the same record to act on different requests as the scene changes.</p>
+        <div class="links">
+          <a class="primary" href="https://arxiv.org/abs/2611.21115">Read the paper <span aria-hidden="true">↗</span></a>
+          <a class="secondary" href="https://arxiv.org/pdf/2611.21115">PDF <span aria-hidden="true">↗</span></a>
         </div>
       </div>
-      <div class="requests" role="group" aria-label="Case task photo sequence">
-        <button type="button" data-stage="setup" aria-pressed="true">Before requests</button>
-        <button type="button" data-stage="usb" aria-pressed="false">USB case to left tray</button>
-        <button type="button" data-stage="sd" aria-pressed="false">SD case to right tray</button>
-        <button type="button" data-stage="return" aria-pressed="false">Return the USB case</button>
+      <div class="case-panel" id="demo">
+        <h2>Which case holds the USB?</h2>
+        <div class="compare">
+          <figure>
+            <img src="assets/photo-06.jpg" width="1280" height="960" alt="Open cases before any request. A USB drive is visible on the left and an SD card on the right.">
+            <figcaption>What the robot saw</figcaption>
+          </figure>
+          <figure>
+            <img id="goal-frame" src="assets/photo-07.jpg" width="1280" height="960" alt="The two closed cases have moved to new positions below the trays.">
+            <figcaption id="goal-label">Before the requests</figcaption>
+          </figure>
+        </div>
+        <div class="requests" role="group" aria-label="Case task photo sequence">
+          <button type="button" data-stage="setup" aria-pressed="true">Start</button>
+          <button type="button" data-stage="usb" aria-pressed="false">Move USB</button>
+          <button type="button" data-stage="sd" aria-pressed="false">Move SD</button>
+          <button type="button" data-stage="return" aria-pressed="false">Return USB</button>
+        </div>
+        <p id="goal-description" aria-live="polite">The cases are closed and moved. Their contents and original positions are only visible in the earlier record.</p>
       </div>
-      <div data-media="case"></div>
     </section>
 
-    <section id="method" aria-labelledby="method-title">
+    <div class="section-rule" id="demos">
+      <section class="wrap section" id="real-world" aria-labelledby="real-title">
+        <div class="section-intro">
+          <h2 id="real-title">Real-world demonstrations</h2>
+          <p>Two SO101 scenarios show different ways to reuse a record through three consecutive requests.</p>
+        </div>
+        <div class="demo-grid real-grid">
+          <article class="demo-card">
+            <figure class="poster" data-media="case" data-kind="Photo preview">
+              <img src="assets/photo-09.jpg" width="1280" height="960" alt="The closed cases sit in separate trays after they have been identified by their observed contents." loading="lazy">
+            </figure>
+            <div class="card-copy">
+              <h3>Case preparation and return</h3>
+              <p>Select two closed cases by their contents, then return the USB case to the position seen earlier.</p>
+              <ol class="steps" aria-label="Requests"><li>USB to left tray</li><li>SD to right tray</li><li>Return USB case</li></ol>
+            </div>
+          </article>
+          <article class="demo-card">
+            <figure class="poster" data-media="toy" data-kind="Photo preview">
+              <img src="assets/photo-04.jpg" width="1280" height="960" alt="The robot holds a brush over the spot the dragon toy occupied before it was moved." loading="lazy">
+            </figure>
+            <div class="card-copy">
+              <h3>Toy relocation, cleaning, and return</h3>
+              <p>Use the toy’s original position to select it, brush the spot it has vacated, and put it back.</p>
+              <ol class="steps" aria-label="Requests"><li>Move the toy</li><li>Brush its spot</li><li>Return the toy</li></ol>
+            </div>
+          </article>
+        </div>
+        <p class="note">In each scenario, all three independent requests succeeded on <strong>14 of 20 recordings</strong>. All three requests succeeded without a reset in <strong>13 of 20 sequences</strong>.</p>
+      </section>
+    </div>
+
+    <div class="section-rule tinted">
+      <section class="wrap section" id="simulation" aria-labelledby="sim-title">
+        <div class="section-intro">
+          <h2 id="sim-title">Simulation demonstrations</h2>
+          <p>Each pair of goals draws on the same observation history. The paper previews show Goal 1 on the left and Goal 2 on the right.</p>
+        </div>
+        <div class="demo-grid sim-grid">
+          <article class="demo-card">
+            <figure class="poster sim-poster" data-media="button">
+              <img src="assets/sim-button.png" width="469" height="182" alt="Two target locations for a cube, one from before and one from after a button press." loading="lazy">
+            </figure>
+            <div class="card-copy"><h3>VideoPlaceButton</h3><p>Use the last placement before the button press or the first one after it.</p></div>
+          </article>
+          <article class="demo-card">
+            <figure class="poster sim-poster" data-media="order">
+              <img src="assets/sim-order.png" width="469" height="182" alt="The green cube occupies its first recorded destination in one view and its second destination in the other." loading="lazy">
+            </figure>
+            <div class="card-copy"><h3>VideoPlaceOrder</h3><p>Return the cube to its first or second distinct position in the recording.</p></div>
+          </article>
+          <article class="demo-card">
+            <figure class="poster sim-poster" data-media="swap">
+              <img src="assets/sim-swap.png" width="469" height="182" alt="The blue cube is uncovered in the first view, and the red cube is uncovered in the second." loading="lazy">
+            </figure>
+            <div class="card-copy"><h3>VideoUnmaskSwap</h3><p>Track identity through a cover swap, then uncover the requested blue or red object.</p></div>
+          </article>
+          <article class="demo-card">
+            <figure class="poster sim-poster" data-media="highlight">
+              <img src="assets/sim-highlight.png" width="469" height="182" alt="The first highlighted object and the second highlighted object appear in separate target slots." loading="lazy">
+            </figure>
+            <div class="card-copy"><h3>PickHighlight</h3><p>Move the first or second highlighted object after the cues disappear.</p></div>
+          </article>
+        </div>
+        <p class="note"><a href="assets/simulation.png">See the observation histories and goals in Fig. 6 ↗</a></p>
+      </section>
+    </div>
+
+    <section class="wrap section" id="method" aria-labelledby="method-title">
       <div class="section-intro">
         <h2 id="method-title">How ReuseMem works</h2>
-        <p>The Writer records visual observations before the goal is known. For each new request, the Reader retrieves relevant past evidence from the same bank. The policy combines it with the current view to generate the next action.</p>
+        <p>A single memory bank serves each new request. The policy combines the retrieved evidence with the current scene to decide what to do next.</p>
       </div>
-      <figure class="paper-figure">
-        <a href="assets/architecture.png"><img src="assets/architecture.png" alt="ReuseMem architecture. The Writer builds a goal-independent memory bank. The Reader selects request-specific evidence, which is fused with current observations and passed to the action expert." loading="lazy"></a>
-      </figure>
       <dl class="contributions">
-        <div><dt>Reuse one record across goals</dt><dd>Record before goals are known and use the same bank to act as the scene changes.</dd></div>
-        <div><dt>Learn which evidence helps action</dt><dd>The Reader learns to select past observations that help predict expert actions across different current states.</dd></div>
-        <div><dt>Reuse visual features and computation</dt><dd>Share repeated appearances while preserving when each was seen, and reuse fixed memory projections within each action-sampling call.</dd></div>
+        <div><dt>Record before the request</dt><dd>The Writer stores visual observations and their times before it knows which goals will follow.</dd></div>
+        <div><dt>Learn what helps the action</dt><dd>The Reader learns from how well retrieved evidence predicts expert actions across different current states.</dd></div>
+        <div><dt>Reuse storage and computation</dt><dd>Repeated appearances share storage. Fixed memory projections are reused while an action is sampled.</dd></div>
       </dl>
-    </section>
-
-    <section id="real-world" aria-labelledby="real-title">
-      <div class="section-intro">
-        <h2 id="real-title">Real-world manipulation</h2>
-        <p>One original position answers three requests: which toy to move, where to brush, and where to return it.</p>
-      </div>
-      <div class="photo-strip">
-        <figure><img src="assets/photo-01.jpg" width="1280" height="960" alt="Blue dragon and yellow chick at their original positions on the desk." loading="lazy"><figcaption>Observe the original positions</figcaption></figure>
-        <figure><img src="assets/photo-03.jpg" width="1280" height="960" alt="The chick is in the left tray and the dragon has been moved to the right tray." loading="lazy"><figcaption>Move the requested toy</figcaption></figure>
-        <figure><img src="assets/photo-04.jpg" width="1280" height="960" alt="The robot holds the brush over the dragon’s original position." loading="lazy"><figcaption>Brush the original spot</figcaption></figure>
-        <figure><img src="assets/photo-05.jpg" width="1280" height="960" alt="The dragon is back at its original position and the brush is parked." loading="lazy"><figcaption>Return the toy</figcaption></figure>
-      </div>
-      <div data-media="toy"></div>
-      <p class="caption">In each of the two SO101 scenarios, ReuseMem completed all three independent requests on 14 of 20 recordings and completed 13 of 20 sequences without a reset.</p>
-    </section>
-
-    <section id="results" aria-labelledby="results-title">
-      <div class="section-intro">
-        <h2 id="results-title">Simulation results</h2>
-        <p>Four RoboMME-based tasks test whether the same recording supports two distinct goals involving event timing, placement order, hidden identity, or a temporary visual cue.</p>
-      </div>
-      <div class="results-grid">
-        <figure class="paper-figure"><a href="assets/simulation-results.png"><img src="assets/simulation-results.png" alt="All-goal success by simulation task. ReuseMem improves over Uniform-Memory on all four tasks, with hidden object swaps remaining the hardest." loading="lazy"></a></figure>
-        <div>
-          <p class="result"><strong>+24.5 pp</strong><span>All-goal success over Uniform-Memory</span></p>
-          <table>
-            <caption class="sr-only">Simulation success across 200 common recordings</caption>
-            <thead><tr><th scope="col">Method</th><th scope="col">All-goal</th><th scope="col">Sequence</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">Uniform-Memory</th><td>36.0%</td><td>35.0%</td></tr>
-              <tr><th scope="row">ReuseMem</th><td>60.5%</td><td>58.0%</td></tr>
-            </tbody>
-          </table>
-          <p class="caption"><strong>All-goal</strong> requires both requests to succeed in separate runs from the same post-recording state. <strong>Sequence</strong> requires both requests to succeed in one run without a reset.</p>
-        </div>
-      </div>
       <details>
-        <summary>See the four tasks and their two goals</summary>
-        <figure class="paper-figure"><a href="assets/simulation.png"><img src="assets/simulation.png" alt="Examples of the four simulation tasks with common observation histories, current scenes, and separate outcomes for goal one and goal two." loading="lazy"></a></figure>
-        <div data-media="simulation"></div>
+        <summary>View the full architecture</summary>
+        <figure class="paper-figure"><a href="assets/architecture.png"><img src="assets/architecture.png" alt="Architecture of the Writer, memory bank, Reader, current-scene fusion, and action expert." loading="lazy"></a></figure>
       </details>
-      <p class="caption">At 2,048 entries, feature sharing uses 43.98 MiB of retained memory compared with 66.38 MiB without sharing. A new request takes 175 ms from receipt to the first dispatched command on an RTX 5090. <a href="https://arxiv.org/html/2611.21115v1#S4.SS5">Measurement details</a></p>
     </section>
 
-    <section id="citation" aria-labelledby="citation-title">
+    <div class="section-rule tinted">
+      <section class="wrap section" id="results" aria-labelledby="results-title">
+        <div class="section-intro"><h2 id="results-title">Results across later goals</h2></div>
+        <div class="results-grid">
+          <div class="results-copy">
+            <p class="result"><strong>+24.5 pp</strong><span>All-goal success over Uniform-Memory</span></p>
+            <table>
+              <caption class="sr-only">Simulation success across 200 common recordings</caption>
+              <thead><tr><th scope="col">Method</th><th scope="col">All-goal</th><th scope="col">Sequence</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Uniform-Memory</th><td>36.0%</td><td>35.0%</td></tr>
+                <tr><th scope="row">ReuseMem</th><td>60.5%</td><td>58.0%</td></tr>
+              </tbody>
+            </table>
+            <p class="note"><strong>All-goal</strong> requires success on both requests in separate runs with the same starting scene and memory. <strong>Sequence</strong> tests both requests in one run without a reset.</p>
+          </div>
+          <figure class="paper-figure"><a href="assets/simulation-results.png"><img src="assets/simulation-results.png" alt="Per-task All-goal success for the four simulation tasks. ReuseMem improves over Uniform-Memory across all four." loading="lazy"></a></figure>
+        </div>
+        <p class="note">At 2,048 entries, feature sharing cuts retained memory from 66.38 to 43.98 MiB. A new request takes 175 ms from receipt to first dispatched command on an RTX 5090. <a href="https://arxiv.org/html/2611.21115v1#S4.SS5">Measurement details ↗</a></p>
+      </section>
+    </div>
+
+    <section class="wrap section" id="citation" aria-labelledby="citation-title">
       <div class="citation-heading">
         <h2 id="citation-title">Citation</h2>
         <button id="copy-citation" type="button" hidden>Copy BibTeX</button>

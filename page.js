@@ -1,27 +1,33 @@
 const stages = {
   setup: {
     image: "assets/photo-07.jpg",
-    alt: "Two closed cases have moved to new positions below the trays.",
-    description: "The cases are now closed and have moved. Choose a request to see its outcome.",
+    alt: "The two closed cases have moved to new positions below the trays.",
+    label: "Before the requests",
+    description: "The cases are closed and moved. Their contents and original positions are only visible in the earlier record.",
   },
   usb: {
     image: "assets/photo-08.jpg",
     alt: "The closed black case that holds the USB drive is in the left tray.",
+    label: "USB case in the left tray",
     description: "The earlier view of the contents identifies which closed case to move.",
   },
   sd: {
     image: "assets/photo-09.jpg",
-    alt: "The black USB case is in the left tray and the silver SD card case is in the right tray.",
-    description: "The same record identifies the case that contains the SD card.",
+    alt: "The USB case remains in the left tray and the SD card case is in the right tray.",
+    label: "SD case in the right tray",
+    description: "The same record identifies the other case by its contents.",
   },
   return: {
     image: "assets/photo-10.jpg",
-    alt: "The black USB case is back in its original desk position. The silver case remains in the right tray.",
-    description: "The robot returns the USB case from the tray to the position it saw before any request.",
+    alt: "The USB case is back at its original desk position. The SD card case remains on the right tray.",
+    label: "USB case back at its origin",
+    description: "The robot takes the USB case from the tray and returns it to the position seen before any request.",
   },
 };
+
 const stageButtons = document.querySelectorAll("[data-stage]");
 const goalFrame = document.querySelector("#goal-frame");
+const goalLabel = document.querySelector("#goal-label");
 const goalDescription = document.querySelector("#goal-description");
 
 for (const button of stageButtons) {
@@ -29,6 +35,7 @@ for (const button of stageButtons) {
     const stage = stages[button.dataset.stage];
     goalFrame.src = stage.image;
     goalFrame.alt = stage.alt;
+    goalLabel.textContent = stage.label;
     goalDescription.textContent = stage.description;
     for (const choice of stageButtons) {
       choice.setAttribute("aria-pressed", String(choice === button));
@@ -36,29 +43,35 @@ for (const button of stageButtons) {
   });
 }
 
-// Add a relative video path, poster, and a caption for each available clip.
-const media = {
-  case: [],
-  toy: [],
-  simulation: [],
+// Set an entry to a published relative MP4 path to activate that player.
+const videoSources = {
+  case: "",
+  toy: "",
+  button: "",
+  order: "",
+  swap: "",
+  highlight: "",
 };
 
-for (const slot of document.querySelectorAll("[data-media]")) {
-  for (const clip of media[slot.dataset.media]) {
-    const figure = document.createElement("figure");
-    figure.className = "media";
-    const video = document.createElement("video");
-    video.controls = true;
-    video.playsInline = true;
-    video.preload = "none";
-    video.src = clip.src;
-    video.poster = clip.poster;
-    video.setAttribute("aria-label", clip.caption);
-    const caption = document.createElement("figcaption");
-    caption.textContent = clip.caption;
-    figure.append(video, caption);
-    slot.append(figure);
-  }
+for (const poster of document.querySelectorAll("[data-media]")) {
+  const src = videoSources[poster.dataset.media];
+  if (!src) continue;
+  const image = poster.querySelector("img");
+  const kind = poster.dataset.kind;
+  const video = document.createElement("video");
+  const title = poster.closest("article").querySelector("h3").textContent;
+  video.controls = true;
+  video.playsInline = true;
+  video.preload = "none";
+  video.poster = image.src;
+  video.setAttribute("aria-label", title + " demonstration");
+  video.addEventListener("error", () => {
+    video.replaceWith(image);
+    if (kind) poster.dataset.kind = kind;
+  });
+  video.src = src;
+  image.replaceWith(video);
+  delete poster.dataset.kind;
 }
 
 const copy = document.querySelector("#copy-citation");
