@@ -140,10 +140,6 @@ summary:hover { background: var(--wash); }
 .table-scroll caption { text-align: left; color: var(--muted); padding-bottom: 0.42rem; }
 .table-scroll tbody tr:last-child { background: none; color: inherit; font-weight: inherit; }
 
-.results-grid { display: grid; grid-template-columns: minmax(0, 0.84fr) minmax(0, 1.16fr); align-items: center; gap: 1.7rem; }
-.result { display: grid; margin-bottom: 0.85rem; line-height: 1.17; }
-.result strong { color: var(--accent); font: 400 3.1rem/1.04 "DM Serif Text", Georgia, serif; letter-spacing: -0.04em; }
-.result span { font-size: 0.88rem; color: var(--muted); }
 table { width: 100%; border-collapse: collapse; text-align: right; font-size: 0.87rem; font-variant-numeric: tabular-nums; }
 th, td { border-bottom: 1px solid var(--line); padding: 0.47rem 0.42rem; }
 th:first-child { text-align: left; }
@@ -151,8 +147,6 @@ tbody tr:last-child { background: #e5ebf4; color: var(--accent-dark); font-weigh
 .citation-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 pre { white-space: pre-wrap; overflow-wrap: anywhere; margin: 0.85rem 0 0; padding: 0.95rem 1.1rem; background: var(--wash); border-radius: 5px; font-size: 0.83rem; }
 
-.resource-note { margin-top: 1.25rem; color: var(--muted); font-size: 0.92rem; }
-.resource-note h3 { color: var(--ink); font-size: 1rem; margin-bottom: 0.26rem; }
 .evidence-chart { --label-width: 15rem; --stat-width: 3.7rem; max-width: 950px; padding: 1.35rem 1.5rem 1.1rem; border: 1px solid var(--line); border-radius: 8px; background: var(--white); }
 .evidence-chart figcaption { font-weight: 750; margin-bottom: 0.85rem; }
 .chart-rows { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.63rem; }
@@ -168,7 +162,6 @@ pre { white-space: pre-wrap; overflow-wrap: anywhere; margin: 0.85rem 0 0; paddi
 @media (max-width: 790px) {
   .case-panel { grid-template-columns: 1fr; gap: 0.55rem; }
   .requests button { font-size: 0.82rem; }
-  .results-grid { grid-template-columns: 1fr; }
   .evidence-chart { --label-width: 12.1rem; }
 }
 @media (max-width: 635px) {
@@ -193,20 +186,92 @@ pre { white-space: pre-wrap; overflow-wrap: anywhere; margin: 0.85rem 0 0; paddi
   .story-history { grid-column: 1 / -1; }
 }
 
+/* Demonstrations */
+.simulation-toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; padding-bottom: 1.2rem; }
+.task-select { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.task-select button, .playback-button {
+  padding: 0.43rem 0.7rem; border: 1px solid #d6e0ec; border-radius: 5px;
+  background: #fff; color: #233b54; font-size: 0.81rem; font-weight: 680;
+}
+.task-select button:hover, .playback-button:hover { border-color: #47728a; }
+.task-select [aria-pressed="true"] { border-color: #1f4565; background: #1f4565; color: #fff; }
+.playback-button[aria-pressed="true"] { color: #216151; background: #e4f2ec; border-color: #c4e0d4; }
 .sim-tasks { border-top: 1px solid var(--line); }
-.sim-task { padding-block: 1.65rem 2rem; border-bottom: 1px solid var(--line); }
-.sim-task:last-child { padding-bottom: 0; border-bottom: 0; }
-.sim-task h3 { margin-bottom: 0.82rem; color: var(--ink); font-size: 1.22rem; letter-spacing: -0.022em; }
-.sim-clips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.15rem clamp(0.8rem, 1.8vw, 1.4rem); }
+.sim-task { padding-top: 1.55rem; }
+.sim-task h3 { margin-bottom: 0.95rem; color: var(--ink); font-size: 1.26rem; letter-spacing: -0.026em; }
+.sim-clips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.22rem clamp(0.8rem, 1.8vw, 1.4rem); }
 .sim-clip { min-width: 0; }
-.sim-clip video { width: 100%; aspect-ratio: 16/9; background: #142239; border-radius: 6px; }
-.sim-clip figcaption { display: grid; gap: 0.32rem; margin-top: 0.58rem; line-height: 1.37; }
-.sim-clip figcaption strong { width: fit-content; padding: 0.14rem 0.42rem; border-radius: 3px; background: #e7edf5; color: #31455e; font-size: 0.78rem; }
-.sim-clip figcaption span { color: var(--muted); font-size: 0.86rem; }
-.sim-clip.goal-1 figcaption strong { background: #e3f0eb; color: #235d4e; }
-.sim-clip.goal-2 figcaption strong { background: #eee8f7; color: #58428a; }
+.sim-clip video, .action-comparison video { width: 100%; aspect-ratio: 16/9; background: #162639; border-radius: 7px; }
+.sim-clip figcaption { display: grid; gap: 0.3rem; margin-top: 0.61rem; line-height: 1.4; }
+.sim-clip figcaption strong { width: fit-content; padding: 0.13rem 0.42rem; border-radius: 3px; background: #e8eef6; color: #324b63; font-size: 0.78rem; }
+.sim-clip figcaption span { color: var(--muted); font-size: 0.87rem; }
+.sim-clip.goal-1 figcaption strong { background: #e5f2ec; color: #235d4e; }
+.sim-clip.goal-2 figcaption strong { background: #eeeaf6; color: #58428a; }
+.sim-clip.sequence { border-top: 1px solid var(--line); padding-top: 1.1rem; grid-column: 1 / -1; }
+.sim-clip.sequence video { max-width: 780px; }
 .sim-clip.sequence figcaption strong { background: #e1ebfa; color: #244a83; }
-@media (max-width: 560px) {
+.action-comparison { max-width: 1040px; }
+.pair-labels { display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem; margin-bottom: 0.5rem; }
+.pair-labels span { padding: 0.35rem 0.7rem; border-radius: 4px; background: #e2f0eb; color: #235d4e; font-size: 0.86rem; font-weight: 730; }
+.pair-labels span + span { background: #f3e9e5; color: #824833; }
+.action-comparison video { aspect-ratio: 32/9; }
+.action-comparison figcaption { margin-top: 0.58rem; color: var(--muted); font-size: 0.88rem; }
+
+/* Experimental results */
+#simulation .section-intro h2, .comparison-section .section-intro h2, #results .section-intro h2,
+.evidence-section .section-intro h2, .citation-heading h2 {
+  font-family: "Inter", system-ui, sans-serif;
+  font-weight: 730;
+  font-size: clamp(1.92rem, 3.8vw, 3.2rem);
+  letter-spacing: -0.047em;
+}
+.outcome-panel { display: grid; grid-template-columns: minmax(0, 0.74fr) minmax(0, 1.26fr); gap: 0.95rem; align-items: stretch; }
+.outcome-intro { display: grid; align-content: center; gap: 0.55rem; border-radius: 9px; padding: clamp(1.15rem, 3.1vw, 2.25rem); background: #182d46; color: #eff7fd; }
+.stat-value { font-size: clamp(2.4rem, 5.4vw, 4.6rem); line-height: 1; letter-spacing: -0.063em; font-weight: 770; color: #a8eae0; white-space: nowrap; }
+.stat-description { font-size: 1.02rem; line-height: 1.4; font-weight: 680; }
+.stat-context { font-size: 0.88rem; line-height: 1.55; color: #c4d3e3; }
+.outcome-chart, .resource-chart { min-width: 0; border: 1px solid var(--line); border-radius: 9px; padding: clamp(0.91rem, 2.05vw, 1.45rem); background: #fff; }
+.chart-heading { display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 0.55rem; margin-bottom: 0.85rem; }
+.chart-title, .resource-chart figcaption { font-weight: 740; letter-spacing: -0.013em; }
+.chart-controls { display: flex; gap: 0.55rem; flex-wrap: wrap; }
+.chart-controls label { display: grid; gap: 0.17rem; color: var(--muted); font-size: 0.72rem; font-weight: 650; }
+.chart-controls select { max-width: 100%; padding: 0.25rem 0.35rem; border: 1px solid #cfdceb; border-radius: 4px; background: #f9fbff; color: #203f5a; font: inherit; font-size: 0.83rem; }
+.measures { --measure-name: 7.55rem; --measure-number: 3.98rem; --measure-gap: 0.48rem; display: grid; list-style: none; margin: 0; padding: 0; gap: 0.6rem; }
+.measure { display: grid; grid-template-columns: var(--measure-name) minmax(0, 1fr) var(--measure-number); align-items: center; gap: var(--measure-gap); min-width: 0; }
+.measure-name { color: #384f66; font-size: 0.81rem; line-height: 1.2; }
+.measure-track { height: 0.85rem; background: #ecf2f7; border-radius: 3px; overflow: hidden; }
+.measure-track span { display: block; height: 100%; width: var(--bar); border-radius: 3px; background: #819ab0; transition: width 320ms ease; }
+.measure.reference .measure-track span { background: #647c98; }
+.measure.ours .measure-track span { background: #198273; }
+.measure.ours .measure-name, .measure.ours .measure-value { color: #11574d; font-weight: 770; }
+.measure-value { text-align: right; white-space: nowrap; color: #263e55; font-size: 0.83rem; font-variant-numeric: tabular-nums; }
+.measure-value small { display: block; color: var(--muted); font-size: 0.7rem; font-weight: 500; }
+.measure-axis { display: flex; justify-content: space-between; margin: 0.37rem 4.46rem 0 8.03rem; color: var(--muted); font-size: 0.69rem; }
+.efficiency { border-top: 1px solid var(--line); padding-top: 1.35rem; margin-top: 1.6rem; }
+.efficiency h3 { font-size: 1.27rem; letter-spacing: -0.02em; }
+.efficiency .section-intro { margin-bottom: 0.93rem; }
+.efficiency-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.93rem; }
+.resource-chart figcaption { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.82rem; }
+.resource-chart figcaption strong { color: #146052; font-size: 1.15rem; font-variant-numeric: tabular-nums; }
+.resource-chart .measures { --measure-name: 9rem; --measure-number: 5.15rem; }
+.resource-axis { margin-left: 9.48rem; margin-right: 5.63rem; }
+.chart-entered .bar, .chart-entered .measure-track span { animation: bar-in 600ms cubic-bezier(.2,.75,.25,1) both; transform-origin: left center; }
+@keyframes bar-in { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@media (prefers-reduced-motion: reduce) {
+  .measure-track span { transition: none; }
+  .chart-entered .bar, .chart-entered .measure-track span { animation: none; }
+}
+@media (max-width: 820px) {
+  .sim-clips { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .outcome-panel { grid-template-columns: 1fr; }
+}
+@media (max-width: 620px) {
+  .efficiency-grid { grid-template-columns: 1fr; }
   .sim-clips { grid-template-columns: 1fr; }
-  .sim-task { padding-block: 1.12rem 1.35rem; }
+  .sim-task { padding-top: 1.15rem; }
+  .task-select button, .playback-button { padding: 0.37rem 0.55rem; }
+  .measure-axis { margin-left: 6.3rem; margin-right: 3.74rem; }
+  .measures, .resource-chart .measures { --measure-name: 5.82rem; --measure-number: 3.26rem; }
+  .resource-chart .measures { --measure-number: 4.9rem; }
+  .resource-axis { margin-right: 5.38rem; }
 }

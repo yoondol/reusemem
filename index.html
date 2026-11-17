@@ -8,8 +8,8 @@
   <meta property="og:description" content="One record of what the robot saw can guide different requests after the scene changes.">
   <meta property="og:image" content="https://yoondol.github.io/reusemem/assets/photo-08.jpg">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
-  <link rel="stylesheet" href="style.css?v=large-demos">
-  <script src="page.js?v=large-demos" defer></script>
+  <link rel="stylesheet" href="style.css?v=final-gallery">
+  <script src="page.js?v=final-gallery" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -152,12 +152,21 @@
           <h2 id="sim-title">Simulation demonstrations</h2>
           <p>One shared observation, two separate goal runs, and one continuous sequence per task. Scripted RoboMME demonstrations.</p>
         </div>
+        <div class="simulation-toolbar">
+          <div class="task-select" role="group" aria-label="Simulation task">
+            <button data-task="video-place-button" type="button" aria-controls="video-place-button" aria-pressed="true">VideoPlaceButton</button>
+            <button data-task="video-place-order" type="button" aria-controls="video-place-order" aria-pressed="false">VideoPlaceOrder</button>
+            <button data-task="video-unmask-swap" type="button" aria-controls="video-unmask-swap" aria-pressed="false">VideoUnmaskSwap</button>
+            <button data-task="pick-highlight" type="button" aria-controls="pick-highlight" aria-pressed="false">PickHighlight</button>
+          </div>
+          <button id="autoplay-control" class="playback-button" type="button" aria-pressed="true">Autoplay</button>
+        </div>
         <div class="sim-tasks">
           <article class="sim-task" id="video-place-button">
             <h3>VideoPlaceButton</h3>
             <div class="sim-clips">
             <figure class="sim-clip observation">
-              <video controls playsinline muted data-motion-preview preload="none" poster="assets/simulation/video-place-button-observation.jpg" aria-label="VideoPlaceButton, Observation">
+              <video controls playsinline preload="none" poster="assets/simulation/video-place-button-observation.jpg" aria-label="VideoPlaceButton, Observation">
                 <source src="assets/simulation/video-place-button-observation.mp4" type="video/mp4">
                 <a href="assets/simulation/video-place-button-observation.mp4">Download Observation video</a>
               </video>
@@ -289,24 +298,70 @@
       </section>
     </div>
 
+    <section class="wrap section comparison-section" id="action-comparison" aria-labelledby="comparison-title">
+      <div class="section-intro">
+        <h2 id="comparison-title">The right action depends on what the robot remembers</h2>
+        <p>In VideoUnmaskSwap, the visible covers look alike after they move. The request is <strong>“Uncover the blue cube.”</strong></p>
+      </div>
+      <figure class="action-comparison">
+        <div class="pair-labels"><span>Correct target</span><span>Wrong target</span></div>
+        <video controls playsinline preload="none" poster="assets/simulation/unmask-choice-comparison.jpg" aria-label="Scripted comparison of uncovering the blue cube and uncovering the red cube">
+          <source src="assets/simulation/unmask-choice-comparison.mp4" type="video/mp4">
+        </video>
+        <figcaption>Scripted examples from the same starting scene. Both grasps succeed. The right-hand execution reveals the red cube. <a href="#results">See the measured policy results.</a></figcaption>
+      </figure>
+    </section>
     <div class="section-rule tinted">
       <section class="wrap section" id="results" aria-labelledby="results-title">
         <div class="section-intro"><h2 id="results-title">Results across later goals</h2></div>
-        <div class="results-grid">
-          <div class="results-copy">
-            <p class="result"><strong>+24.5 pp</strong><span>All-goal success over Uniform-Memory</span></p>
-            <table>
-              <caption class="sr-only">Simulation success across 200 common recordings</caption>
-              <thead><tr><th scope="col">Method</th><th scope="col">All-goal</th><th scope="col">Sequence</th></tr></thead>
-              <tbody>
-                <tr><th scope="row">Uniform-Memory</th><td>36.0%</td><td>35.0%</td></tr>
-                <tr><th scope="row">ReuseMem</th><td>60.5%</td><td>58.0%</td></tr>
-              </tbody>
-            </table>
-            <p class="note"><strong>All-goal</strong> requires success on both requests in separate runs with the same starting scene and memory. <strong>Sequence</strong> tests both requests in one run without a reset.</p>
+        <div class="outcome-panel">
+          <div class="outcome-intro">
+            <p class="stat-value" id="gain-value">+24.5 pp</p>
+            <p class="stat-description" id="gain-description">All-goal success over Uniform-Memory across four tasks</p>
+            <p class="stat-context" id="metric-context">All-goal success requires both requests to succeed independently from the same starting scene and memory.</p>
           </div>
-          <figure class="paper-figure"><a href="assets/simulation-results.png"><img src="assets/simulation-results.png" alt="Per-task All-goal success for the four simulation tasks. ReuseMem improves over Uniform-Memory across all four." loading="lazy"></a></figure>
+          <figure class="outcome-chart" aria-labelledby="outcome-caption">
+            <div class="chart-heading">
+              <span class="chart-title" id="outcome-caption">Simulation success</span>
+              <div class="chart-controls">
+                <label>Task<select id="results-task"><option value="all-tasks">All four tasks</option>
+                  <option>VideoPlaceButton</option><option>VideoPlaceOrder</option><option>VideoUnmaskSwap</option><option>PickHighlight</option>
+                </select></label>
+                <label>Metric<select id="results-metric"><option value="all">All-goal</option><option value="sequence">Sequence</option><option value="goal">Single goal</option></select></label>
+              </div>
+            </div>
+            <ul class="measures" id="outcome-bars" aria-label="Model success rates">
+              <li class="measure">
+                <span class="measure-name">No-Memory</span>
+                <div class="measure-track" aria-hidden="true"><span style="--bar:5.5%"></span></div>
+                <span class="measure-value"><strong>5.5%</strong><small>11/200</small></span>
+              </li>
+              <li class="measure">
+                <span class="measure-name">MME-VLA</span>
+                <div class="measure-track" aria-hidden="true"><span style="--bar:14.5%"></span></div>
+                <span class="measure-value"><strong>14.5%</strong><small>29/200</small></span>
+              </li>
+              <li class="measure">
+                <span class="measure-name">MemER</span>
+                <div class="measure-track" aria-hidden="true"><span style="--bar:20.0%"></span></div>
+                <span class="measure-value"><strong>20.0%</strong><small>40/200</small></span>
+              </li>
+              <li class="measure reference">
+                <span class="measure-name">Uniform-Memory</span>
+                <div class="measure-track" aria-hidden="true"><span style="--bar:36.0%"></span></div>
+                <span class="measure-value"><strong>36.0%</strong><small>72/200</small></span>
+              </li>
+              <li class="measure ours">
+                <span class="measure-name">ReuseMem</span>
+                <div class="measure-track" aria-hidden="true"><span style="--bar:60.5%"></span></div>
+                <span class="measure-value"><strong>60.5%</strong><small>121/200</small></span>
+              </li>
+            </ul>
+            <div class="measure-axis" aria-hidden="true"><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div>
+            <span class="sr-only" id="chart-update" role="status"></span>
+          </figure>
         </div>
+        <script type="application/json" id="outcome-data">{"all-tasks":{"goal":[[25.3,101,400],[32.5,130,400],[39.3,157,400],[54.0,216,400],[74.5,298,400]],"all":[[5.5,11,200],[14.5,29,200],[20.0,40,200],[36.0,72,200],[60.5,121,200]],"sequence":[[7.5,15,200],[11.5,23,200],[20.5,41,200],[35.0,70,200],[58.0,116,200]]},"VideoPlaceButton":{"goal":[[27.0,27,100],[56.0,56,100],[30.0,30,100],[67.0,67,100],[89.0,89,100]],"all":[[6.0,3,50],[34.0,17,50],[8.0,4,50],[52.0,26,50],[80.0,40,50]],"sequence":[[8.0,4,50],[26.0,13,50],[10.0,5,50],[50.0,25,50],[76.0,38,50]]},"VideoPlaceOrder":{"goal":[[26.0,26,100],[32.0,32,100],[26.0,26,100],[54.0,54,100],[82.0,82,100]],"all":[[6.0,3,50],[12.0,6,50],[6.0,3,50],[34.0,17,50],[68.0,34,50]],"sequence":[[8.0,4,50],[10.0,5,50],[8.0,4,50],[36.0,18,50],[68.0,34,50]]},"VideoUnmaskSwap":{"goal":[[26.0,26,100],[23.0,23,100],[37.0,37,100],[35.0,35,100],[48.0,48,100]],"all":[[6.0,3,50],[8.0,4,50],[20.0,10,50],[16.0,8,50],[30.0,15,50]],"sequence":[[8.0,4,50],[6.0,3,50],[18.0,9,50],[14.0,7,50],[26.0,13,50]]},"PickHighlight":{"goal":[[22.0,22,100],[19.0,19,100],[64.0,64,100],[60.0,60,100],[79.0,79,100]],"all":[[4.0,2,50],[4.0,2,50],[46.0,23,50],[42.0,21,50],[64.0,32,50]],"sequence":[[6.0,3,50],[4.0,2,50],[46.0,23,50],[40.0,20,50],[62.0,31,50]]}}</script>
         <details class="protocol">
           <summary>Per-task results and evaluation protocol</summary>
           <div class="detail-body">
@@ -327,9 +382,32 @@
             <p class="note"><a href="https://arxiv.org/html/2611.21115v1#A2">Full task definitions, baselines, and counts ↗</a></p>
           </div>
         </details>
-        <div class="resource-note">
-          <h3>Runtime and storage</h3>
-          <p>At 2,048 entries, feature sharing reduces retained-bank storage from 66.38 to 43.98 MiB. A new request takes 175 ms on an RTX 5090, measured from request receipt to first command dispatch. <a href="https://arxiv.org/html/2611.21115v1#A3">Measurement details ↗</a></p>
+        <div class="efficiency" id="efficiency">
+          <div class="section-intro">
+            <h3>Memory storage and response time</h3>
+            <p>Appearance sharing saves storage while keeping the order of all 2,048 observations.</p>
+          </div>
+          <div class="efficiency-grid">
+            <figure class="resource-chart">
+              <figcaption>Retained memory <strong>−33.7%</strong></figcaption>
+              <ul class="measures">
+            <li class="measure"><span class="measure-name">Separate appearances</span><div class="measure-track" aria-hidden="true"><span style="--bar:82.975000%"></span></div><span class="measure-value"><strong>66.38 MiB</strong></span></li>
+            <li class="measure ours"><span class="measure-name">Shared appearances</span><div class="measure-track" aria-hidden="true"><span style="--bar:54.975000%"></span></div><span class="measure-value"><strong>43.98 MiB</strong></span></li>
+              </ul>
+              <div class="measure-axis resource-axis" aria-hidden="true"><span>0</span><span>40</span><span>80 MiB</span></div>
+              <p class="note">Same ReuseMem policy and 2,048 temporal entries. Counts retained bank storage.</p>
+            </figure>
+            <figure class="resource-chart">
+              <figcaption>Time to the first command <strong>175 ms</strong></figcaption>
+              <ul class="measures">
+            <li class="measure"><span class="measure-name">Uniform-Memory</span><div class="measure-track" aria-hidden="true"><span style="--bar:13.583333%"></span></div><span class="measure-value"><strong>163 ms</strong></span></li>
+            <li class="measure ours"><span class="measure-name">ReuseMem</span><div class="measure-track" aria-hidden="true"><span style="--bar:14.583333%"></span></div><span class="measure-value"><strong>175 ms</strong></span></li>
+            <li class="measure"><span class="measure-name">MemER (RoboMME)</span><div class="measure-track" aria-hidden="true"><span style="--bar:92.666667%"></span></div><span class="measure-value"><strong>1112 ms</strong></span></li>
+              </ul>
+              <div class="measure-axis resource-axis" aria-hidden="true"><span>0</span><span>600</span><span>1,200 ms</span></div>
+              <p class="note">New requests, RTX 5090, BF16, batch size one. <a href="https://arxiv.org/html/2611.21115v1#A3">Measurement details ↗</a></p>
+            </figure>
+          </div>
         </div>
       </section>
     </div>
@@ -348,7 +426,7 @@
           <li><span>Mismatched history</span><div class="bar-track"><div class="bar intervention" style="--value:24%" aria-hidden="true"></div></div><strong>24.0%</strong></li>
         </ul>
         <div class="chart-axis" aria-hidden="true"><div class="ticks"><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div></div>
-        <p class="note"><a href="https://arxiv.org/html/2611.21115v1#A2.SS4">Memory intervention protocol ↗</a> · <a href="assets/memory-interventions.png">Original Fig. 11 ↗</a></p>
+        <p class="note"><a href="https://arxiv.org/html/2611.21115v1#A2.SS4">Memory intervention protocol ↗</a></p>
       </figure>
     </section>
 

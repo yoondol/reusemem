@@ -20,8 +20,15 @@ post-observation scene. Goal instructions appear in the web captions.
 | PickHighlight | `pick-highlight` |
 
 The fourth player shows both goals in one execution with no reset between them.
-The desktop gallery uses a 2×2 layout. Only the first observation can start
-automatically in view, muted and once, with reduced-motion settings respected.
+The gallery shows one selected task at a time, with three clips across and a
+separate continuous sequence. All requested videos autoplay muted in view and
+pause off-screen. Use the Autoplay button to disable it. The initial setting
+respects reduced-motion preferences.
+
+The side-by-side VideoUnmaskSwap clip uses the two scripted goal videos
+from the same post-observation state. Its labels refer to whether the action
+satisfies the displayed blue-cube request. Quantitative policy outcomes and
+resource charts use the published paper’s tables and measurements.
 
 ## Adding the real-world demonstrations
 

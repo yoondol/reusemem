@@ -70,25 +70,121 @@ for (const poster of document.querySelectorAll("[data-media]")) {
   delete poster.dataset.kind;
 }
 
-const motionPreview = document.querySelector("[data-motion-preview]");
-if (motionPreview && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  let started = false;
-  const observer = new IntersectionObserver(([entry]) => {
-    if (!entry.isIntersecting || entry.intersectionRatio < 0.65) {
-      if (started) {
-        motionPreview.pause();
-        observer.disconnect();
+const taskButtons = document.querySelectorAll("[data-task]");
+function selectTask(id) {
+  const active = Array.from(taskButtons).find(button => button.dataset.task === id);
+  if (!active) return;
+  for (const button of taskButtons) {
+    const selected = button === active;
+    const section = document.getElementById(button.dataset.task);
+    button.setAttribute("aria-pressed", String(selected));
+    section.hidden = !selected;
+    if (!selected) {
+      for (const video of section.querySelectorAll("video")) video.pause();
+    }
+  }
+}
+const taskFromHash = () => selectTask(window.location.hash.slice(1));
+for (const button of taskButtons) {
+  button.addEventListener("click", () => selectTask(button.dataset.task));
+}
+if (taskButtons.length) {
+  selectTask(taskButtons[0].dataset.task);
+  taskFromHash();
+  window.addEventListener("hashchange", taskFromHash);
+}
+
+const autoplayControl = document.querySelector("#autoplay-control");
+const motionPreference = matchMedia("(prefers-reduced-motion: reduce)");
+const galleryVideos = document.querySelectorAll("#demos video, #simulation video, #action-comparison video");
+
+if (autoplayControl && "IntersectionObserver" in window) {
+  let enabled = !motionPreference.matches;
+  const visible = new Set();
+  function updatePlayback() {
+    autoplayControl.setAttribute("aria-pressed", String(enabled));
+    autoplayControl.textContent = enabled ? "Autoplay on" : "Autoplay off";
+    for (const video of visible) {
+      if (enabled) video.play().catch(() => {});
+      else video.pause();
+    }
+  }
+  const observer = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      const video = entry.target;
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+        visible.add(video);
+        if (enabled) video.play().catch(() => {});
+      } else {
+        visible.delete(video);
+        if (enabled) video.pause();
       }
-      return;
     }
-    if (started) return;
-    started = true;
-    // The introductory clip plays at most once; controls remain available.
-    if (motionPreview.paused && motionPreview.currentTime === 0) {
-      motionPreview.play().catch(() => {});
+  }, { threshold: 0.6 });
+  for (const video of galleryVideos) {
+    video.muted = true;
+    video.defaultMuted = true;
+    video.loop = true;
+    observer.observe(video);
+  }
+  autoplayControl.addEventListener("click", () => {
+    enabled = !enabled;
+    updatePlayback();
+  });
+  motionPreference.addEventListener("change", event => {
+    enabled = !event.matches;
+    updatePlayback();
+  });
+  updatePlayback();
+} else if (autoplayControl) {
+  autoplayControl.hidden = true;
+}
+
+const outcomes = document.querySelector("#outcome-data");
+if (outcomes) {
+  const data = JSON.parse(outcomes.textContent);
+  const task = document.querySelector("#results-task");
+  const metric = document.querySelector("#results-metric");
+  const rows = document.querySelectorAll("#outcome-bars .measure");
+  const metrics = {
+    all: ["All-goal success", "Both requests must succeed independently from the same starting scene and memory."],
+    sequence: ["Sequence success", "Both requests must succeed in one run without resetting the scene."],
+    goal: ["Single-goal success", "Each of the two requests is scored separately from the same post-observation scene."],
+  };
+  function updateOutcomes() {
+    const values = data[task.value][metric.value];
+    const [name, definition] = metrics[metric.value];
+    const [uniform, reuse] = values.slice(-2);
+    const delta = reuse[0] - uniform[0];
+    const gain = (delta >= 0 ? "+" : "") + delta.toFixed(1) + " pp";
+    const scope = task.value === "all-tasks" ? "across four tasks" : "on " + task.value;
+
+    rows.forEach((row, i) => {
+      const [rate, count, total] = values[i];
+      row.querySelector(".measure-track span").style.setProperty("--bar", rate + "%");
+      row.querySelector(".measure-value strong").textContent = rate.toFixed(1) + "%";
+      row.querySelector(".measure-value small").textContent = count + "/" + total;
+    });
+    document.querySelector("#gain-value").textContent = gain;
+    document.querySelector("#gain-description").textContent = name + " over Uniform-Memory " + scope;
+    document.querySelector("#metric-context").textContent = definition;
+    document.querySelector("#chart-update").textContent = name + " " + scope + ". ReuseMem " + reuse[0].toFixed(1) + " percent.";
+  }
+  task.addEventListener("change", updateOutcomes);
+  metric.addEventListener("change", updateOutcomes);
+}
+
+if ("IntersectionObserver" in window && !motionPreference.matches) {
+  const chartObserver = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      entry.target.classList.add("chart-entered");
+      chartObserver.unobserve(entry.target);
     }
-  }, { threshold: 0.65 });
-  observer.observe(motionPreview);
+  }, { threshold: 0.2 });
+  for (const chart of document.querySelectorAll(".outcome-chart, .resource-chart, .evidence-chart")) {
+    chartObserver.observe(chart);
+  }
 }
 
 const copy = document.querySelector("#copy-citation");
