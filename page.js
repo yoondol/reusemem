@@ -174,6 +174,39 @@ if (outcomes) {
   metric.addEventListener("change", updateOutcomes);
 }
 
+const efficiencySource = document.querySelector("#efficiency-data");
+if (efficiencySource) {
+  const efficiency = JSON.parse(efficiencySource.textContent);
+  const costButtons = document.querySelectorAll("[data-cost-metric]");
+  const metricNames = { all: "All-goal success", sequence: "Sequence success", goal: "Goal success" };
+
+  function updateEfficiency(metric) {
+    for (const button of costButtons) {
+      button.setAttribute("aria-pressed", String(button.dataset.costMetric === metric));
+    }
+    for (const chart of document.querySelectorAll("[data-cost-axis]")) {
+      const axis = chart.dataset.costAxis;
+      const unit = axis === "response" ? "ms" : "MiB";
+      chart.querySelector(".cost-metric-name").textContent = metricNames[metric];
+      for (const point of chart.querySelectorAll("[data-model]")) {
+        const model = efficiency[point.dataset.model];
+        const rate = model.rates[metric];
+        const value = model[axis].toLocaleString("en-US", {
+          minimumFractionDigits: axis === "storage" ? 2 : 0,
+          maximumFractionDigits: axis === "storage" ? 2 : 0,
+        });
+        point.style.bottom = rate + "%";
+        point.querySelector("small").textContent = value + " " + unit + " · " + rate.toFixed(1) + "%";
+        point.querySelector("button").setAttribute("aria-label", point.dataset.model + ", " + value + " " + unit + ", " + rate.toFixed(1) + "% " + metricNames[metric]);
+      }
+    }
+    document.querySelector("#cost-update").textContent = "Both efficiency plots show " + metricNames[metric] + ". ReuseMem " + efficiency.ReuseMem.rates[metric].toFixed(1) + " percent.";
+  }
+  for (const button of costButtons) {
+    button.addEventListener("click", () => updateEfficiency(button.dataset.costMetric));
+  }
+}
+
 if ("IntersectionObserver" in window && !motionPreference.matches) {
   const chartObserver = new IntersectionObserver(entries => {
     for (const entry of entries) {

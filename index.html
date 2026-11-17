@@ -8,8 +8,8 @@
   <meta property="og:description" content="One record of what the robot saw can guide different requests after the scene changes.">
   <meta property="og:image" content="https://yoondol.github.io/reusemem/assets/photo-08.jpg">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
-  <link rel="stylesheet" href="style.css?v=research-charts">
-  <script src="page.js?v=research-charts" defer></script>
+  <link rel="stylesheet" href="style.css?v=cost-comparison">
+  <script src="page.js?v=cost-comparison" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -308,7 +308,7 @@
         <video controls playsinline preload="none" poster="assets/simulation/unmask-choice-comparison.jpg" aria-label="Scripted comparison of uncovering the blue cube and uncovering the red cube">
           <source src="assets/simulation/unmask-choice-comparison.mp4" type="video/mp4">
         </video>
-        <figcaption>Scripted examples from the same starting scene. Both grasps succeed. The right-hand execution reveals the red cube. <a href="#results">See the measured policy results.</a></figcaption>
+        <figcaption>Scripted examples from the same starting scene. Both grasps succeed. The right-hand execution reveals the red cube.</figcaption>
       </figure>
     </section>
     <div class="section-rule tinted">
@@ -379,44 +379,88 @@
                 </tbody>
               </table>
             </div>
-            <p class="note"><a href="https://arxiv.org/html/2611.21115v1#A2">Full task definitions, baselines, and counts ↗</a></p>
           </div>
         </details>
         <div class="efficiency" id="efficiency">
-          <div class="section-intro">
-            <h3>Memory storage and response time</h3>
-            <p>Appearance sharing saves storage while keeping the order of all 2,048 observations.</p>
+          <div class="efficiency-heading">
+            <div class="section-intro"><h3>Performance and efficiency</h3><p>Higher success across later goals, with a fast response and a compact memory bank.</p></div>
+            <div class="cost-controls" role="group" aria-label="Efficiency success metric">
+              <button type="button" data-cost-metric="all" aria-pressed="true">All-goal</button>
+              <button type="button" data-cost-metric="sequence" aria-pressed="false">Sequence</button>
+              <button type="button" data-cost-metric="goal" aria-pressed="false">Goal average</button>
+            </div>
           </div>
           <div class="efficiency-grid">
-            <figure class="resource-chart storage-chart">
-              <figcaption>Retained memory</figcaption>
-              <div class="storage-saving"><strong>33.7<span>%</span></strong><p>less memory for the same recording</p></div>
-              <ul class="measures">
-            <li class="measure"><span class="measure-name">Separate appearances</span><div class="measure-track" aria-hidden="true"><span style="--bar:82.975000%"></span></div><span class="measure-value"><strong>66.38 MiB</strong></span></li>
-            <li class="measure ours"><span class="measure-name">Shared appearances</span><div class="measure-track" aria-hidden="true"><span style="--bar:54.975000%"></span></div><span class="measure-value"><strong>43.98 MiB</strong></span></li>
-              </ul>
-              <div class="measure-axis resource-axis" aria-hidden="true"><span>0</span><span>40</span><span>80 MiB</span></div>
-              <p class="note">Same ReuseMem policy and 2,048 temporal entries. Counts retained bank storage.</p>
-            </figure>
-            <figure class="resource-chart response-chart">
-              <figcaption>Success and response time <strong>175 ms</strong></figcaption>
-              <p class="scatter-axis-title">All-goal success (%)</p>
-              <div class="response-scatter" role="img" aria-label="All-goal success versus time from a new request to the first command. Uniform-Memory, 163 milliseconds and 36 percent. ReuseMem, 175 milliseconds and 60.5 percent. MemER in RoboMME, 1112 milliseconds and 20 percent.">
-                <div class="scatter-y" aria-hidden="true"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div>
-                <div class="scatter-field" aria-hidden="true">
-                  <div class="scatter-point ours" style="left:14.583333%;bottom:60.5%"><span><b>ReuseMem</b><small>175 ms · 60.5%</small></span></div>
-                  <div class="scatter-point" style="left:13.583333%;bottom:36%"><span><b>Uniform-Memory</b><small>163 ms · 36.0%</small></span></div>
-                  <div class="scatter-point point-right" style="left:92.666667%;bottom:20%"><span><b>MemER (RoboMME)</b><small>1,112 ms · 20.0%</small></span></div>
+<figure class="resource-chart efficiency-chart" data-cost-axis="response">
+              <figcaption><span>Success vs. response time</span></figcaption>
+              <div class="cost-highlight"><strong>6.4×</strong><span>faster response than MemER</span></div>
+              <p class="plot-y-title"><span class="cost-metric-name">All-goal success</span> (%)</p>
+              <div class="cost-plot">
+                <div class="plot-y" aria-hidden="true"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div>
+                <div class="plot-field">
+                  <div class="plot-point" data-model="No-Memory" style="left:11.00000000%;bottom:5.5%">
+                    <button class="plot-mark" type="button" aria-label="No-Memory, 132 ms, 5.5% All-goal success"></button>
+                    <span class="plot-label"><b>No-Memory</b><small>132 ms · 5.5%</small></span>
+                  </div>
+                  <div class="plot-point" data-model="MME-VLA" style="left:12.50000000%;bottom:14.5%">
+                    <button class="plot-mark" type="button" aria-label="MME-VLA, 150 ms, 14.5% All-goal success"></button>
+                    <span class="plot-label"><b>MME-VLA</b><small>150 ms · 14.5%</small></span>
+                  </div>
+                  <div class="plot-point label-left" data-model="MemER" style="left:92.66666667%;bottom:20.0%">
+                    <button class="plot-mark" type="button" aria-label="MemER, 1,112 ms, 20.0% All-goal success"></button>
+                    <span class="plot-label"><b>MemER</b><small>1,112 ms · 20.0%</small></span>
+                  </div>
+                  <div class="plot-point" data-model="Uniform-Memory" style="left:13.58333333%;bottom:36.0%">
+                    <button class="plot-mark" type="button" aria-label="Uniform-Memory, 163 ms, 36.0% All-goal success"></button>
+                    <span class="plot-label"><b>Uniform-Memory</b><small>163 ms · 36.0%</small></span>
+                  </div>
+                  <div class="plot-point ours" data-model="ReuseMem" style="left:14.58333333%;bottom:60.5%">
+                    <button class="plot-mark" type="button" aria-label="ReuseMem, 175 ms, 60.5% All-goal success"></button>
+                    <span class="plot-label"><b>ReuseMem</b><small>175 ms · 60.5%</small></span>
+                  </div>
                 </div>
-                <div class="scatter-x" aria-hidden="true"><span>0</span><span>600</span><span>1,200</span></div>
+                <div class="plot-x" aria-hidden="true"><span>0</span><span>300</span><span>600</span><span>900</span><span>1,200</span></div>
               </div>
-              <p class="scatter-x-title">Time to the first command (ms)</p>
-              <p class="note">All-goal success across four tasks. New requests, RTX 5090, BF16, batch size one. <a href="https://arxiv.org/html/2611.21115v1#A3">Measurement details ↗</a></p>
+              <p class="plot-x-title">Time to the first command (ms)</p>
+              <p class="cost-note">New requests · RTX 5090 · BF16 · batch 1</p>
+            </figure>
+<figure class="resource-chart efficiency-chart" data-cost-axis="storage">
+              <figcaption><span>Success vs. memory storage</span></figcaption>
+              <div class="cost-highlight"><strong>33.7%</strong><span>less storage with appearance sharing</span></div>
+              <p class="plot-y-title"><span class="cost-metric-name">All-goal success</span> (%)</p>
+              <div class="cost-plot">
+                <div class="plot-y" aria-hidden="true"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div>
+                <div class="plot-field">
+                  <div class="plot-point" data-model="No-Memory" style="left:0.00000000%;bottom:5.5%">
+                    <button class="plot-mark" type="button" aria-label="No-Memory, 0.00 MiB, 5.5% All-goal success"></button>
+                    <span class="plot-label"><b>No-Memory</b><small>0.00 MiB · 5.5%</small></span>
+                  </div>
+                  <div class="plot-point" data-model="Uniform-Memory" style="left:54.98046875%;bottom:36.0%">
+                    <button class="plot-mark" type="button" aria-label="Uniform-Memory, 43.98 MiB, 36.0% All-goal success"></button>
+                    <span class="plot-label"><b>Uniform-Memory</b><small>43.98 MiB · 36.0%</small></span>
+                  </div>
+                  <div class="plot-point ours" data-model="ReuseMem" style="left:54.98046875%;bottom:60.5%">
+                    <button class="plot-mark" type="button" aria-label="ReuseMem, 43.98 MiB, 60.5% All-goal success"></button>
+                    <span class="plot-label"><b>ReuseMem</b><small>43.98 MiB · 60.5%</small></span>
+                  </div>
+                  <div class="plot-point variant label-left label-below" data-model="Without feature sharing" style="left:82.96875000%;bottom:61.0%">
+                    <button class="plot-mark" type="button" aria-label="Without feature sharing, 66.38 MiB, 61.0% All-goal success"></button>
+                    <span class="plot-label"><b>Without sharing</b><small>66.38 MiB · 61.0%</small></span>
+                  </div>
+                </div>
+                <div class="plot-x" aria-hidden="true"><span>0</span><span>20</span><span>40</span><span>60</span><span>80</span></div>
+              </div>
+              <p class="plot-x-title">Retained memory (MiB)</p>
+              <p class="cost-note">Same 2,048 observations · shared or separate appearance features</p>
             </figure>
           </div>
+          <p class="efficiency-scope">Response measures the time from a request to its first dispatched command. Storage counts the retained memory bank. Move over a point or focus it to inspect the values.</p>
+          <span id="cost-update" class="sr-only" role="status"></span>
         </div>
       </section>
     </div>
+
+    <script type="application/json" id="efficiency-data">{"No-Memory":{"rates":{"all":5.5,"sequence":7.5,"goal":25.25},"response":132.0,"storage":0.0},"MME-VLA":{"rates":{"all":14.5,"sequence":11.5,"goal":32.5},"response":150.0,"storage":null},"MemER":{"rates":{"all":20.0,"sequence":20.5,"goal":39.25},"response":1112.0,"storage":null},"Uniform-Memory":{"rates":{"all":36.0,"sequence":35.0,"goal":54.0},"response":163.0,"storage":43.984375},"ReuseMem":{"rates":{"all":60.5,"sequence":58.0,"goal":74.5},"response":175.0,"storage":43.984375},"Without feature sharing":{"rates":{"all":61.0,"sequence":58.0,"goal":74.75},"storage":66.375}}</script>
 
     <section class="wrap section evidence-section" id="evidence" aria-labelledby="evidence-title">
       <div class="section-intro">
@@ -432,7 +476,6 @@
           <li><span>Mismatched history</span><div class="bar-track"><div class="bar intervention" style="--value:24%" aria-hidden="true"></div></div><strong>24.0%</strong></li>
         </ul>
         <div class="chart-axis" aria-hidden="true"><div class="ticks"><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div></div>
-        <p class="note"><a href="https://arxiv.org/html/2611.21115v1#A2.SS4">Memory intervention protocol ↗</a></p>
       </figure>
     </section>
 
