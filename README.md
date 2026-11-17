@@ -25,10 +25,14 @@ separate continuous sequence. All requested videos autoplay muted in view and
 pause off-screen. Use the Autoplay button to disable it. The initial setting
 respects reduced-motion preferences.
 
-The side-by-side VideoUnmaskSwap clip uses the two scripted goal videos
-from the same post-observation state. Its labels refer to whether the action
-satisfies the displayed blue-cube request. Quantitative policy outcomes and
-resource charts use the published paper’s tables and measurements.
+Observation and sequence players include English WebVTT captions in `assets/captions/`.
+Sequence captions change at each verified Goal 2 boundary. The final observation
+frames of VideoUnmaskSwap and PickHighlight are held for two seconds so the
+hidden-cube and disappearing-cue states can be read. Goal instructions appear
+above the independent goal players.
+
+Quantitative policy outcomes and resource plots use the published paper’s tables
+and measurements. The site ships DM Sans locally under its OFL license.
 
 ## Adding the real-world demonstrations
 

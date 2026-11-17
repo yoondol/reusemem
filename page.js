@@ -1,48 +1,3 @@
-const stages = {
-  setup: {
-    image: "assets/photo-07.jpg",
-    alt: "The two closed cases have moved to new positions below the trays.",
-    label: "Before the requests",
-    description: "The current view no longer shows what is inside either case.",
-  },
-  usb: {
-    image: "assets/photo-08.jpg",
-    alt: "The closed black case that holds the USB drive is in the left tray.",
-    label: "USB case in the left tray",
-    description: "The earlier view of the contents identifies which closed case to move.",
-  },
-  sd: {
-    image: "assets/photo-09.jpg",
-    alt: "The USB case remains in the left tray and the SD card case is in the right tray.",
-    label: "SD case in the right tray",
-    description: "The same record identifies the other case by its contents.",
-  },
-  return: {
-    image: "assets/photo-10.jpg",
-    alt: "The USB case is back at its original desk position. The SD card case remains on the right tray.",
-    label: "USB case back at its origin",
-    description: "The robot takes the USB case from the tray and returns it to the position seen before any request.",
-  },
-};
-
-const stageButtons = document.querySelectorAll("[data-stage]");
-const goalFrame = document.querySelector("#goal-frame");
-const goalLabel = document.querySelector("#goal-label");
-const goalDescription = document.querySelector("#goal-description");
-
-for (const button of stageButtons) {
-  button.addEventListener("click", () => {
-    const stage = stages[button.dataset.stage];
-    goalFrame.src = stage.image;
-    goalFrame.alt = stage.alt;
-    goalLabel.textContent = stage.label;
-    goalDescription.textContent = stage.description;
-    for (const choice of stageButtons) {
-      choice.setAttribute("aria-pressed", String(choice === button));
-    }
-  });
-}
-
 // Set an entry to a published relative MP4 path to activate that player.
 const videoSources = {
   case: "",
@@ -84,7 +39,7 @@ function selectTask(id) {
     }
   }
 }
-const taskFromHash = () => selectTask(window.location.hash.slice(1));
+const taskFromHash = () => selectTask(window.location.hash.slice(1).replace(/-sequence$/, ""));
 for (const button of taskButtons) {
   button.addEventListener("click", () => selectTask(button.dataset.task));
 }
@@ -94,9 +49,33 @@ if (taskButtons.length) {
   window.addEventListener("hashchange", taskFromHash);
 }
 
+// Keep the observation cues and current sequence instruction visible.
+for (const video of document.querySelectorAll("#simulation video")) {
+  for (const track of video.textTracks) track.mode = "showing";
+  video.addEventListener("loadedmetadata", () => {
+    for (const track of video.textTracks) track.mode = "showing";
+  }, { once: true });
+}
+for (const video of document.querySelectorAll("video[data-second-goal-at]")) {
+  const boundary = Number(video.dataset.secondGoalAt);
+  const steps = video.closest("figure").querySelectorAll("[data-step]");
+  function updateSequence() {
+    const current = video.currentTime < boundary ? "1" : "2";
+    for (const step of steps) {
+      const active = step.dataset.step === current;
+      step.classList.toggle("is-current", active);
+      if (active) step.setAttribute("aria-current", "step");
+      else step.removeAttribute("aria-current");
+    }
+  }
+  video.addEventListener("timeupdate", updateSequence);
+  video.addEventListener("seeked", updateSequence);
+  updateSequence();
+}
+
 const autoplayControl = document.querySelector("#autoplay-control");
 const motionPreference = matchMedia("(prefers-reduced-motion: reduce)");
-const galleryVideos = document.querySelectorAll("#demos video, #simulation video, #action-comparison video");
+const galleryVideos = document.querySelectorAll("#demos video, #simulation video");
 
 if (autoplayControl && "IntersectionObserver" in window) {
   let enabled = !motionPreference.matches;
@@ -112,7 +91,7 @@ if (autoplayControl && "IntersectionObserver" in window) {
   const observer = new IntersectionObserver(entries => {
     for (const entry of entries) {
       const video = entry.target;
-      if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.25) {
         visible.add(video);
         if (enabled) video.play().catch(() => {});
       } else {
@@ -120,7 +99,7 @@ if (autoplayControl && "IntersectionObserver" in window) {
         if (enabled) video.pause();
       }
     }
-  }, { threshold: 0.6 });
+  }, { threshold: 0.25 });
   for (const video of galleryVideos) {
     video.muted = true;
     video.defaultMuted = true;
@@ -147,9 +126,9 @@ if (outcomes) {
   const metric = document.querySelector("#results-metric");
   const rows = document.querySelectorAll("#outcome-bars .measure");
   const metrics = {
-    all: ["All-goal success", "Both requests must succeed independently from the same starting scene and memory."],
-    sequence: ["Sequence success", "Both requests must succeed in one run without resetting the scene."],
-    goal: ["Single-goal success", "Each of the two requests is scored separately from the same post-observation scene."],
+    all: ["All-goal success", "Both requests succeed using the same observation history."],
+    sequence: ["Sequence success", "Both requests succeed in one continuous run."],
+    goal: ["Single-goal success", "Each request is evaluated separately."],
   };
   function updateOutcomes() {
     const values = data[task.value][metric.value];
@@ -157,7 +136,7 @@ if (outcomes) {
     const [uniform, reuse] = values.slice(-2);
     const delta = reuse[0] - uniform[0];
     const gain = (delta >= 0 ? "+" : "") + delta.toFixed(1) + " pp";
-    const scope = task.value === "all-tasks" ? "across four tasks" : "on " + task.value;
+    const scope = task.value === "all-tasks" ? "across four tasks" : "on " + task.selectedOptions[0].textContent;
 
     rows.forEach((row, i) => {
       const [rate, count, total] = values[i];
@@ -196,7 +175,7 @@ if (efficiencySource) {
           maximumFractionDigits: axis === "storage" ? 2 : 0,
         });
         point.style.bottom = rate + "%";
-        point.querySelector("small").textContent = value + " " + unit + " · " + rate.toFixed(1) + "%";
+        point.querySelector("small").textContent = value + " " + unit + ", " + rate.toFixed(1) + "%";
         point.querySelector("button").setAttribute("aria-label", point.dataset.model + ", " + value + " " + unit + ", " + rate.toFixed(1) + "% " + metricNames[metric]);
       }
     }

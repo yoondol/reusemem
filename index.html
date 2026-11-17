@@ -8,8 +8,9 @@
   <meta property="og:description" content="One record of what the robot saw can guide different requests after the scene changes.">
   <meta property="og:image" content="https://yoondol.github.io/reusemem/assets/photo-08.jpg">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
-  <link rel="stylesheet" href="style.css?v=cost-comparison">
-  <script src="page.js?v=cost-comparison" defer></script>
+  <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css?v=clear-final">
+  <script src="page.js?v=clear-final" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -17,7 +18,7 @@
     <div class="wrap top-inner">
       <a class="wordmark" href="#main">ReuseMem</a>
       <nav aria-label="Sections">
-        <a href="#demos">Demos</a><a href="#method">Method</a>
+        <a href="#simulation">Demos</a><a href="#method">Method</a>
         <a href="#results">Results</a><a href="#citation">Citation</a>
       </nav>
     </div>
@@ -26,13 +27,13 @@
   <main id="main">
     <section class="hero" aria-labelledby="title">
       <div class="hero-copy wrap">
-        <h1 id="title">ReuseMem<span class="title-subtitle">One Memory, Multiple Goals in Robot Manipulation</span></h1>
+        <h1 id="title">ReuseMem<span class="title-subtitle">One Memory, Multiple Goals<br>in Robot Manipulation</span></h1>
         <p class="authors"><span>Yoonseok Kang</span>, <span>Dayeon Jung</span>, <span>Seunghoon Jeon</span>, <span>Wonjib Kim</span>, and <span>Dongchul Park</span></p>
         <p class="affiliation">Chung-Ang University</p>
         <div class="links">
           <a class="primary" href="https://arxiv.org/abs/2611.21115">Paper <span aria-hidden="true">↗</span></a>
           <a class="secondary" href="https://arxiv.org/pdf/2611.21115">PDF <span aria-hidden="true">↗</span></a>
-          <a class="secondary" href="#demos">Demos <span aria-hidden="true">↓</span></a>
+          <a class="secondary" href="#simulation">Demos <span aria-hidden="true">↓</span></a>
         </div>
       </div>
     </section>
@@ -70,7 +71,7 @@
     <div class="section-rule abstract-band">
       <section class="wrap section abstract" id="abstract" aria-labelledby="abstract-title">
         <h2 id="abstract-title">Abstract</h2>
-        <p>The same experience can become useful for several robot requests, even when those requests are unknown during observation. ReuseMem records visual features before the goal is given, learns to retrieve past evidence that helps predict expert actions, and combines that evidence with the current scene. Across four simulation tasks and two physical scenarios, we evaluate whether a single recording supports multiple goals in independent trials and in sequences that carry forward changes from earlier actions. In simulation, ReuseMem improves joint completion of later goals by 24.5 percentage points over uniform memory with matched action adaptation.</p>
+        <p>Robots experience the world before they know how that experience will be used. ReuseMem learns to retrieve visual evidence from one memory for multiple later manipulation goals. It connects past observations to the current scene, so the same experience remains useful after earlier actions move objects. Across four simulation tasks and two physical scenarios, we evaluate independent requests and continuous sequences. ReuseMem improves joint goal completion by 24.5 percentage points over uniform memory.</p>
       </section>
     </div>
 
@@ -80,13 +81,13 @@
         <p>A single memory bank serves each new request. The policy combines the retrieved evidence with the current scene to decide what to do next.</p>
       </div>
       <dl class="contributions">
-        <div><dt>Record before the request</dt><dd>The Writer stores visual observations and their times before it knows which goals will follow.</dd></div>
-        <div><dt>Learn what helps the action</dt><dd>The Reader learns from how well retrieved evidence predicts expert actions across different current states.</dd></div>
-        <div><dt>Reuse storage and computation</dt><dd>Repeated appearances share storage. Fixed memory projections are reused while an action is sampled.</dd></div>
+        <div><dt>Record the experience</dt><dd>Store what the robot sees before future requests are known.</dd></div>
+        <div><dt>Retrieve for each goal</dt><dd>Learn which past observations help the requested action.</dd></div>
+        <div><dt>Act in the current scene</dt><dd>Combine the selected evidence with the current view.</dd></div>
       </dl>
       <figure class="paper-figure method-figure">
         <a href="assets/architecture.png"><img src="assets/architecture.png" alt="Architecture of the Writer, memory bank, Reader, current-scene fusion, and action expert." loading="lazy"></a>
-        <figcaption>The Writer keeps the order of observations even when they share stored features. After a request arrives, the Reader retrieves evidence from this record and the action policy uses it alongside the current view.</figcaption>
+        <figcaption>The Writer stores repeated appearances once while preserving their order. The Reader selects evidence for each request, and the policy uses it with the current scene.</figcaption>
       </figure>
     </section>
 
@@ -98,7 +99,7 @@
         </div>
         <div class="demo-grid real-grid">
           <article class="demo-card">
-            <figure class="poster" data-media="case" data-kind="Photo preview">
+            <figure class="poster" data-media="case">
               <img src="assets/photo-09.jpg" width="1280" height="960" alt="The closed cases sit in separate trays after they have been identified by their observed contents." loading="lazy">
             </figure>
             <div class="card-copy">
@@ -108,7 +109,7 @@
             </div>
           </article>
           <article class="demo-card">
-            <figure class="poster" data-media="toy" data-kind="Photo preview">
+            <figure class="poster" data-media="toy">
               <img src="assets/photo-04.jpg" width="1280" height="960" alt="The robot holds a brush over the spot the dragon toy occupied before it was moved." loading="lazy">
             </figure>
             <div class="card-copy">
@@ -118,30 +119,6 @@
             </div>
           </article>
         </div>
-        <details class="case-explorer">
-          <summary>Explore all three case requests</summary>
-          <div class="case-panel">
-            <div class="case-copy"><p id="goal-description" aria-live="polite">The current view no longer shows what is inside either case.</p></div>
-            <div class="case-view">
-                <div class="compare">
-                  <figure>
-                    <img src="assets/photo-06.jpg" width="1280" height="960" alt="Open cases before any request. A USB drive is visible on the left and an SD card on the right.">
-                    <figcaption>What the robot saw</figcaption>
-                  </figure>
-                  <figure>
-                    <img id="goal-frame" src="assets/photo-07.jpg" width="1280" height="960" alt="The two closed cases have moved to new positions below the trays.">
-                    <figcaption id="goal-label">Before the requests</figcaption>
-                  </figure>
-                </div>
-                <div class="requests" role="group" aria-label="Case task photo sequence">
-                  <button type="button" data-stage="setup" aria-pressed="true">Start</button>
-                  <button type="button" data-stage="usb" aria-pressed="false">Move USB</button>
-                  <button type="button" data-stage="sd" aria-pressed="false">Move SD</button>
-                  <button type="button" data-stage="return" aria-pressed="false">Return USB</button>
-                </div>
-              </div>
-          </div>
-        </details>
         <p class="note">In each scenario, all three independent requests succeeded on <strong>14 of 20 recordings</strong>. All three requests succeeded without a reset in <strong>13 of 20 sequences</strong>.</p>
       </section>
     </div>
@@ -150,167 +127,151 @@
       <section class="wrap section" id="simulation" aria-labelledby="sim-title">
         <div class="section-intro">
           <h2 id="sim-title">Simulation demonstrations</h2>
-          <p>One shared observation, two separate goal runs, and one continuous sequence per task. Scripted RoboMME demonstrations.</p>
+          <p>The same observation history guides two different requests. Watch each request separately and both in sequence.</p>
         </div>
         <div class="simulation-toolbar">
           <div class="task-select" role="group" aria-label="Simulation task">
-            <button data-task="video-place-button" type="button" aria-controls="video-place-button" aria-pressed="true">VideoPlaceButton</button>
-            <button data-task="video-place-order" type="button" aria-controls="video-place-order" aria-pressed="false">VideoPlaceOrder</button>
-            <button data-task="video-unmask-swap" type="button" aria-controls="video-unmask-swap" aria-pressed="false">VideoUnmaskSwap</button>
-            <button data-task="pick-highlight" type="button" aria-controls="pick-highlight" aria-pressed="false">PickHighlight</button>
+            <button data-task="video-place-button" type="button" aria-controls="video-place-button" aria-pressed="true">Button press</button>
+            <button data-task="video-place-order" type="button" aria-controls="video-place-order" aria-pressed="false">Placement order</button>
+            <button data-task="video-unmask-swap" type="button" aria-controls="video-unmask-swap" aria-pressed="false">Hidden cubes</button>
+            <button data-task="pick-highlight" type="button" aria-controls="pick-highlight" aria-pressed="false">Temporary highlights</button>
           </div>
           <button id="autoplay-control" class="playback-button" type="button" aria-pressed="true">Autoplay</button>
         </div>
         <div class="sim-tasks">
           <article class="sim-task" id="video-place-button">
-            <h3>VideoPlaceButton</h3>
+            <h3>Before and after the button press</h3>
             <div class="sim-clips">
             <figure class="sim-clip observation">
-              <video controls playsinline preload="none" poster="assets/simulation/video-place-button-observation.jpg" aria-label="VideoPlaceButton, Observation">
+              <figcaption><strong>Observation</strong><p>Watch where the cube is placed before and after the press.</p></figcaption>
+              <video controls muted loop playsinline preload="none" poster="assets/simulation/video-place-button-observation.jpg" aria-label="VideoPlaceButton, Observation">
                 <source src="assets/simulation/video-place-button-observation.mp4" type="video/mp4">
-                <a href="assets/simulation/video-place-button-observation.mp4">Download Observation video</a>
+                <track kind="captions" src="assets/captions/video-place-button-observation.vtt" srclang="en" label="English" default>
               </video>
-              <figcaption><strong>Observation</strong><span>Watch the cube placements and the button press.</span></figcaption>
             </figure>
             <figure class="sim-clip goal-1">
-              <video controls playsinline preload="none" poster="assets/simulation/video-place-button-goal-1.jpg" aria-label="VideoPlaceButton, Goal 1">
+              <figcaption><strong>Goal 1</strong><p>Return the cube to its <b>last location before the press.</b></p></figcaption>
+              <video controls muted loop playsinline preload="none" poster="assets/simulation/video-place-button-goal-1.jpg" aria-label="VideoPlaceButton, Goal 1">
                 <source src="assets/simulation/video-place-button-goal-1.mp4" type="video/mp4">
-                <a href="assets/simulation/video-place-button-goal-1.mp4">Download Goal 1 video</a>
               </video>
-              <figcaption><strong>Goal 1</strong><span>Place the cube at the last target before the press.</span></figcaption>
             </figure>
             <figure class="sim-clip goal-2">
-              <video controls playsinline preload="none" poster="assets/simulation/video-place-button-goal-2.jpg" aria-label="VideoPlaceButton, Goal 2">
+              <figcaption><strong>Goal 2</strong><p>Return the cube to its <b>first location after the press.</b></p></figcaption>
+              <video controls muted loop playsinline preload="none" poster="assets/simulation/video-place-button-goal-2.jpg" aria-label="VideoPlaceButton, Goal 2">
                 <source src="assets/simulation/video-place-button-goal-2.mp4" type="video/mp4">
-                <a href="assets/simulation/video-place-button-goal-2.mp4">Download Goal 2 video</a>
               </video>
-              <figcaption><strong>Goal 2</strong><span>Place the cube at the first target after the press.</span></figcaption>
             </figure>
-            <figure class="sim-clip sequence">
-              <video controls playsinline preload="none" poster="assets/simulation/video-place-button-sequence.jpg" aria-label="VideoPlaceButton, Sequence">
+            <figure class="sim-clip sequence" id="video-place-button-sequence">
+              <figcaption><strong>Sequence</strong><p>Two requests, without resetting the scene.</p></figcaption>
+              <video controls muted loop playsinline preload="none" data-second-goal-at="10.75" poster="assets/simulation/video-place-button-sequence.jpg" aria-label="VideoPlaceButton, Sequence">
                 <source src="assets/simulation/video-place-button-sequence.mp4" type="video/mp4">
-                <a href="assets/simulation/video-place-button-sequence.mp4">Download sequence video</a>
+                <track kind="captions" src="assets/captions/video-place-button-sequence.vtt" srclang="en" label="English" default>
               </video>
-              <figcaption><strong>Sequence</strong><span>Goal 1 → Goal 2 without a reset.</span></figcaption>
+              <div class="sequence-status" aria-label="Current request"><span data-step="1" class="is-current">Goal 1</span><span aria-hidden="true">→</span><span data-step="2">Goal 2</span></div>
             </figure>
             </div>
           </article>
           <article class="sim-task" id="video-place-order">
-            <h3>VideoPlaceOrder</h3>
+            <h3>The order of past locations</h3>
             <div class="sim-clips">
             <figure class="sim-clip observation">
-              <video controls playsinline preload="none" poster="assets/simulation/video-place-order-observation.jpg" aria-label="VideoPlaceOrder, Observation">
+              <figcaption><strong>Observation</strong><p>Watch the order in which the cube visits the locations.</p></figcaption>
+              <video controls muted loop playsinline preload="none" poster="assets/simulation/video-place-order-observation.jpg" aria-label="VideoPlaceOrder, Observation">
                 <source src="assets/simulation/video-place-order-observation.mp4" type="video/mp4">
-                <a href="assets/simulation/video-place-order-observation.mp4">Download Observation video</a>
+                <track kind="captions" src="assets/captions/video-place-order-observation.vtt" srclang="en" label="English" default>
               </video>
-              <figcaption><strong>Observation</strong><span>Watch the cube visit three targets in order.</span></figcaption>
             </figure>
             <figure class="sim-clip goal-1">
-              <video controls playsinline preload="none" poster="assets/simulation/video-place-order-goal-1.jpg" aria-label="VideoPlaceOrder, Goal 1">
+              <figcaption><strong>Goal 1</strong><p>Return the cube to the <b>first recorded location.</b></p></figcaption>
+              <video controls muted loop playsinline preload="none" poster="assets/simulation/video-place-order-goal-1.jpg" aria-label="VideoPlaceOrder, Goal 1">
                 <source src="assets/simulation/video-place-order-goal-1.mp4" type="video/mp4">
-                <a href="assets/simulation/video-place-order-goal-1.mp4">Download Goal 1 video</a>
               </video>
-              <figcaption><strong>Goal 1</strong><span>Place the cube at the first recorded target.</span></figcaption>
             </figure>
             <figure class="sim-clip goal-2">
-              <video controls playsinline preload="none" poster="assets/simulation/video-place-order-goal-2.jpg" aria-label="VideoPlaceOrder, Goal 2">
+              <figcaption><strong>Goal 2</strong><p>Return the cube to the <b>second recorded location.</b></p></figcaption>
+              <video controls muted loop playsinline preload="none" poster="assets/simulation/video-place-order-goal-2.jpg" aria-label="VideoPlaceOrder, Goal 2">
                 <source src="assets/simulation/video-place-order-goal-2.mp4" type="video/mp4">
-                <a href="assets/simulation/video-place-order-goal-2.mp4">Download Goal 2 video</a>
               </video>
-              <figcaption><strong>Goal 2</strong><span>Place the cube at the second recorded target.</span></figcaption>
             </figure>
-            <figure class="sim-clip sequence">
-              <video controls playsinline preload="none" poster="assets/simulation/video-place-order-sequence.jpg" aria-label="VideoPlaceOrder, Sequence">
+            <figure class="sim-clip sequence" id="video-place-order-sequence">
+              <figcaption><strong>Sequence</strong><p>Two requests, without resetting the scene.</p></figcaption>
+              <video controls muted loop playsinline preload="none" data-second-goal-at="11.8" poster="assets/simulation/video-place-order-sequence.jpg" aria-label="VideoPlaceOrder, Sequence">
                 <source src="assets/simulation/video-place-order-sequence.mp4" type="video/mp4">
-                <a href="assets/simulation/video-place-order-sequence.mp4">Download sequence video</a>
+                <track kind="captions" src="assets/captions/video-place-order-sequence.vtt" srclang="en" label="English" default>
               </video>
-              <figcaption><strong>Sequence</strong><span>Goal 1 → Goal 2 without a reset.</span></figcaption>
+              <div class="sequence-status" aria-label="Current request"><span data-step="1" class="is-current">Goal 1</span><span aria-hidden="true">→</span><span data-step="2">Goal 2</span></div>
             </figure>
             </div>
           </article>
           <article class="sim-task" id="video-unmask-swap">
-            <h3>VideoUnmaskSwap</h3>
+            <h3>Objects hidden under moving covers</h3>
             <div class="sim-clips">
             <figure class="sim-clip observation">
-              <video controls playsinline preload="none" poster="assets/simulation/video-unmask-swap-observation.jpg" aria-label="VideoUnmaskSwap, Observation">
+              <figcaption><strong>Observation</strong><p>Watch the cubes get covered and the covers swap places.</p></figcaption>
+              <video controls muted loop playsinline preload="none" poster="assets/simulation/video-unmask-swap-observation.jpg" aria-label="VideoUnmaskSwap, Observation">
                 <source src="assets/simulation/video-unmask-swap-observation.mp4" type="video/mp4">
-                <a href="assets/simulation/video-unmask-swap-observation.mp4">Download Observation video</a>
+                <track kind="captions" src="assets/captions/video-unmask-swap-observation.vtt" srclang="en" label="English" default>
               </video>
-              <figcaption><strong>Observation</strong><span>Watch the cubes get covered and the covers swap places.</span></figcaption>
             </figure>
             <figure class="sim-clip goal-1">
-              <video controls playsinline preload="none" poster="assets/simulation/video-unmask-swap-goal-1.jpg" aria-label="VideoUnmaskSwap, Goal 1">
+              <figcaption><strong>Goal 1</strong><p><b>Uncover the blue cube.</b></p></figcaption>
+              <video controls muted loop playsinline preload="none" poster="assets/simulation/video-unmask-swap-goal-1.jpg" aria-label="VideoUnmaskSwap, Goal 1">
                 <source src="assets/simulation/video-unmask-swap-goal-1.mp4" type="video/mp4">
-                <a href="assets/simulation/video-unmask-swap-goal-1.mp4">Download Goal 1 video</a>
               </video>
-              <figcaption><strong>Goal 1</strong><span>Uncover the blue cube and set its cover aside.</span></figcaption>
             </figure>
             <figure class="sim-clip goal-2">
-              <video controls playsinline preload="none" poster="assets/simulation/video-unmask-swap-goal-2.jpg" aria-label="VideoUnmaskSwap, Goal 2">
+              <figcaption><strong>Goal 2</strong><p><b>Uncover the red cube.</b></p></figcaption>
+              <video controls muted loop playsinline preload="none" poster="assets/simulation/video-unmask-swap-goal-2.jpg" aria-label="VideoUnmaskSwap, Goal 2">
                 <source src="assets/simulation/video-unmask-swap-goal-2.mp4" type="video/mp4">
-                <a href="assets/simulation/video-unmask-swap-goal-2.mp4">Download Goal 2 video</a>
               </video>
-              <figcaption><strong>Goal 2</strong><span>Uncover the red cube and set its cover aside.</span></figcaption>
             </figure>
-            <figure class="sim-clip sequence">
-              <video controls playsinline preload="none" poster="assets/simulation/video-unmask-swap-sequence.jpg" aria-label="VideoUnmaskSwap, Sequence">
+            <figure class="sim-clip sequence" id="video-unmask-swap-sequence">
+              <figcaption><strong>Sequence</strong><p>Two requests, without resetting the scene.</p></figcaption>
+              <video controls muted loop playsinline preload="none" data-second-goal-at="11.4" poster="assets/simulation/video-unmask-swap-sequence.jpg" aria-label="VideoUnmaskSwap, Sequence">
                 <source src="assets/simulation/video-unmask-swap-sequence.mp4" type="video/mp4">
-                <a href="assets/simulation/video-unmask-swap-sequence.mp4">Download sequence video</a>
+                <track kind="captions" src="assets/captions/video-unmask-swap-sequence.vtt" srclang="en" label="English" default>
               </video>
-              <figcaption><strong>Sequence</strong><span>Goal 1 → Goal 2 without a reset.</span></figcaption>
+              <div class="sequence-status" aria-label="Current request"><span data-step="1" class="is-current">Goal 1</span><span aria-hidden="true">→</span><span data-step="2">Goal 2</span></div>
             </figure>
             </div>
           </article>
           <article class="sim-task" id="pick-highlight">
-            <h3>PickHighlight</h3>
+            <h3>Brief highlights that disappear</h3>
             <div class="sim-clips">
             <figure class="sim-clip observation">
-              <video controls playsinline preload="none" poster="assets/simulation/pick-highlight-observation.jpg" aria-label="PickHighlight, Observation">
+              <figcaption><strong>Observation</strong><p>Watch which cube lights up first and which lights up second.</p></figcaption>
+              <video controls muted loop playsinline preload="none" poster="assets/simulation/pick-highlight-observation.jpg" aria-label="PickHighlight, Observation">
                 <source src="assets/simulation/pick-highlight-observation.mp4" type="video/mp4">
-                <a href="assets/simulation/pick-highlight-observation.mp4">Download Observation video</a>
+                <track kind="captions" src="assets/captions/pick-highlight-observation.vtt" srclang="en" label="English" default>
               </video>
-              <figcaption><strong>Observation</strong><span>Watch two cubes light up in turn, then see both cues disappear.</span></figcaption>
             </figure>
             <figure class="sim-clip goal-1">
-              <video controls playsinline preload="none" poster="assets/simulation/pick-highlight-goal-1.jpg" aria-label="PickHighlight, Goal 1">
+              <figcaption><strong>Goal 1</strong><p>Bring the <b>first highlighted cube</b> to the front.</p></figcaption>
+              <video controls muted loop playsinline preload="none" poster="assets/simulation/pick-highlight-goal-1.jpg" aria-label="PickHighlight, Goal 1">
                 <source src="assets/simulation/pick-highlight-goal-1.mp4" type="video/mp4">
-                <a href="assets/simulation/pick-highlight-goal-1.mp4">Download Goal 1 video</a>
               </video>
-              <figcaption><strong>Goal 1</strong><span>Move the first highlighted cube to Slot A.</span></figcaption>
             </figure>
             <figure class="sim-clip goal-2">
-              <video controls playsinline preload="none" poster="assets/simulation/pick-highlight-goal-2.jpg" aria-label="PickHighlight, Goal 2">
+              <figcaption><strong>Goal 2</strong><p>Bring the <b>second highlighted cube</b> to the front.</p></figcaption>
+              <video controls muted loop playsinline preload="none" poster="assets/simulation/pick-highlight-goal-2.jpg" aria-label="PickHighlight, Goal 2">
                 <source src="assets/simulation/pick-highlight-goal-2.mp4" type="video/mp4">
-                <a href="assets/simulation/pick-highlight-goal-2.mp4">Download Goal 2 video</a>
               </video>
-              <figcaption><strong>Goal 2</strong><span>Move the second highlighted cube to Slot B.</span></figcaption>
             </figure>
-            <figure class="sim-clip sequence">
-              <video controls playsinline preload="none" poster="assets/simulation/pick-highlight-sequence.jpg" aria-label="PickHighlight, Sequence">
+            <figure class="sim-clip sequence" id="pick-highlight-sequence">
+              <figcaption><strong>Sequence</strong><p>Two requests, without resetting the scene.</p></figcaption>
+              <video controls muted loop playsinline preload="none" data-second-goal-at="12.35" poster="assets/simulation/pick-highlight-sequence.jpg" aria-label="PickHighlight, Sequence">
                 <source src="assets/simulation/pick-highlight-sequence.mp4" type="video/mp4">
-                <a href="assets/simulation/pick-highlight-sequence.mp4">Download sequence video</a>
+                <track kind="captions" src="assets/captions/pick-highlight-sequence.vtt" srclang="en" label="English" default>
               </video>
-              <figcaption><strong>Sequence</strong><span>Goal 1 → Goal 2 without a reset.</span></figcaption>
+              <div class="sequence-status" aria-label="Current request"><span data-step="1" class="is-current">Goal 1</span><span aria-hidden="true">→</span><span data-step="2">Goal 2</span></div>
             </figure>
             </div>
           </article>
         </div>
+        <p class="media-note">Simulation clips are task demonstrations using a scripted controller.</p>
       </section>
     </div>
 
-    <section class="wrap section comparison-section" id="action-comparison" aria-labelledby="comparison-title">
-      <div class="section-intro">
-        <h2 id="comparison-title">The right action depends on what the robot remembers</h2>
-        <p>In VideoUnmaskSwap, the visible covers look alike after they move. The request is <strong>“Uncover the blue cube.”</strong></p>
-      </div>
-      <figure class="action-comparison">
-        <div class="pair-labels"><span>Correct target</span><span>Wrong target</span></div>
-        <video controls playsinline preload="none" poster="assets/simulation/unmask-choice-comparison.jpg" aria-label="Scripted comparison of uncovering the blue cube and uncovering the red cube">
-          <source src="assets/simulation/unmask-choice-comparison.mp4" type="video/mp4">
-        </video>
-        <figcaption>Scripted examples from the same starting scene. Both grasps succeed. The right-hand execution reveals the red cube.</figcaption>
-      </figure>
-    </section>
     <div class="section-rule tinted">
       <section class="wrap section" id="results" aria-labelledby="results-title">
         <div class="section-intro"><h2 id="results-title">Results across later goals</h2></div>
@@ -318,14 +279,14 @@
           <div class="outcome-intro">
             <p class="stat-value" id="gain-value">+24.5 pp</p>
             <p class="stat-description" id="gain-description">All-goal success over Uniform-Memory across four tasks</p>
-            <p class="stat-context" id="metric-context">All-goal success requires both requests to succeed independently from the same starting scene and memory.</p>
+            <p class="stat-context" id="metric-context">Both requests succeed using the same observation history.</p>
           </div>
           <figure class="outcome-chart" aria-labelledby="outcome-caption">
             <div class="chart-heading">
               <span class="chart-title" id="outcome-caption">Simulation success</span>
               <div class="chart-controls">
                 <label>Task<select id="results-task"><option value="all-tasks">All four tasks</option>
-                  <option>VideoPlaceButton</option><option>VideoPlaceOrder</option><option>VideoUnmaskSwap</option><option>PickHighlight</option>
+                  <option value="VideoPlaceButton">Button press</option><option value="VideoPlaceOrder">Placement order</option><option value="VideoUnmaskSwap">Hidden cubes</option><option value="PickHighlight">Temporary highlights</option>
                 </select></label>
                 <label>Metric<select id="results-metric"><option value="all">All-goal</option><option value="sequence">Sequence</option><option value="goal">Single goal</option></select></label>
               </div>
@@ -400,29 +361,28 @@
                 <div class="plot-field">
                   <div class="plot-point" data-model="No-Memory" style="left:11.00000000%;bottom:5.5%">
                     <button class="plot-mark" type="button" aria-label="No-Memory, 132 ms, 5.5% All-goal success"></button>
-                    <span class="plot-label"><b>No-Memory</b><small>132 ms · 5.5%</small></span>
+                    <span class="plot-label"><b>No-Memory</b><small>132 ms, 5.5%</small></span>
                   </div>
                   <div class="plot-point" data-model="MME-VLA" style="left:12.50000000%;bottom:14.5%">
                     <button class="plot-mark" type="button" aria-label="MME-VLA, 150 ms, 14.5% All-goal success"></button>
-                    <span class="plot-label"><b>MME-VLA</b><small>150 ms · 14.5%</small></span>
+                    <span class="plot-label"><b>MME-VLA</b><small>150 ms, 14.5%</small></span>
                   </div>
                   <div class="plot-point label-left" data-model="MemER" style="left:92.66666667%;bottom:20.0%">
                     <button class="plot-mark" type="button" aria-label="MemER, 1,112 ms, 20.0% All-goal success"></button>
-                    <span class="plot-label"><b>MemER</b><small>1,112 ms · 20.0%</small></span>
+                    <span class="plot-label"><b>MemER</b><small>1,112 ms, 20.0%</small></span>
                   </div>
                   <div class="plot-point" data-model="Uniform-Memory" style="left:13.58333333%;bottom:36.0%">
                     <button class="plot-mark" type="button" aria-label="Uniform-Memory, 163 ms, 36.0% All-goal success"></button>
-                    <span class="plot-label"><b>Uniform-Memory</b><small>163 ms · 36.0%</small></span>
+                    <span class="plot-label"><b>Uniform-Memory</b><small>163 ms, 36.0%</small></span>
                   </div>
                   <div class="plot-point ours" data-model="ReuseMem" style="left:14.58333333%;bottom:60.5%">
                     <button class="plot-mark" type="button" aria-label="ReuseMem, 175 ms, 60.5% All-goal success"></button>
-                    <span class="plot-label"><b>ReuseMem</b><small>175 ms · 60.5%</small></span>
+                    <span class="plot-label"><b>ReuseMem</b><small>175 ms, 60.5%</small></span>
                   </div>
                 </div>
                 <div class="plot-x" aria-hidden="true"><span>0</span><span>300</span><span>600</span><span>900</span><span>1,200</span></div>
               </div>
               <p class="plot-x-title">Time to the first command (ms)</p>
-              <p class="cost-note">New requests · RTX 5090 · BF16 · batch 1</p>
             </figure>
 <figure class="resource-chart efficiency-chart" data-cost-axis="storage">
               <figcaption><span>Success vs. memory storage</span></figcaption>
@@ -433,28 +393,26 @@
                 <div class="plot-field">
                   <div class="plot-point" data-model="No-Memory" style="left:0.00000000%;bottom:5.5%">
                     <button class="plot-mark" type="button" aria-label="No-Memory, 0.00 MiB, 5.5% All-goal success"></button>
-                    <span class="plot-label"><b>No-Memory</b><small>0.00 MiB · 5.5%</small></span>
+                    <span class="plot-label"><b>No-Memory</b><small>0.00 MiB, 5.5%</small></span>
                   </div>
                   <div class="plot-point" data-model="Uniform-Memory" style="left:54.98046875%;bottom:36.0%">
                     <button class="plot-mark" type="button" aria-label="Uniform-Memory, 43.98 MiB, 36.0% All-goal success"></button>
-                    <span class="plot-label"><b>Uniform-Memory</b><small>43.98 MiB · 36.0%</small></span>
+                    <span class="plot-label"><b>Uniform-Memory</b><small>43.98 MiB, 36.0%</small></span>
                   </div>
                   <div class="plot-point ours" data-model="ReuseMem" style="left:54.98046875%;bottom:60.5%">
                     <button class="plot-mark" type="button" aria-label="ReuseMem, 43.98 MiB, 60.5% All-goal success"></button>
-                    <span class="plot-label"><b>ReuseMem</b><small>43.98 MiB · 60.5%</small></span>
+                    <span class="plot-label"><b>ReuseMem</b><small>43.98 MiB, 60.5%</small></span>
                   </div>
                   <div class="plot-point variant label-left label-below" data-model="Without feature sharing" style="left:82.96875000%;bottom:61.0%">
                     <button class="plot-mark" type="button" aria-label="Without feature sharing, 66.38 MiB, 61.0% All-goal success"></button>
-                    <span class="plot-label"><b>Without sharing</b><small>66.38 MiB · 61.0%</small></span>
+                    <span class="plot-label"><b>Without sharing</b><small>66.38 MiB, 61.0%</small></span>
                   </div>
                 </div>
                 <div class="plot-x" aria-hidden="true"><span>0</span><span>20</span><span>40</span><span>60</span><span>80</span></div>
               </div>
               <p class="plot-x-title">Retained memory (MiB)</p>
-              <p class="cost-note">Same 2,048 observations · shared or separate appearance features</p>
             </figure>
           </div>
-          <p class="efficiency-scope">Response measures the time from a request to its first dispatched command. Storage counts the retained memory bank. Move over a point or focus it to inspect the values.</p>
           <span id="cost-update" class="sr-only" role="status"></span>
         </div>
       </section>
@@ -465,7 +423,7 @@
     <section class="wrap section evidence-section" id="evidence" aria-labelledby="evidence-title">
       <div class="section-intro">
         <h2 id="evidence-title">Does the robot use the right memories?</h2>
-        <p>In simulation, we held the scene, request, and correct outcome fixed and changed the history available to the policy. Success fell from 74.5% to 27.5% when relevant observations were removed, compared with 74.0% when unrelated observations were removed.</p>
+        <p>Removing the relevant history reduces success. Removing unrelated observations has little effect.</p>
       </div>
       <figure class="evidence-chart" aria-labelledby="evidence-caption">
         <figcaption id="evidence-caption">Goal success when the history changes</figcaption>
