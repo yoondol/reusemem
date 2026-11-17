@@ -194,27 +194,22 @@ pre { white-space: pre-wrap; overflow-wrap: anywhere; margin: 0.85rem 0 0; paddi
 }
 
 .sim-tasks { border-top: 1px solid var(--line); }
-.sim-task { padding-block: 1.35rem 1.55rem; border-bottom: 1px solid var(--line); }
-.sim-task h3 { color: var(--ink); margin-bottom: 0.86rem; font-size: 1.23rem; letter-spacing: -0.023em; }
-.sim-clips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.88rem; }
+.sim-task { padding-block: 1.4rem 1.65rem; border-bottom: 1px solid var(--line); }
+.sim-task:last-child { padding-bottom: 0; border-bottom: 0; }
+.sim-task h3 { margin-bottom: 0.82rem; color: var(--ink); font-size: 1.22rem; letter-spacing: -0.022em; }
+.sim-clips { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(0.64rem, 1.25vw, 0.95rem); }
 .sim-clip { min-width: 0; }
-.sim-clip video { width: 100%; aspect-ratio: 16/9; background: #142239; border-radius: 7px; }
-.sim-clip figcaption { display: grid; gap: 0.19rem; margin-top: 0.64rem; line-height: 1.37; }
-.sim-clip figcaption strong { color: var(--ink); font-size: 0.86rem; }
-.sim-clip figcaption span { color: var(--muted); font-size: 0.88rem; }
-.sim-clip.goal-1 figcaption strong { color: #1e695a; }
-.sim-clip.goal-2 figcaption strong { color: #5e4791; }
-@media (max-width: 640px) {
-  .sim-clips { grid-template-columns: 1fr; gap: 1.05rem; }
-  .sim-task { padding-block: 1.1rem 1.3rem; }
+.sim-clip video { width: 100%; aspect-ratio: 16/9; background: #142239; border-radius: 6px; }
+.sim-clip figcaption { display: grid; gap: 0.32rem; margin-top: 0.58rem; line-height: 1.37; }
+.sim-clip figcaption strong { width: fit-content; padding: 0.14rem 0.42rem; border-radius: 3px; background: #e7edf5; color: #31455e; font-size: 0.78rem; }
+.sim-clip figcaption span { color: var(--muted); font-size: 0.86rem; }
+.sim-clip.goal-1 figcaption strong { background: #e3f0eb; color: #235d4e; }
+.sim-clip.goal-2 figcaption strong { background: #eee8f7; color: #58428a; }
+.sim-clip.sequence figcaption strong { background: #e1ebfa; color: #244a83; }
+@media (max-width: 850px) {
+  .sim-clips { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 1.12rem; }
 }
-
-.sim-sequence { margin-top: 0.85rem; border-block: 0; }
-.sim-sequence summary { display: list-item; width: fit-content; padding: 0.32rem 0.46rem; border-radius: 4px; font-size: 0.89rem; }
-.sim-sequence summary span { margin-left: 0.35rem; color: var(--muted); font-size: 0.81rem; font-weight: 580; }
-.sequence-body { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 0.95rem; max-width: 900px; margin-top: 0.55rem; align-items: start; }
-.sequence-body video { width: 100%; aspect-ratio: 16/9; border-radius: 7px; background: #142239; }
-.sequence-body p { margin-top: 0.25rem; color: var(--muted); font-size: 0.88rem; }
-@media (max-width: 640px) {
-  .sequence-body { grid-template-columns: 1fr; gap: 0.42rem; }
+@media (max-width: 460px) {
+  .sim-clips { grid-template-columns: 1fr; }
+  .sim-task { padding-block: 1.12rem 1.35rem; }
 }

@@ -7,9 +7,9 @@ root of the main branch. Open `index.html` directly or run
 
 ## Simulation gallery
 
-Each of the four task rows in `index.html` uses three 1080p video and JPEG
+Each of the four task rows in `index.html` uses four 1080p video and JPEG
 poster pairs under `assets/simulation/`. The suffixes are `-observation`,
-`-goal-1`, and `-goal-2`. The goal clips execute separately from the same
+`-goal-1`, `-goal-2`, and `-sequence`. The goal clips execute separately from the same
 post-observation scene. Goal instructions appear in the web captions.
 
 | Task | Filename prefix |
@@ -19,8 +19,7 @@ post-observation scene. Goal instructions appear in the web captions.
 | VideoUnmaskSwap | `video-unmask-swap` |
 | PickHighlight | `pick-highlight` |
 
-Each row also has a collapsible sequence player with the `-sequence` suffix.
-It shows both goals in one execution with no reset between them.
+The fourth player shows both goals in one execution with no reset between them.
 
 ## Adding the real-world demonstrations
 
