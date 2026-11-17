@@ -49,33 +49,33 @@ if (taskButtons.length) {
   window.addEventListener("hashchange", taskFromHash);
 }
 
-// Keep the observation cues and current sequence instruction visible.
-for (const video of document.querySelectorAll("#simulation video")) {
-  for (const track of video.textTracks) track.mode = "showing";
-  video.addEventListener("loadedmetadata", () => {
-    for (const track of video.textTracks) track.mode = "showing";
-  }, { once: true });
-}
-for (const video of document.querySelectorAll("video[data-second-goal-at]")) {
-  const boundary = Number(video.dataset.secondGoalAt);
-  const steps = video.closest("figure").querySelectorAll("[data-step]");
-  function updateSequence() {
-    const current = video.currentTime < boundary ? "1" : "2";
-    for (const step of steps) {
-      const active = step.dataset.step === current;
-      step.classList.toggle("is-current", active);
-      if (active) step.setAttribute("aria-current", "step");
-      else step.removeAttribute("aria-current");
+// Keep timed context below the image, without covering the action.
+const cueSource = document.querySelector("#video-cue-data");
+if (cueSource) {
+  const cueData = JSON.parse(cueSource.textContent);
+  for (const video of document.querySelectorAll("video[data-caption-id]")) {
+    const cues = cueData[video.dataset.captionId];
+    const panel = document.querySelector(`[data-caption="${video.dataset.captionId}"]`);
+    for (const track of video.textTracks) track.mode = "hidden";
+    video.addEventListener("loadedmetadata", () => {
+      for (const track of video.textTracks) track.mode = "hidden";
+    }, { once: true });
+    function updateContext() {
+      const cue = cues.find(c => video.currentTime >= c.start && video.currentTime < c.end) || cues[cues.length - 1];
+      panel.querySelector(".caption-phase").textContent = cue.phase;
+      panel.querySelector(".caption-text").textContent = cue.text;
+      const progress = Math.max(0, Math.min(1, (video.currentTime - cue.start) / (cue.end - cue.start)));
+      panel.querySelector(".caption-progress span").style.width = (progress * 100) + "%";
     }
+    video.addEventListener("timeupdate", updateContext);
+    video.addEventListener("seeked", updateContext);
+    updateContext();
   }
-  video.addEventListener("timeupdate", updateSequence);
-  video.addEventListener("seeked", updateSequence);
-  updateSequence();
 }
 
 const autoplayControl = document.querySelector("#autoplay-control");
 const motionPreference = matchMedia("(prefers-reduced-motion: reduce)");
-const galleryVideos = document.querySelectorAll("#demos video, #simulation video");
+const galleryVideos = document.querySelectorAll("#demos video, #simulation video, #comparison video");
 
 if (autoplayControl && "IntersectionObserver" in window) {
   let enabled = !motionPreference.matches;
@@ -211,4 +211,70 @@ if (navigator.clipboard) {
       copy.textContent = "Select BibTeX to copy";
     }
   });
+}
+
+const architecture = document.querySelector("#architecture-player");
+if (architecture) {
+  const stages = [
+    ["Record before the goal is known", "The Writer encodes each observation and builds a retrieval key from the experience so far. No future request is needed."],
+    ["Share appearances, preserve the timeline", "Similar observations can reference the same stored appearance. Each frame keeps its own temporal entry, so order and timing remain available."],
+    ["Read the same bank for a different goal", "The Reader selects complementary evidence for the request. Reference, support and coverage observations form 24 historical slots."],
+    ["Turn past evidence into a current action", "Selected history and recent views are fused with current context. The action expert uses 512 memory tokens, with memory keys and values prepared once per call."]
+  ];
+  const play = document.querySelector("#architecture-play");
+  let stage = 0;
+  let elapsed = 0;
+  let visible = false;
+  let playing = !motionPreference.matches;
+  function showStage(next) {
+    stage = next;
+    elapsed = 0;
+    architecture.dataset.stage = String(stage);
+    document.querySelector("#architecture-stage-title").textContent = stages[stage][0];
+    document.querySelector("#architecture-stage-copy").textContent = stages[stage][1];
+    for (const button of architecture.querySelectorAll("[data-architecture-stage]")) {
+      button.setAttribute("aria-pressed", String(Number(button.dataset.architectureStage) === stage));
+    }
+    architecture.style.setProperty("--stage-progress", "0%");
+  }
+  function updatePlayLabel() {
+    play.setAttribute("aria-pressed", String(playing));
+    play.textContent = playing ? "Pause walkthrough" : "Play walkthrough";
+  }
+  for (const button of architecture.querySelectorAll("[data-architecture-stage]")) {
+    button.addEventListener("click", () => {
+      playing = false;
+      showStage(Number(button.dataset.architectureStage));
+      updatePlayLabel();
+    });
+  }
+  play.addEventListener("click", () => { playing = !playing; updatePlayLabel(); });
+  motionPreference.addEventListener("change", event => {
+    playing = !event.matches;
+    updatePlayLabel();
+  });
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(entries => { visible = entries[0].isIntersecting; }, { threshold: 0.18 }).observe(architecture);
+  }
+  setInterval(() => {
+    if (!visible || !playing || document.hidden) return;
+    elapsed += 100;
+    if (elapsed >= 7000) showStage((stage + 1) % stages.length);
+    architecture.style.setProperty("--stage-progress", (elapsed / 70) + "%");
+  }, 100);
+  showStage(0);
+  updatePlayLabel();
+}
+
+const comparison = document.querySelector("#comparison-video");
+if (comparison) {
+  const lines = document.querySelectorAll(".comparison-outcomes p");
+  function updateComparison() {
+    const revealed = comparison.currentTime >= 5.3;
+    lines[0].textContent = revealed ? "The blue cube is revealed." : "Lift the cover hiding the blue cube.";
+    lines[1].textContent = revealed ? "The red cube is revealed." : "Lift the cover hiding the red cube.";
+  }
+  comparison.addEventListener("timeupdate", updateComparison);
+  comparison.addEventListener("seeked", updateComparison);
+  updateComparison();
 }

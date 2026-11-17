@@ -25,7 +25,7 @@ separate continuous sequence. All requested videos autoplay muted in view and
 pause off-screen. Use the Autoplay button to disable it. The initial setting
 respects reduced-motion preferences.
 
-Observation and sequence players include English WebVTT captions in `assets/captions/`.
+Observation and sequence players show synchronized descriptions in fixed panels below the video. English WebVTT captions in `assets/captions/` remain available through the native accessibility controls.
 Sequence captions change at each verified Goal 2 boundary. The final observation
 frames of VideoUnmaskSwap and PickHighlight are held for two seconds so the
 hidden-cube and disappearing-cue states can be read. Goal instructions appear
@@ -46,3 +46,21 @@ transitions identifiable.
   SD to right tray, and USB returned to its original position.
 - `real-toy.mp4` — Show the toys’ original positions, then relocation,
   brushing of the vacated position and brush parking, and the toy’s return.
+
+## Interactive method figure
+
+The original paper architecture is retained without redrawing. Four selectable
+regions and an optional automatic walkthrough connect the Writer, memory bank,
+Reader and action generation to concise explanations. The walkthrough pauses
+outside the viewport and respects reduced-motion settings. Selecting a stage
+pauses automatic advancement.
+
+## Comparison layout preview
+
+`assets/simulation/unmask-choice-preview.mp4` is a synchronized, scripted
+illustration of correct-object and wrong-object choices for the same blue-cube
+request. The model headings preview a comparison layout; these are **not**
+ReuseMem or Uniform-Memory evaluation rollouts. A visible disclosure immediately
+above the player states this distinction. The MP4 itself contains no explanatory
+text or production labels. Quantitative results elsewhere are independent of
+this illustrative video.

@@ -9,8 +9,8 @@
   <meta property="og:image" content="https://yoondol.github.io/reusemem/assets/photo-08.jpg">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
   <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=clear-final">
-  <script src="page.js?v=clear-final" defer></script>
+  <link rel="stylesheet" href="style.css?v=interactive-flow">
+  <script src="page.js?v=interactive-flow" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -80,15 +80,33 @@
         <h2 id="method-title">How ReuseMem works</h2>
         <p>A single memory bank serves each new request. The policy combines the retrieved evidence with the current scene to decide what to do next.</p>
       </div>
-      <dl class="contributions">
-        <div><dt>Record the experience</dt><dd>Store what the robot sees before future requests are known.</dd></div>
-        <div><dt>Retrieve for each goal</dt><dd>Learn which past observations help the requested action.</dd></div>
-        <div><dt>Act in the current scene</dt><dd>Combine the selected evidence with the current view.</dd></div>
-      </dl>
-      <figure class="paper-figure method-figure">
-        <a href="assets/architecture.png"><img src="assets/architecture.png" alt="Architecture of the Writer, memory bank, Reader, current-scene fusion, and action expert." loading="lazy"></a>
-        <figcaption>The Writer stores repeated appearances once while preserving their order. The Reader selects evidence for each request, and the policy uses it with the current scene.</figcaption>
-      </figure>
+      <div class="architecture-player" id="architecture-player" data-stage="0">
+        <div class="architecture-toolbar">
+          <p>Explore the memory-to-action pipeline</p>
+          <div class="architecture-actions"><a href="assets/architecture.png" target="_blank" rel="noopener">Full diagram ↗</a><button type="button" id="architecture-play" aria-pressed="true">Pause walkthrough</button></div>
+        </div>
+        <div class="architecture-body">
+        <div class="architecture-canvas">
+          <img src="assets/architecture.png" width="1480" height="960" alt="ReuseMem architecture. A Writer records features before goals are known. The memory bank shares appearances while retaining separate temporal entries. The Reader retrieves history, and current-scene fusion connects it to the action expert." loading="lazy">
+          <button class="architecture-region region-writer" data-architecture-stage="0" aria-label="Explore the Writer" type="button"></button>
+          <button class="architecture-region region-bank" data-architecture-stage="1" aria-label="Explore the memory bank" type="button"></button>
+          <button class="architecture-region region-reader" data-architecture-stage="2" aria-label="Explore the Reader" type="button"></button>
+          <button class="architecture-region region-action" data-architecture-stage="3" aria-label="Explore action generation" type="button"></button>
+        </div>
+        <div class="architecture-sidebar">
+        <div class="architecture-steps" role="group" aria-label="Architecture stages">
+          <button type="button" data-architecture-stage="0" aria-pressed="true"><span>01</span> Record<i aria-hidden="true"></i></button>
+          <button type="button" data-architecture-stage="1" aria-pressed="false"><span>02</span> Store<i aria-hidden="true"></i></button>
+          <button type="button" data-architecture-stage="2" aria-pressed="false"><span>03</span> Retrieve<i aria-hidden="true"></i></button>
+          <button type="button" data-architecture-stage="3" aria-pressed="false"><span>04</span> Act<i aria-hidden="true"></i></button>
+        </div>
+        <div class="architecture-explanation">
+          <h3 id="architecture-stage-title">Record before the goal is known</h3>
+          <p id="architecture-stage-copy">The Writer encodes each observation and builds a retrieval key from the experience so far. No future request is needed.</p>
+        </div>
+        </div>
+        </div>
+      </div>
     </section>
 
     <div class="section-rule" id="demos">
@@ -144,10 +162,11 @@
             <div class="sim-clips">
             <figure class="sim-clip observation">
               <figcaption><strong>Observation</strong><p>Watch where the cube is placed before and after the press.</p></figcaption>
-              <video controls muted loop playsinline preload="none" poster="assets/simulation/video-place-button-observation.jpg" aria-label="VideoPlaceButton, Observation">
+              <video data-caption-id="video-place-button-observation" controls muted loop playsinline preload="none" poster="assets/simulation/video-place-button-observation.jpg" aria-label="VideoPlaceButton, Observation">
                 <source src="assets/simulation/video-place-button-observation.mp4" type="video/mp4">
-                <track kind="captions" src="assets/captions/video-place-button-observation.vtt" srclang="en" label="English" default>
+                <track kind="captions" src="assets/captions/video-place-button-observation.vtt" srclang="en" label="English">
               </video>
+              <div class="video-caption" data-caption="video-place-button-observation"><span class="caption-phase">Observation</span><p class="caption-text">Watch the cube placements.</p><div class="caption-progress" aria-hidden="true"><span></span></div></div>
             </figure>
             <figure class="sim-clip goal-1">
               <figcaption><strong>Goal 1</strong><p>Return the cube to its <b>last location before the press.</b></p></figcaption>
@@ -163,11 +182,11 @@
             </figure>
             <figure class="sim-clip sequence" id="video-place-button-sequence">
               <figcaption><strong>Sequence</strong><p>Two requests, without resetting the scene.</p></figcaption>
-              <video controls muted loop playsinline preload="none" data-second-goal-at="10.75" poster="assets/simulation/video-place-button-sequence.jpg" aria-label="VideoPlaceButton, Sequence">
+              <video data-caption-id="video-place-button-sequence" controls muted loop playsinline preload="none" data-second-goal-at="10.75" poster="assets/simulation/video-place-button-sequence.jpg" aria-label="VideoPlaceButton, Sequence">
                 <source src="assets/simulation/video-place-button-sequence.mp4" type="video/mp4">
-                <track kind="captions" src="assets/captions/video-place-button-sequence.vtt" srclang="en" label="English" default>
+                <track kind="captions" src="assets/captions/video-place-button-sequence.vtt" srclang="en" label="English">
               </video>
-              <div class="sequence-status" aria-label="Current request"><span data-step="1" class="is-current">Goal 1</span><span aria-hidden="true">→</span><span data-step="2">Goal 2</span></div>
+              <div class="video-caption" data-caption="video-place-button-sequence"><span class="caption-phase">Goal 1</span><p class="caption-text">Return the cube to its last location before the press.</p><div class="caption-progress" aria-hidden="true"><span></span></div></div>
             </figure>
             </div>
           </article>
@@ -176,10 +195,11 @@
             <div class="sim-clips">
             <figure class="sim-clip observation">
               <figcaption><strong>Observation</strong><p>Watch the order in which the cube visits the locations.</p></figcaption>
-              <video controls muted loop playsinline preload="none" poster="assets/simulation/video-place-order-observation.jpg" aria-label="VideoPlaceOrder, Observation">
+              <video data-caption-id="video-place-order-observation" controls muted loop playsinline preload="none" poster="assets/simulation/video-place-order-observation.jpg" aria-label="VideoPlaceOrder, Observation">
                 <source src="assets/simulation/video-place-order-observation.mp4" type="video/mp4">
-                <track kind="captions" src="assets/captions/video-place-order-observation.vtt" srclang="en" label="English" default>
+                <track kind="captions" src="assets/captions/video-place-order-observation.vtt" srclang="en" label="English">
               </video>
+              <div class="video-caption" data-caption="video-place-order-observation"><span class="caption-phase">Observation</span><p class="caption-text">Watch the order of the placements.</p><div class="caption-progress" aria-hidden="true"><span></span></div></div>
             </figure>
             <figure class="sim-clip goal-1">
               <figcaption><strong>Goal 1</strong><p>Return the cube to the <b>first recorded location.</b></p></figcaption>
@@ -195,11 +215,11 @@
             </figure>
             <figure class="sim-clip sequence" id="video-place-order-sequence">
               <figcaption><strong>Sequence</strong><p>Two requests, without resetting the scene.</p></figcaption>
-              <video controls muted loop playsinline preload="none" data-second-goal-at="11.8" poster="assets/simulation/video-place-order-sequence.jpg" aria-label="VideoPlaceOrder, Sequence">
+              <video data-caption-id="video-place-order-sequence" controls muted loop playsinline preload="none" data-second-goal-at="11.8" poster="assets/simulation/video-place-order-sequence.jpg" aria-label="VideoPlaceOrder, Sequence">
                 <source src="assets/simulation/video-place-order-sequence.mp4" type="video/mp4">
-                <track kind="captions" src="assets/captions/video-place-order-sequence.vtt" srclang="en" label="English" default>
+                <track kind="captions" src="assets/captions/video-place-order-sequence.vtt" srclang="en" label="English">
               </video>
-              <div class="sequence-status" aria-label="Current request"><span data-step="1" class="is-current">Goal 1</span><span aria-hidden="true">→</span><span data-step="2">Goal 2</span></div>
+              <div class="video-caption" data-caption="video-place-order-sequence"><span class="caption-phase">Goal 1</span><p class="caption-text">Return the cube to the first recorded location.</p><div class="caption-progress" aria-hidden="true"><span></span></div></div>
             </figure>
             </div>
           </article>
@@ -208,10 +228,11 @@
             <div class="sim-clips">
             <figure class="sim-clip observation">
               <figcaption><strong>Observation</strong><p>Watch the cubes get covered and the covers swap places.</p></figcaption>
-              <video controls muted loop playsinline preload="none" poster="assets/simulation/video-unmask-swap-observation.jpg" aria-label="VideoUnmaskSwap, Observation">
+              <video data-caption-id="video-unmask-swap-observation" controls muted loop playsinline preload="none" poster="assets/simulation/video-unmask-swap-observation.jpg" aria-label="VideoUnmaskSwap, Observation">
                 <source src="assets/simulation/video-unmask-swap-observation.mp4" type="video/mp4">
-                <track kind="captions" src="assets/captions/video-unmask-swap-observation.vtt" srclang="en" label="English" default>
+                <track kind="captions" src="assets/captions/video-unmask-swap-observation.vtt" srclang="en" label="English">
               </video>
+              <div class="video-caption" data-caption="video-unmask-swap-observation"><span class="caption-phase">Observation</span><p class="caption-text">See both cubes.</p><div class="caption-progress" aria-hidden="true"><span></span></div></div>
             </figure>
             <figure class="sim-clip goal-1">
               <figcaption><strong>Goal 1</strong><p><b>Uncover the blue cube.</b></p></figcaption>
@@ -227,11 +248,11 @@
             </figure>
             <figure class="sim-clip sequence" id="video-unmask-swap-sequence">
               <figcaption><strong>Sequence</strong><p>Two requests, without resetting the scene.</p></figcaption>
-              <video controls muted loop playsinline preload="none" data-second-goal-at="11.4" poster="assets/simulation/video-unmask-swap-sequence.jpg" aria-label="VideoUnmaskSwap, Sequence">
+              <video data-caption-id="video-unmask-swap-sequence" controls muted loop playsinline preload="none" data-second-goal-at="11.4" poster="assets/simulation/video-unmask-swap-sequence.jpg" aria-label="VideoUnmaskSwap, Sequence">
                 <source src="assets/simulation/video-unmask-swap-sequence.mp4" type="video/mp4">
-                <track kind="captions" src="assets/captions/video-unmask-swap-sequence.vtt" srclang="en" label="English" default>
+                <track kind="captions" src="assets/captions/video-unmask-swap-sequence.vtt" srclang="en" label="English">
               </video>
-              <div class="sequence-status" aria-label="Current request"><span data-step="1" class="is-current">Goal 1</span><span aria-hidden="true">→</span><span data-step="2">Goal 2</span></div>
+              <div class="video-caption" data-caption="video-unmask-swap-sequence"><span class="caption-phase">Goal 1</span><p class="caption-text">Uncover the blue cube.</p><div class="caption-progress" aria-hidden="true"><span></span></div></div>
             </figure>
             </div>
           </article>
@@ -240,10 +261,11 @@
             <div class="sim-clips">
             <figure class="sim-clip observation">
               <figcaption><strong>Observation</strong><p>Watch which cube lights up first and which lights up second.</p></figcaption>
-              <video controls muted loop playsinline preload="none" poster="assets/simulation/pick-highlight-observation.jpg" aria-label="PickHighlight, Observation">
+              <video data-caption-id="pick-highlight-observation" controls muted loop playsinline preload="none" poster="assets/simulation/pick-highlight-observation.jpg" aria-label="PickHighlight, Observation">
                 <source src="assets/simulation/pick-highlight-observation.mp4" type="video/mp4">
-                <track kind="captions" src="assets/captions/pick-highlight-observation.vtt" srclang="en" label="English" default>
+                <track kind="captions" src="assets/captions/pick-highlight-observation.vtt" srclang="en" label="English">
               </video>
+              <div class="video-caption" data-caption="pick-highlight-observation"><span class="caption-phase">Observation</span><p class="caption-text">First highlighted cube.</p><div class="caption-progress" aria-hidden="true"><span></span></div></div>
             </figure>
             <figure class="sim-clip goal-1">
               <figcaption><strong>Goal 1</strong><p>Bring the <b>first highlighted cube</b> to the front.</p></figcaption>
@@ -259,16 +281,34 @@
             </figure>
             <figure class="sim-clip sequence" id="pick-highlight-sequence">
               <figcaption><strong>Sequence</strong><p>Two requests, without resetting the scene.</p></figcaption>
-              <video controls muted loop playsinline preload="none" data-second-goal-at="12.35" poster="assets/simulation/pick-highlight-sequence.jpg" aria-label="PickHighlight, Sequence">
+              <video data-caption-id="pick-highlight-sequence" controls muted loop playsinline preload="none" data-second-goal-at="12.35" poster="assets/simulation/pick-highlight-sequence.jpg" aria-label="PickHighlight, Sequence">
                 <source src="assets/simulation/pick-highlight-sequence.mp4" type="video/mp4">
-                <track kind="captions" src="assets/captions/pick-highlight-sequence.vtt" srclang="en" label="English" default>
+                <track kind="captions" src="assets/captions/pick-highlight-sequence.vtt" srclang="en" label="English">
               </video>
-              <div class="sequence-status" aria-label="Current request"><span data-step="1" class="is-current">Goal 1</span><span aria-hidden="true">→</span><span data-step="2">Goal 2</span></div>
+              <div class="video-caption" data-caption="pick-highlight-sequence"><span class="caption-phase">Goal 1</span><p class="caption-text">Bring the first highlighted cube to the front.</p><div class="caption-progress" aria-hidden="true"><span></span></div></div>
             </figure>
             </div>
           </article>
         </div>
         <p class="media-note">Simulation clips are task demonstrations using a scripted controller.</p>
+      </section>
+    </div>
+
+    <div class="section-rule">
+      <section class="wrap section" id="comparison" aria-labelledby="comparison-title">
+        <div class="section-intro">
+          <h2 id="comparison-title">When the remembered object matters</h2>
+          <p>The same request, two different choices. The robot must follow the hidden object through the cover swap.</p>
+        </div>
+        <div class="comparison-request"><span>Request</span><strong>“Uncover the blue cube.”</strong></div>
+        <p class="comparison-disclosure">Comparison layout preview. Both clips are scripted illustrations, not model evaluation rollouts.</p>
+        <div class="comparison-panel">
+          <div class="comparison-labels"><div><strong>ReuseMem</strong><span>Correct-choice illustration</span></div><div><strong>Uniform-Memory</strong><span>Wrong-choice illustration</span></div></div>
+          <video id="comparison-video" controls muted loop playsinline preload="none" poster="assets/simulation/unmask-choice-preview.jpg" aria-label="Scripted comparison preview: uncovering the blue cube versus uncovering the wrong red cube">
+            <source src="assets/simulation/unmask-choice-preview.mp4" type="video/mp4">
+          </video>
+          <div class="comparison-outcomes"><div><span class="caption-phase">Correct object</span><p>The blue cube is revealed.</p></div><div><span class="caption-phase">Wrong object</span><p>The red cube is revealed.</p></div></div>
+        </div>
       </section>
     </div>
 
@@ -455,5 +495,6 @@
       <p id="copy-status" class="sr-only" role="status"></p>
     </section>
   </main>
+<script id="video-cue-data" type="application/json">{"video-place-button-observation":[{"start":0.0,"end":3.389,"phase":"Observation","text":"Watch the cube placements."},{"start":3.389,"end":5.667,"phase":"Observation","text":"Last placement before the press."},{"start":5.667,"end":8.222,"phase":"Observation","text":"The button is pressed."},{"start":8.222,"end":13.556,"phase":"Observation","text":"First placement after the press."},{"start":13.556,"end":22.5,"phase":"Observation","text":"Remember the two locations."}],"video-place-button-sequence":[{"start":0.0,"end":10.75,"phase":"Goal 1","text":"Return the cube to its last location before the press."},{"start":10.75,"end":19.85,"phase":"Goal 2","text":"Return the cube to its first location after the press."}],"video-place-order-observation":[{"start":0.0,"end":3.389,"phase":"Observation","text":"Watch the order of the placements."},{"start":3.389,"end":8.167,"phase":"Observation","text":"First recorded location."},{"start":8.167,"end":13.278,"phase":"Observation","text":"Second recorded location."},{"start":13.278,"end":22.722,"phase":"Observation","text":"Remember which location came first."}],"video-place-order-sequence":[{"start":0.0,"end":11.8,"phase":"Goal 1","text":"Return the cube to the first recorded location."},{"start":11.8,"end":21.0,"phase":"Goal 2","text":"Return the cube to the second recorded location."}],"video-unmask-swap-observation":[{"start":0.0,"end":1.4,"phase":"Observation","text":"See both cubes."},{"start":1.4,"end":3.2,"phase":"Observation","text":"The cubes are covered."},{"start":3.2,"end":5.7,"phase":"Observation","text":"The covers swap positions."},{"start":5.7,"end":8.1,"phase":"Observation","text":"Remember where each cube is hidden."}],"video-unmask-swap-sequence":[{"start":0.0,"end":11.4,"phase":"Goal 1","text":"Uncover the blue cube."},{"start":11.4,"end":23.45,"phase":"Goal 2","text":"Uncover the red cube."}],"pick-highlight-observation":[{"start":0.0,"end":3.0,"phase":"Observation","text":"First highlighted cube."},{"start":3.0,"end":4.8,"phase":"Observation","text":"Second highlighted cube."},{"start":4.8,"end":7.6,"phase":"Observation","text":"The highlights disappear."}],"pick-highlight-sequence":[{"start":0.0,"end":12.35,"phase":"Goal 1","text":"Bring the first highlighted cube to the front."},{"start":12.35,"end":28.2,"phase":"Goal 2","text":"Bring the second highlighted cube to the front."}]}</script>
 </body>
 </html>

@@ -323,3 +323,99 @@ pre { white-space: pre-wrap; overflow-wrap: anywhere; margin: 0.85rem 0 0; paddi
   .measure-axis { margin-left: 6.3rem; margin-right: 3.74rem; }
   .measures, .resource-chart .measures { --measure-name: 5.82rem; --measure-number: 3.26rem; }
 }
+
+/* Original paper figure, explored one stage at a time. */
+.architecture-player { --stage-progress: 0%; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #fff; }
+.architecture-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.35rem; border-bottom: 1px solid #e9edf4; }
+.architecture-toolbar p { font-size: 0.9rem; font-weight: 650; color: #485970; }
+.architecture-toolbar button { border: 1px solid #d4ddea; border-radius: 5px; background: #fff; padding: 0.3rem 0.65rem; color: #364e6b; font-size: 0.8rem; white-space: nowrap; }
+.architecture-canvas { position: relative; margin: 1.25rem 1rem; }
+.architecture-canvas > img { width: 100%; }
+.architecture-region { position: absolute; border: 2px solid transparent; border-radius: 9px; background: transparent; transition: background 350ms, border-color 350ms, box-shadow 350ms; }
+.architecture-region:hover { border-color: #6b87b8; background: #4566a109; }
+.architecture-region[aria-pressed="true"] { border-color: #2d5de6; background: #2d5de609; box-shadow: 0 0 0 4px #2d5de612; }
+.region-writer { left: 10.2%; top: 6%; width: 89%; height: 20.5%; }
+.region-bank { left: 0.5%; top: 29%; width: 99%; height: 26.2%; }
+.region-reader { left: 17.6%; top: 63.7%; width: 11%; height: 15.4%; }
+.region-action { left: 49.7%; top: 56.6%; width: 49.5%; height: 42.5%; }
+.architecture-steps { display: grid; grid-template-columns: repeat(4, 1fr); border-block: 1px solid var(--line); background: #f8faff; }
+.architecture-steps button { position: relative; overflow: hidden; border: 0; border-right: 1px solid var(--line); padding: 0.85rem 1rem; background: transparent; color: #566478; text-align: left; font-weight: 680; font-size: 1rem; }
+.architecture-steps button:last-child { border-right: 0; }
+.architecture-steps button > span { margin-right: 0.45rem; font-size: 0.73rem; font-weight: 500; opacity: 0.75; }
+.architecture-steps button[aria-pressed="true"] { background: #eaf0ff; color: #244fc8; }
+.architecture-steps i { position: absolute; left: 0; bottom: 0; height: 3px; background: #2d5de6; width: 0; }
+.architecture-steps button[aria-pressed="true"] i { width: var(--stage-progress); }
+.architecture-explanation { min-height: 8.5rem; padding: 1.2rem 1.4rem 1.4rem; display: grid; grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr); gap: 1rem 2rem; align-items: start; }
+.architecture-explanation h3 { font-size: 1.25rem; line-height: 1.35; letter-spacing: -0.03em; }
+.architecture-explanation p { font-size: 0.97rem; color: #485970; line-height: 1.65; }
+
+/* A stable caption strip keeps the scene unobstructed. */
+.sim-clip:has(.video-caption) video { border-radius: 6px 6px 0 0; }
+.video-caption { position: relative; min-height: 6rem; padding: 0.7rem 1rem 0.85rem; border-radius: 0 0 6px 6px; background: #1c2c43; color: #f6f9ff; }
+.caption-phase { display: block; color: #acbdd7; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.2rem; }
+.caption-text { font-size: 0.94rem; font-weight: 550; line-height: 1.4; }
+.caption-progress { position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; overflow: hidden; border-radius: 0 0 6px 6px; background: #33435b; }
+.caption-progress span { display: block; height: 100%; width: 0; background: #90adeb; transition: width 180ms linear; }
+.sequence .video-caption { min-height: 5.7rem; padding: 1.05rem 1.4rem 1.2rem; display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: 0.6rem; align-items: center; }
+.sequence .caption-phase { margin: 0; font-size: 0.77rem; }
+.sequence .caption-text { font-size: clamp(1rem, 1.65vw, 1.3rem); line-height: 1.35; letter-spacing: -0.015em; }
+
+/* Synchronized comparison layout, explicitly distinguished from policy results. */
+#comparison h2 { font-size: clamp(1.9rem, 3.7vw, 3.1rem); letter-spacing: -0.045em; line-height: 1.1; }
+.comparison-request { display: flex; gap: 1.2rem; align-items: center; padding: 1.3rem 1.6rem; background: #edf2fc; border-left: 3px solid #476bba; border-radius: 0 7px 7px 0; }
+.comparison-request > span { font-size: 0.77rem; color: #586c89; }
+.comparison-request > strong { font-size: clamp(1.15rem, 2.5vw, 1.9rem); color: #243e6c; letter-spacing: -0.03em; }
+.comparison-disclosure { margin: 0.8rem 0 1.3rem; font-size: 0.81rem; color: #5e6b80; }
+.comparison-panel { border: 1px solid #d7e0ed; border-radius: 9px; overflow: hidden; }
+.comparison-labels, .comparison-outcomes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.comparison-labels > div { display: flex; justify-content: space-between; gap: 0.5rem; align-items: center; padding: 0.85rem 1.2rem; background: #eff4ff; color: #294ec1; }
+.comparison-labels > div + div { background: #f2f4f7; color: #475971; }
+.comparison-labels strong { font-size: 1.1rem; letter-spacing: -0.02em; }
+.comparison-labels span { font-size: 0.74rem; }
+.comparison-panel video { width: 100%; aspect-ratio: 32/9; background: #152235; }
+.comparison-outcomes { background: #1c2c43; color: #f6f9ff; }
+.comparison-outcomes > div { padding: 0.85rem 1.2rem 1rem; min-height: 5.7rem; }
+.comparison-outcomes > div + div { border-left: 1px solid #3a4960; }
+.comparison-outcomes p { font-size: 0.98rem; font-weight: 550; }
+@media (max-width: 700px) {
+  .architecture-toolbar { padding: 0.75rem; }
+  .architecture-toolbar p { font-size: 0.75rem; }
+  .architecture-toolbar button { font-size: 0.7rem; }
+  .architecture-canvas { margin: 0.7rem 0.3rem; }
+  .architecture-region { border-width: 1px; border-radius: 4px; }
+  .architecture-steps button { padding: 0.7rem 0.45rem; font-size: 0.83rem; }
+  .architecture-steps button > span { display: block; margin: 0 0 0.1rem; }
+  .architecture-explanation { grid-template-columns: 1fr; padding: 1rem; gap: 0.4rem; min-height: 12rem; }
+  .architecture-explanation h3 { font-size: 1.1rem; }
+  .architecture-explanation p { font-size: 0.9rem; }
+  .sequence .video-caption { grid-template-columns: 1fr; gap: 0.3rem; min-height: 7.8rem; padding: 0.8rem 1rem 1rem; }
+  .comparison-labels > div { align-items: flex-start; flex-direction: column; padding: 0.7rem; }
+  .comparison-labels strong { font-size: 0.92rem; }
+  .comparison-labels span { font-size: 0.64rem; }
+  .comparison-outcomes > div { padding: 0.75rem; min-height: 7rem; }
+  .comparison-outcomes p { font-size: 0.83rem; }
+  .comparison-request { padding: 1rem; gap: 0.7rem; }
+}
+.architecture-body { display: grid; grid-template-columns: minmax(0, 1fr) 15.5rem; align-items: center; }
+.architecture-canvas { margin: 1rem 0.6rem; }
+.architecture-sidebar { align-self: stretch; display: flex; flex-direction: column; justify-content: center; border-left: 1px solid var(--line); background: #fafbfe; }
+.architecture-steps { grid-template-columns: 1fr; border: 0; }
+.architecture-steps button { border-right: 0; border-bottom: 1px solid #e2e8f1; padding: 0.8rem 1.2rem; }
+.architecture-explanation { display: block; padding: 1.2rem; min-height: 16rem; }
+.architecture-explanation h3 { font-size: 1.12rem; margin-bottom: 0.7rem; }
+.architecture-explanation p { font-size: 0.89rem; }
+@media (max-width: 850px) {
+  .architecture-body { grid-template-columns: 1fr; }
+  .architecture-sidebar { border-left: 0; border-top: 1px solid var(--line); }
+  .architecture-steps { grid-template-columns: repeat(4, 1fr); }
+  .architecture-steps button { padding: 0.8rem 0.65rem; border-right: 1px solid var(--line); }
+  .architecture-explanation { min-height: 10rem; }
+  .architecture-explanation h3 { margin-bottom: 0.4rem; }
+}
+.architecture-actions { display: flex; align-items: center; gap: 0.85rem; }
+.architecture-actions > a { font-size: 0.77rem; color: #4b6384; white-space: nowrap; text-decoration: none; }
+.architecture-actions > a:hover { text-decoration: underline; }
+@media (max-width: 540px) {
+  .architecture-actions { align-items: flex-end; flex-direction: column; gap: 0.2rem; }
+  .architecture-actions > a { font-size: 0.65rem; }
+}
