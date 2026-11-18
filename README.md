@@ -47,21 +47,30 @@ transitions identifiable.
 - `real-toy.mp4` — Show the toys’ original positions, then relocation,
   brushing of the vacated position and brush parking, and the toy’s return.
 
-## Animated memory-to-action flow
+## Animated memory and continuous execution
 
-`flow.js` and `flow.css` animate an SVG explanation of the method: observed
-frames travel through the Writer, fill the memory bank, and are selected by
-later blue-cube and red-cube requests. Retrieved evidence and the present view
-then feed fusion and the action policy. Each request ends with its existing
-scripted manipulation clip. The two requests start independently from the same
-post-observation scene and reuse the same recorded bank.
+`flow.js` and `flow.css` explain the method using VideoPlaceButton. Six native
+history snapshots in `assets/flow-button/` illustrate four stored appearances
+and six temporal entries. A similarity gate shows reuse of an appearance while
+time and retrieval keys remain specific to each observation. Admission choices,
+key glyphs and selected evidence are explanatory illustrations, not logged
+encoder or Reader outputs.
 
-Six native RoboMME history images in `assets/flow/` illustrate features and
-temporal entries; pictured selections explain information flow and are not
-Reader attention traces. They are magnified using SVG viewports without changing
-the image files. The full paper architecture remains under “Full model
-architecture”. Chapters can be selected directly; Pause and Replay control the
-animation. Playback pauses off-screen and honors reduced-motion preferences.
+The first request returns the cube to the last location before the button
+press. The second returns it to the first location after the press. The action
+player uses one existing `video-place-button-sequence.mp4`: Goal 1 ends and
+Goal 2 begins at 10.75 seconds, with no reset. Current-scene snapshots change as
+the sequence progresses. New execution views are encoded into recent execution
+context, which feeds fusion separately from the retained common experience
+bank. The recorded bank is not overwritten or appended during these actions,
+as specified in the paper’s execution algorithm.
+
+Native video snapshots at 0, 3, 6, 10.75, 14, 17 and 19.8 seconds illustrate
+current and recent observations. SVG viewports enlarge the useful tabletop
+region without changing source images. The full paper architecture remains
+expandable below. Pause, Replay, chapter buttons and a clickable Similar gate
+control the explanation; mobile panning follows the active stage. Off-screen
+playback pauses, and reduced-motion preferences are respected.
 
 ## Comparison layout preview
 
