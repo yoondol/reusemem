@@ -47,13 +47,21 @@ transitions identifiable.
 - `real-toy.mp4` — Show the toys’ original positions, then relocation,
   brushing of the vacated position and brush parking, and the toy’s return.
 
-## Interactive method figure
+## Animated memory-to-action flow
 
-The original paper architecture is retained without redrawing. Four selectable
-regions and an optional automatic walkthrough connect the Writer, memory bank,
-Reader and action generation to concise explanations. The walkthrough pauses
-outside the viewport and respects reduced-motion settings. Selecting a stage
-pauses automatic advancement.
+`flow.js` and `flow.css` animate an SVG explanation of the method: observed
+frames travel through the Writer, fill the memory bank, and are selected by
+later blue-cube and red-cube requests. Retrieved evidence and the present view
+then feed fusion and the action policy. Each request ends with its existing
+scripted manipulation clip. The two requests start independently from the same
+post-observation scene and reuse the same recorded bank.
+
+Six native RoboMME history images in `assets/flow/` illustrate features and
+temporal entries; pictured selections explain information flow and are not
+Reader attention traces. They are magnified using SVG viewports without changing
+the image files. The full paper architecture remains under “Full model
+architecture”. Chapters can be selected directly; Pause and Replay control the
+animation. Playback pauses off-screen and honors reduced-motion preferences.
 
 ## Comparison layout preview
 
