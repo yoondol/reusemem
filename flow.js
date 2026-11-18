@@ -18,7 +18,7 @@
   const cues=['Before press','Similar view','Button press','After press','Similar view','Later'];
   const flights=['flow-frame-flight','flow-entry-flight','flow-evidence-flight','flow-feedback-flight','flow-query-pulse','flow-key-pulse','flow-past-pulse','flow-current-pulse','flow-recent-pulse','flow-action-pulse'].map($);
   let time=reduced.matches?T.goal2+3900:0, playing=!reduced.matches, visible=false, previous=0;
-  let previousStory='',previousPan='',lastSync=-1000,inspecting=false,forceVideoSync=false;
+  let previousStory='',previousPan='',lastSync=-1000,inspecting=false,forceVideoSync=false,scrubbing=false;
   timeline.max=String(T.end);
   root.style.setProperty('--goal-one',`${T.goal1/T.end*100}%`);
   root.style.setProperty('--goal-two',`${T.goal2/T.end*100}%`);
@@ -46,7 +46,7 @@
     const key=label+title+copy;if(key===previousStory)return;previousStory=key;
     text('flow-phase-label',label);text('flow-story-title',title);text('flow-story-copy',copy);
   }
-  function controls(){root.dataset.playing=String(playing&&visible);text('flow-play',playing?'Pause':'Play');attr($('flow-play'),'aria-pressed',playing);if(!playing||!visible)video.pause();}
+  function controls(){root.dataset.playing=String(playing&&visible);attr($('flow-play'),'aria-label',playing?'Pause':'Play');attr($('flow-play'),'title',playing?'Pause':'Play');attr($('flow-play'),'aria-pressed',playing);if(!playing||!visible)video.pause();}
   function panTo(stage){
     if(stage===previousPan)return;previousPan=stage;
     if(viewport.clientWidth>=viewport.scrollWidth||reduced.matches)return;
@@ -149,9 +149,13 @@
     syncVideo(state);
   }
   function jump(which){time=jumps[which];playing=true;inspecting=false;forceVideoSync=true;previous=0;lastSync=-1000;controls();render();}
-  function seek(){time=Math.max(0,Math.min(T.end,Number(timeline.value)));playing=false;inspecting=true;forceVideoSync=true;previous=0;lastSync=-1000;controls();render();}
+  function seek(){time=Math.max(0,Math.min(T.end,Number(timeline.value)));playing=!scrubbing;inspecting=true;forceVideoSync=true;previous=0;lastSync=-1000;controls();render();}
   timeline.addEventListener('input',seek);
-  timeline.addEventListener('pointerdown',()=>{playing=false;inspecting=true;previous=0;controls();render();});
+  timeline.addEventListener('pointerdown',()=>{scrubbing=true;playing=false;inspecting=true;previous=0;controls();render();});
+  function finishSeek(){if(!scrubbing)return;scrubbing=false;playing=true;previous=0;forceVideoSync=true;controls();render();}
+  timeline.addEventListener('change',finishSeek);
+  window.addEventListener('pointerup',finishSeek);
+  window.addEventListener('pointercancel',finishSeek);
   video.addEventListener('loadedmetadata',()=>{forceVideoSync=true;render();});
   for(const b of chapters)b.addEventListener('click',()=>jump(b.dataset.flowChapter));
   $('flow-similar').addEventListener('click',()=>jump('similar'));

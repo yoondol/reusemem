@@ -10,9 +10,9 @@
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
   <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=moving-memory">
-  <link rel="stylesheet" href="flow.css?v=timeline-v1">
+  <link rel="stylesheet" href="flow.css?v=timeline-v2">
   <script src="page.js?v=moving-memory" defer></script>
-  <script src="flow.js?v=timeline-v1" defer></script>
+  <script src="flow.js?v=timeline-v2" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -83,7 +83,7 @@
         <p>Record before the goals are known. Reuse the experience as the scene changes.</p>
       </div>
       <div class="memory-flow" id="memory-flow" data-playing="true" data-phase="record" data-goal="none">
-        <div class="flow-toolbar"><div class="flow-chapters" role="group" aria-label="Explore the sequence"><button type="button" data-flow-chapter="record" aria-pressed="true">1 <span>Observe</span></button><button type="button" data-flow-chapter="goal1" aria-pressed="false">2 <span>Goal 1</span></button><button type="button" data-flow-chapter="goal2" aria-pressed="false">3 <span>Goal 2</span></button></div><div class="flow-playback"><button type="button" id="flow-play" aria-pressed="true">Pause</button></div></div>
+        <div class="flow-toolbar"><div class="flow-chapters" role="group" aria-label="Explore the sequence"><button type="button" data-flow-chapter="record" aria-pressed="true">1 <span>Observe</span></button><button type="button" data-flow-chapter="goal1" aria-pressed="false">2 <span>Goal 1</span></button><button type="button" data-flow-chapter="goal2" aria-pressed="false">3 <span>Goal 2</span></button></div></div>
         <p class="flow-mobile-hint" id="flow-mobile-status">Future goals unknown. Swipe to follow the flow.</p>
         <div class="flow-transition" id="flow-transition" aria-hidden="true"><strong id="flow-transition-title">Goal 1</strong><span id="flow-transition-copy">Last location before the press</span></div>
         <div class="flow-viewport" tabindex="0" aria-label="Animated memory and continuous execution flow"><div class="flow-scene"><svg viewBox="0 0 1360 765" role="group" aria-labelledby="flow-svg-title flow-svg-desc">
@@ -111,6 +111,7 @@
 <circle id="flow-query-pulse" r="5" fill="#5577b9" opacity="0" /><circle id="flow-key-pulse" r="5" fill="#6f9f70" opacity="0" /><circle id="flow-past-pulse" r="5.5" fill="#a08bcb" opacity="0" /><circle id="flow-current-pulse" r="5.5" fill="#bd9b52" opacity="0" /><circle id="flow-recent-pulse" r="5.5" fill="#bd9b52" opacity="0" /><circle id="flow-action-pulse" r="5.5" fill="#5577b9" opacity="0" />
 <g id="flow-recent" class="recent-context"><text x="240" y="654" class="recent-title">Recent frames</text><rect x="230" y="668" width="90" height="58" rx="5" fill="none" stroke="#d8dce4" stroke-width="1" opacity="0.35" /><rect x="285" y="672" width="90" height="58" rx="5" fill="none" stroke="#d8dce4" stroke-width="1" opacity="0.35" /><rect x="340" y="676" width="90" height="58" rx="5" fill="none" stroke="#d8dce4" stroke-width="1" opacity="0.35" /><g class="recent-card" data-recent-card="0" opacity="0"><rect x="230" y="668" width="90" height="58" rx="5" fill="#fff" stroke="#c7b88e" stroke-width="1.3" /><svg x="234" y="672" width="82" height="50" viewBox="760 380 780 520" preserveAspectRatio="xMidYMid slice" overflow="hidden"><image id="flow-recent-image-0" href="assets/flow-button/recent-1.jpg" width="1920" height="1080" /></svg></g><g class="recent-card" data-recent-card="1" opacity="0"><rect x="285" y="672" width="90" height="58" rx="5" fill="#fff" stroke="#c7b88e" stroke-width="1.3" /><svg x="289" y="676" width="82" height="50" viewBox="760 380 780 520" preserveAspectRatio="xMidYMid slice" overflow="hidden"><image id="flow-recent-image-1" href="assets/flow-button/recent-2.jpg" width="1920" height="1080" /></svg></g><g class="recent-card" data-recent-card="2" opacity="0"><rect x="340" y="676" width="90" height="58" rx="5" fill="#fff" stroke="#c7b88e" stroke-width="1.3" /><svg x="344" y="680" width="82" height="50" viewBox="760 380 780 520" preserveAspectRatio="xMidYMid slice" overflow="hidden"><image id="flow-recent-image-2" href="assets/flow-button/recent-3.jpg" width="1920" height="1080" /></svg></g></g></svg><div class="flow-outcome" id="flow-outcome" hidden><video id="flow-sequence-video" muted playsinline preload="metadata" aria-label="Continuous button-press task: Goal 1 then Goal 2, without a scene reset"><source src="assets/simulation/video-place-button-sequence.mp4" type="video/mp4"></video></div></div></div>
         <div class="flow-timeline">
+          <button type="button" id="flow-play" aria-label="Pause" title="Pause" aria-pressed="true"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path class="flow-play-glyph" d="M8 5L19 12L8 19Z" fill="currentColor"/><g class="flow-pause-glyph" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></g></svg></button>
           <div class="flow-timeline-labels" aria-hidden="true"><span data-timeline-stage="record">Observe</span><span data-timeline-stage="goal1">Goal 1</span><span data-timeline-stage="goal2">Goal 2</span></div>
           <span class="flow-timeline-clock" id="flow-timeline-clock" aria-hidden="true">0:00 / 0:40</span>
           <div class="flow-timeline-track"><label for="flow-timeline" class="sr-only">Explore the animation from Observe through Goal 2</label><input id="flow-timeline" type="range" min="0" max="40300" step="100" value="0" aria-valuetext="Observe, 0:00 of 0:40"></div>
