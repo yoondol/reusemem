@@ -10,9 +10,9 @@
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
   <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=moving-memory">
-  <link rel="stylesheet" href="flow.css?v=paper-faithful">
+  <link rel="stylesheet" href="flow.css?v=timeline-v1">
   <script src="page.js?v=moving-memory" defer></script>
-  <script src="flow.js?v=paper-faithful" defer></script>
+  <script src="flow.js?v=timeline-v1" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -110,6 +110,11 @@
 <g id="flow-entry-flight" opacity="0"><rect width="39" height="43" rx="5" fill="#fff" stroke="#b6a8d0" /><text x="7" y="15" class="flow-time" id="flow-entry-time">t1</text><path d="M9 26H29M9 30H23M9 34H26" stroke="#7aa678" stroke-width="2.5" /></g>
 <circle id="flow-query-pulse" r="5" fill="#5577b9" opacity="0" /><circle id="flow-key-pulse" r="5" fill="#6f9f70" opacity="0" /><circle id="flow-past-pulse" r="5.5" fill="#a08bcb" opacity="0" /><circle id="flow-current-pulse" r="5.5" fill="#bd9b52" opacity="0" /><circle id="flow-recent-pulse" r="5.5" fill="#bd9b52" opacity="0" /><circle id="flow-action-pulse" r="5.5" fill="#5577b9" opacity="0" />
 <g id="flow-recent" class="recent-context"><text x="240" y="654" class="recent-title">Recent frames</text><rect x="230" y="668" width="90" height="58" rx="5" fill="none" stroke="#d8dce4" stroke-width="1" opacity="0.35" /><rect x="285" y="672" width="90" height="58" rx="5" fill="none" stroke="#d8dce4" stroke-width="1" opacity="0.35" /><rect x="340" y="676" width="90" height="58" rx="5" fill="none" stroke="#d8dce4" stroke-width="1" opacity="0.35" /><g class="recent-card" data-recent-card="0" opacity="0"><rect x="230" y="668" width="90" height="58" rx="5" fill="#fff" stroke="#c7b88e" stroke-width="1.3" /><svg x="234" y="672" width="82" height="50" viewBox="760 380 780 520" preserveAspectRatio="xMidYMid slice" overflow="hidden"><image id="flow-recent-image-0" href="assets/flow-button/recent-1.jpg" width="1920" height="1080" /></svg></g><g class="recent-card" data-recent-card="1" opacity="0"><rect x="285" y="672" width="90" height="58" rx="5" fill="#fff" stroke="#c7b88e" stroke-width="1.3" /><svg x="289" y="676" width="82" height="50" viewBox="760 380 780 520" preserveAspectRatio="xMidYMid slice" overflow="hidden"><image id="flow-recent-image-1" href="assets/flow-button/recent-2.jpg" width="1920" height="1080" /></svg></g><g class="recent-card" data-recent-card="2" opacity="0"><rect x="340" y="676" width="90" height="58" rx="5" fill="#fff" stroke="#c7b88e" stroke-width="1.3" /><svg x="344" y="680" width="82" height="50" viewBox="760 380 780 520" preserveAspectRatio="xMidYMid slice" overflow="hidden"><image id="flow-recent-image-2" href="assets/flow-button/recent-3.jpg" width="1920" height="1080" /></svg></g></g></svg><div class="flow-outcome" id="flow-outcome" hidden><video id="flow-sequence-video" muted playsinline preload="metadata" aria-label="Continuous button-press task: Goal 1 then Goal 2, without a scene reset"><source src="assets/simulation/video-place-button-sequence.mp4" type="video/mp4"></video></div></div></div>
+        <div class="flow-timeline">
+          <div class="flow-timeline-labels" aria-hidden="true"><span data-timeline-stage="record">Observe</span><span data-timeline-stage="goal1">Goal 1</span><span data-timeline-stage="goal2">Goal 2</span></div>
+          <span class="flow-timeline-clock" id="flow-timeline-clock" aria-hidden="true">0:00 / 0:40</span>
+          <div class="flow-timeline-track"><label for="flow-timeline" class="sr-only">Explore the animation from Observe through Goal 2</label><input id="flow-timeline" type="range" min="0" max="40300" step="100" value="0" aria-valuetext="Observe, 0:00 of 0:40"></div>
+        </div>
         <div class="flow-story"><span class="flow-phase-label" id="flow-phase-label">Record</span><div><h3 id="flow-story-title">Observe before goals are known.</h3><p id="flow-story-copy">Similar views share features. Time and keys remain distinct.</p></div><button type="button" id="flow-restart" aria-label="Restart the animation">Replay ↻</button></div>
       </div>
       <details class="full-architecture"><summary>Full model architecture</summary><a href="assets/architecture.png" target="_blank" rel="noopener"><img src="assets/architecture.png" width="1480" height="960" alt="Full ReuseMem Writer, memory bank, Reader, fusion and action-expert architecture." loading="lazy"></a></details>

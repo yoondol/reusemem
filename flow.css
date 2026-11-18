@@ -117,3 +117,25 @@
 .recent-title { fill:#6b7d93; font-size:17px; font-weight:650; }
 .memory-flow[data-goal="none"] .recent-context { opacity:0.2; }
 .memory-flow[data-goal="2"][data-phase="fuse"] .recent-card > rect { stroke:#ba9951; stroke-width:2.3px; }
+
+/* A single seekable timeline covers the complete Observe → Goal 2 explanation. */
+.flow-timeline { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:0.1rem 1rem; align-items:center; padding:0.85rem 1.4rem 0.55rem; border-top:1px solid #e4eaf3; background:#fff; }
+.flow-timeline-labels { grid-column:1/-1; grid-row:1; display:grid; grid-template-columns:var(--timeline-columns); padding:0 8px; color:#8a96a9; font-size:0.76rem; font-weight:550; }
+.flow-timeline-labels { display:grid; grid-template-columns:var(--timeline-columns); color:#7a879c; font-size:0.79rem; }
+.flow-timeline-labels span { text-align:center; font-size:0.79rem; }
+.memory-flow[data-stage="record"] [data-timeline-stage="record"],
+.memory-flow[data-stage="goal1"] [data-timeline-stage="goal1"],
+.memory-flow[data-stage="goal2"] [data-timeline-stage="goal2"] { color:#355c9d; font-weight:700; }
+.flow-timeline-clock { grid-column:2; grid-row:3; color:#7a879c; font-size:0.69rem; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.flow-timeline-track { position:relative; grid-column:1/-1; grid-row:2; height:28px; }
+.flow-timeline-track::before,.flow-timeline-track::after { content:""; position:absolute; z-index:1; top:11px; width:2px; height:6px; background:#fff; pointer-events:none; }
+.flow-timeline-track::before { left:var(--goal-one); }
+.flow-timeline-track::after { left:var(--goal-two); }
+#flow-timeline { display:block; appearance:none; -webkit-appearance:none; width:100%; height:28px; margin:0; padding:0; border:0; border-radius:4px; background:transparent; cursor:pointer; accent-color:#5479b8; }
+#flow-timeline::-webkit-slider-runnable-track { height:6px; border-radius:4px; background:linear-gradient(to right,#6889c0 0 var(--timeline-progress),#e1e7f0 var(--timeline-progress) 100%); }
+#flow-timeline::-moz-range-track { height:6px; border-radius:4px; background:#e1e7f0; }
+#flow-timeline::-moz-range-progress { height:6px; border-radius:4px; background:#6889c0; }
+#flow-timeline::-webkit-slider-thumb { appearance:none; -webkit-appearance:none; position:relative; z-index:2; width:16px; height:16px; margin-top:-5px; border:2px solid #fff; border-radius:50%; background:#4c70ad; box-shadow:0 0 0 1px #4c70ad,0 2px 5px #28426e20; }
+#flow-timeline::-moz-range-thumb { width:12px; height:12px; border:2px solid #fff; border-radius:50%; background:#4c70ad; box-shadow:0 0 0 1px #4c70ad; }
+#flow-timeline:focus-visible { outline:2px solid #88a5d1; outline-offset:3px; }
+@media(max-width:760px) { .flow-timeline { padding:0.8rem 1rem 0.5rem; } .flow-timeline-labels span { font-size:0.73rem; } }

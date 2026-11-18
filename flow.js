@@ -11,13 +11,19 @@
   const prototypes=Array.from(root.querySelectorAll('[data-prototype]'));
   const chapters=root.querySelectorAll('[data-flow-chapter]');
   const viewport=root.querySelector('.flow-viewport'), reduced=matchMedia('(prefers-reduced-motion: reduce)');
+  const timeline=$('flow-timeline');
   const video=$('flow-sequence-video'); video.muted=video.defaultMuted=true;
   const T={goal1:12800,act1:17800,goal2:25800,act2:30800,complete:37800,end:40300};
   const jumps={record:0,goal1:T.goal1,goal2:T.goal2,similar:3600};
   const cues=['Before press','Similar view','Button press','After press','Similar view','Later'];
   const flights=['flow-frame-flight','flow-entry-flight','flow-evidence-flight','flow-feedback-flight','flow-query-pulse','flow-key-pulse','flow-past-pulse','flow-current-pulse','flow-recent-pulse','flow-action-pulse'].map($);
   let time=reduced.matches?T.goal2+3900:0, playing=!reduced.matches, visible=false, previous=0;
-  let previousStory='',previousPan='',lastSync=-1000;
+  let previousStory='',previousPan='',lastSync=-1000,inspecting=false,forceVideoSync=false;
+  timeline.max=String(T.end);
+  root.style.setProperty('--goal-one',`${T.goal1/T.end*100}%`);
+  root.style.setProperty('--goal-two',`${T.goal2/T.end*100}%`);
+  root.style.setProperty('--timeline-columns',`${T.goal1}fr ${T.goal2-T.goal1}fr ${T.end-T.goal2}fr`);
+  const formatTime=ms=>`${Math.floor(ms/60000)}:${String(Math.floor(ms/1000)%60).padStart(2,'0')}`;
   const clamp=n=>Math.max(0,Math.min(1,n));
   const smooth=n=>{n=clamp(n);return n*n*(3-2*n);};
   function attr(n,k,v){if(n.getAttribute(k)!==String(v))n.setAttribute(k,v);}
@@ -45,7 +51,7 @@
     if(stage===previousPan)return;previousPan=stage;
     if(viewport.clientWidth>=viewport.scrollWidth||reduced.matches)return;
     const x={observe:0,similar:150,bank:315,query:680,retrieve:500,fuse:620,action:680,complete:430};
-    viewport.scrollTo({left:x[stage]||0,behavior:'smooth'});
+    viewport.scrollTo({left:x[stage]||0,behavior:playing?'smooth':'auto'});
   }
   function sampleVideo(){
     if(time<T.act1)return{shown:false,target:0,moving:false,rate:1.34375};
@@ -58,9 +64,9 @@
     $('flow-outcome').hidden=!state.shown;
     if(!state.shown){video.pause();if(video.readyState>=1&&video.currentTime>0.05)video.currentTime=0;return;}
     if(video.playbackRate!==state.rate)video.playbackRate=state.rate;
-    if(video.readyState>=1&&(!state.moving||Math.abs(time-lastSync)>350)){
-      if(Math.abs(video.currentTime-state.target)>(state.moving?0.35:0.035))video.currentTime=state.target;
-      lastSync=time;
+    if(video.readyState>=1&&(forceVideoSync||!state.moving||Math.abs(time-lastSync)>350)){
+      if(Math.abs(video.currentTime-state.target)>(forceVideoSync?0.001:state.moving?0.35:0.035))video.currentTime=state.target;
+      lastSync=time;forceVideoSync=false;
     }
     if(state.moving&&playing&&visible&&!document.hidden){if(video.paused)video.play().catch(()=>{});}else video.pause();
   }
@@ -70,6 +76,10 @@
     let phase=recording?'record':complete?'complete':elapsed<1600?'query':elapsed<3800?'retrieve':elapsed<5000?'fuse':'action';
     const chapter=recording?'record':goal===0?'goal1':'goal2';
     root.dataset.goal=recording?'none':String(goal+1);root.dataset.stage=chapter;
+    if(Number(timeline.value)!==time)timeline.value=String(time);
+    root.style.setProperty('--timeline-progress',`${time/T.end*100}%`);
+    text('flow-timeline-clock',`${formatTime(time)} / ${formatTime(T.end)}`);
+    attr(timeline,'aria-valuetext',`${recording?'Observe':complete?'Complete':`Goal ${goal+1}`}, ${formatTime(time)} of ${formatTime(T.end)}`);
     for(const b of chapters)attr(b,'aria-pressed',b.dataset.flowChapter===chapter);
     text('flow-mobile-status',recording?'Future goals unknown.':'Goal 1 → Goal 2. No reset.');
     flights.forEach(n=>attr(n,'opacity',0));alpha('flow-encoding',0);
@@ -132,18 +142,22 @@
       const slot=Math.min(2,Math.max(0,recent.indexOf(current)));
       travel('flow-feedback-flight',[[1140,618],[1080,660],[455,680],[230+slot*55,672+slot*4]],p);
     }
-    const transitionVisible=!reduced.matches&&(recording?time<1050:complete?time-T.complete<1700:elapsed<1450);
+    const transitionVisible=!inspecting&&!reduced.matches&&(recording?time<1050:complete?time-T.complete<1700:elapsed<1450);
     const card=$('flow-transition');card.classList.toggle('is-visible',transitionVisible);attr(card,'aria-hidden',!transitionVisible);
     text('flow-transition-title',recording?'Observe':complete?'Sequence complete':`Goal ${goal+1}`);
     text('flow-transition-copy',recording?'Future goals unknown':complete?'Goal 1 → Goal 2. No reset.':goal===0?'Last location before the press':'First location after the press');
     syncVideo(state);
   }
-  function jump(which){time=jumps[which];playing=true;previous=0;lastSync=-1000;controls();render();}
+  function jump(which){time=jumps[which];playing=true;inspecting=false;forceVideoSync=true;previous=0;lastSync=-1000;controls();render();}
+  function seek(){time=Math.max(0,Math.min(T.end,Number(timeline.value)));playing=false;inspecting=true;forceVideoSync=true;previous=0;lastSync=-1000;controls();render();}
+  timeline.addEventListener('input',seek);
+  timeline.addEventListener('pointerdown',()=>{playing=false;inspecting=true;previous=0;controls();render();});
+  video.addEventListener('loadedmetadata',()=>{forceVideoSync=true;render();});
   for(const b of chapters)b.addEventListener('click',()=>jump(b.dataset.flowChapter));
   $('flow-similar').addEventListener('click',()=>jump('similar'));
   $('flow-similar').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();jump('similar');}});
   $('flow-restart').addEventListener('click',()=>jump('record'));
-  $('flow-play').addEventListener('click',()=>{playing=!playing;previous=0;controls();render();});
+  $('flow-play').addEventListener('click',()=>{playing=!playing;if(playing){inspecting=false;if(time>=T.end)time=0;}previous=0;forceVideoSync=true;controls();render();});
   reduced.addEventListener('change',e=>{playing=!e.matches;previous=0;controls();render();});
   if('IntersectionObserver'in window)new IntersectionObserver(e=>{visible=e[0].isIntersecting;previous=0;controls();},{threshold:0.16}).observe(root);else visible=true;
   function tick(now){if(playing&&visible&&!document.hidden){if(previous)time+=Math.min(100,now-previous);if(time>=T.end){time=0;lastSync=-1000;}render();}previous=now;requestAnimationFrame(tick);}
