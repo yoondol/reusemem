@@ -273,3 +273,25 @@ if ('IntersectionObserver' in window) {
   const cover = document.querySelector('.hero');
   if (cover) navObserver.observe(cover);
 }
+
+
+const physicalSource = document.querySelector('#physical-outcome-data');
+if (physicalSource) {
+  const values = JSON.parse(physicalSource.textContent);
+  const buttons = [...document.querySelectorAll('[data-physical-metric]')];
+  for (const button of buttons) button.addEventListener('click', () => {
+    const metric=button.dataset.physicalMetric;
+    for (const b of buttons) b.setAttribute('aria-pressed',String(b===button));
+    for (const chart of document.querySelectorAll('[data-physical-chart]')) {
+      const data=values[chart.dataset.physicalChart][metric];
+      chart.querySelectorAll('.measure').forEach((row,i) => {
+        const [rate,count,total]=data[i];
+        row.querySelector('.measure-track span').style.setProperty('--bar',rate+'%');
+        row.querySelector('.measure-value strong').textContent=rate.toFixed(1)+'%';
+        row.querySelector('.measure-value small').textContent=count+'/'+total;
+      });
+    }
+    document.querySelector('#physical-definition').textContent=(metric==='sequence' ? 'All three requests succeed in one continuous execution.' : 'All three independent requests succeed from the same recording.')+' 20 test recordings per scenario.';
+    document.querySelector('#physical-update').textContent='Both real-world plots show '+(metric==='sequence'?'Sequence':'All-goal')+' success.';
+  });
+}

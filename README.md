@@ -116,3 +116,11 @@ The cover uses a larger, heavier title and a strong blue gradient. No graphical
 logo or extra tagline appears. Simulation task selection uses four large
 buttons, arranged in two columns on phones. Goal instructions and ReuseMem's
 result marks use stronger type and contrast without changing the data.
+
+## Physical result plots
+
+The two real-world comparison plots use the v52 manuscript's physical-results
+table, with 20 test recordings per scenario. They switch between Sequence
+(default, matching the demonstrations) and independent All-goal success. Success
+counts are exact percentage conversions for n=20. The plots add no new trials
+and do not alter the simulation or resource measurements.

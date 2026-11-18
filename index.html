@@ -12,9 +12,9 @@
   <link rel="canonical" href="https://yoondol.github.io/reusemem/">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
   <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=body-clear-3">
-  <link rel="stylesheet" href="flow.css?v=body-clear-3">
-  <script src="page.js?v=body-clear-3" defer></script>
+  <link rel="stylesheet" href="style.css?v=body-clear-4">
+  <link rel="stylesheet" href="flow.css?v=body-clear-4">
+  <script src="page.js?v=body-clear-4" defer></script>
   <script src="flow.js?v=growing-memory-v1" defer></script>
 </head>
 <body>
@@ -396,6 +396,26 @@
             </div>
           </div>
         </details>
+        <div class="physical-outcomes">
+          <div class="efficiency-heading">
+            <div class="section-intro"><h3>Real-world success</h3><p id="physical-definition">All three requests succeed in one continuous execution. 20 test recordings per scenario.</p></div>
+            <div class="cost-controls" role="group" aria-label="Real-world success metric"><button type="button" data-physical-metric="sequence" aria-pressed="true">Sequence</button><button type="button" data-physical-metric="all" aria-pressed="false">All-goal</button></div>
+          </div>
+          <div class="physical-result-grid">
+            <figure class="outcome-chart" data-physical-chart="case"><figcaption class="chart-title">Case preparation and return</figcaption><ul class="measures">
+              <li class="measure"><span class="measure-name">No-Memory</span><div class="measure-track" aria-hidden="true"><span style="--bar:20%"></span></div><span class="measure-value"><strong>20.0%</strong><small>4/20</small></span></li>
+              <li class="measure"><span class="measure-name">Uniform-Memory</span><div class="measure-track" aria-hidden="true"><span style="--bar:50%"></span></div><span class="measure-value"><strong>50.0%</strong><small>10/20</small></span></li>
+              <li class="measure ours"><span class="measure-name">ReuseMem</span><div class="measure-track" aria-hidden="true"><span style="--bar:65%"></span></div><span class="measure-value"><strong>65.0%</strong><small>13/20</small></span></li>
+            </ul><div class="measure-axis" aria-hidden="true"><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div></figure>
+            <figure class="outcome-chart" data-physical-chart="toy"><figcaption class="chart-title">Toy relocation, cleaning and return</figcaption><ul class="measures">
+              <li class="measure"><span class="measure-name">No-Memory</span><div class="measure-track" aria-hidden="true"><span style="--bar:10%"></span></div><span class="measure-value"><strong>10.0%</strong><small>2/20</small></span></li>
+              <li class="measure"><span class="measure-name">Uniform-Memory</span><div class="measure-track" aria-hidden="true"><span style="--bar:55%"></span></div><span class="measure-value"><strong>55.0%</strong><small>11/20</small></span></li>
+              <li class="measure ours"><span class="measure-name">ReuseMem</span><div class="measure-track" aria-hidden="true"><span style="--bar:65%"></span></div><span class="measure-value"><strong>65.0%</strong><small>13/20</small></span></li>
+            </ul><div class="measure-axis" aria-hidden="true"><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div></figure>
+          </div>
+          <span class="sr-only" id="physical-update" role="status"></span>
+        </div>
+        <script type="application/json" id="physical-outcome-data">{"case":{"all":[[5,1,20],[45,9,20],[70,14,20]],"sequence":[[20,4,20],[50,10,20],[65,13,20]]},"toy":{"all":[[10,2,20],[60,12,20],[70,14,20]],"sequence":[[10,2,20],[55,11,20],[65,13,20]]}}</script>
         <div class="efficiency" id="efficiency">
           <div class="efficiency-heading">
             <div class="section-intro"><h3>Performance and efficiency</h3><p>Higher success across later goals, with a fast response and a compact memory bank.</p></div>
