@@ -47,30 +47,32 @@ transitions identifiable.
 - `real-toy.mp4` — Show the toys’ original positions, then relocation,
   brushing of the vacated position and brush parking, and the toy’s return.
 
-## Animated memory and continuous execution
+## Memory loop and goal transitions
 
-`flow.js` and `flow.css` explain the method using VideoPlaceButton. Six native
-history snapshots in `assets/flow-button/` illustrate four stored appearances
-and six temporal entries. A similarity gate shows reuse of an appearance while
-time and retrieval keys remain specific to each observation. Admission choices,
-key glyphs and selected evidence are explanatory illustrations, not logged
-encoder or Reader outputs.
+`flow.js` and `flow.css` explain VideoPlaceButton with three chapters: Observe,
+Goal 1 and Goal 2. New observations are written during action; they are not a
+separate stage. Large temporary goal cards and the active chapter button make
+instruction changes explicit. The source video pauses at the verified 10.75 s
+boundary while Goal 2 is revealed, then resumes from that exact scene.
 
-The first request returns the cube to the last location before the button
-press. The second returns it to the first location after the press. The action
-player uses one existing `video-place-button-sequence.mp4`: Goal 1 ends and
-Goal 2 begins at 10.75 seconds, with no reset. Current-scene snapshots change as
-the sequence progresses. New execution views are encoded into recent execution
-context, which feeds fusion separately from the retained common experience
-bank. The recorded bank is not overwritten or appended during these actions,
-as specified in the paper’s execution algorithm.
+One outer Memory bank display contains two regions: Recorded and Recent.
+Recorded holds the original shared experience, its appearance references,
+temporal entries and retrieval keys. Recent receives action-time observations
+through the visible return loop. This is a visual grouping of the paper’s
+retained bank and execution context, not a change to the model: new execution
+frames do not overwrite the original recorded bank, and recent context feeds
+fusion directly. The duplicate Record node has been removed.
 
-Native video snapshots at 0, 3, 6, 10.75, 14, 17 and 19.8 seconds illustrate
-current and recent observations. SVG viewports enlarge the useful tabletop
-region without changing source images. The full paper architecture remains
-expandable below. Pause, Replay, chapter buttons and a clickable Similar gate
-control the explanation; mobile panning follows the active stage. Off-screen
-playback pauses, and reduced-motion preferences are respected.
+Six native history snapshots in `assets/flow-button/` illustrate four stored
+appearances and six temporal entries. Similarity decisions, key glyphs and
+evidence selections are explanatory illustrations rather than logged Reader
+outputs. Seven native sequence snapshots supply the current and recent views.
+The action endpoint uses the existing continuous scripted sequence MP4. The
+full paper architecture remains expandable below the animation.
+
+Pause, Replay, chapter selection and the Similar gate control the explanation.
+Off-screen playback pauses; reduced-motion settings are respected. Mobile uses
+an internal viewport that follows the active part of the diagram.
 
 ## Comparison layout preview
 

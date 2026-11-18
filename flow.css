@@ -45,7 +45,7 @@
 .memory-flow[data-phase="retrieve"] :is(.keys-wire,.read-wire),
 .memory-flow[data-phase="fuse"] :is(.past-wire,.current-wire,.recent-wire),
 .memory-flow[data-phase="action"] .action-wire { stroke:#6081bd; marker-end:url(#flow-arrow-active); }
-.memory-flow:is([data-phase="action"],[data-phase="update"]) .feedback-wire { stroke:#bda16b; }
+.memory-flow[data-phase="action"] .feedback-wire { stroke:#bda16b; }
 .memory-flow[data-playing="true"][data-phase="retrieve"] .keys-wire,
 .memory-flow[data-playing="true"][data-phase="action"] .feedback-wire { stroke-dasharray:4 6; animation:flow-dash 1.5s linear infinite; }
 .memory-flow:is([data-phase="compare"],[data-phase="share"]) .similar-node path { fill:#eee7f9; stroke:#9275ba; stroke-width:2.5px; }
@@ -84,3 +84,31 @@
  .flow-footnote { padding:0 1rem 0.8rem; font-size:0.69rem; }
 }
 @media(prefers-reduced-motion:reduce) { .flow-wire { animation:none!important; } }
+/* One bank, with the return path integrated into the action loop. */
+.memory-flow { position:relative; }
+.experience-title { fill:#344764; font-size:25px; font-weight:700; letter-spacing:-0.5px; }
+.bank-region-label { fill:#8b769f; font-size:13px; font-weight:650; }
+.flow-bank { isolation:isolate; }
+.flow-outcome { left:81.985%; top:78.431%; }
+.feedback-wire { stroke:#b89a5e; stroke-width:2.5px; }
+.feedback-label { fill:#9d824a; }
+.memory-flow[data-phase="query"] #flow-request-bg { stroke:#8ba4d1; stroke-width:2px; }
+.flow-chapters button { padding:0.45rem 0.85rem; }
+.flow-chapters button[aria-pressed="true"] { border-color:#9db5e1; background:#dfe9fc; }
+.flow-chapters button[aria-pressed="true"] span { font-weight:750; }
+.flow-transition { position:absolute; left:50%; top:7rem; z-index:3; width:min(84%, 530px); padding:1.25rem 1.8rem 1.4rem; border:1px solid #b5c7e5; border-radius:12px; background:#fffffff7; box-shadow:0 12px 40px #244b8126; color:#28426e; text-align:center; pointer-events:none; opacity:0; visibility:hidden; transform:translate(-50%,-10px); transition:opacity 180ms,transform 180ms,visibility 180ms; }
+.flow-transition.is-visible { opacity:1; visibility:visible; transform:translate(-50%,0); }
+.flow-transition strong { display:block; font-size:2.55rem; font-weight:760; letter-spacing:-0.05em; line-height:1.1; }
+.flow-transition span { display:block; margin-top:0.55rem; font-size:1.12rem; line-height:1.4; }
+.flow-story { min-height:6.3rem; }
+@media(max-width:760px) {
+ .flow-chapters button { padding:0.35rem 0.48rem; }
+ .flow-transition { top:7.5rem; padding:1rem; width:90%; }
+ .flow-transition strong { font-size:2rem; }
+ .flow-transition span { font-size:0.98rem; }
+ .flow-story { min-height:8.9rem; }
+}
+@media(prefers-reduced-motion:reduce) { .flow-transition { transition:none; } }
+.feedback-wire { marker-end:url(#flow-arrow-write); }
+.memory-flow[data-goal="none"] .feedback-wire { opacity:0.24; }
+.bank-region-label { font-size:14px; }
