@@ -91,6 +91,7 @@
     root.dataset.goal = goal === 0 ? 'blue' : 'red';
     const phase = recording ? 'record' : elapsed < 1200 ? 'query' : elapsed < 3200 ? 'retrieve' : elapsed < 4400 ? 'fuse' : 'action';
     root.dataset.phase = phase;
+    get('flow-action-wait').textContent = recording ? 'Waiting for a goal' : 'Preparing an action';
     const pan = recording ? (time < 3500 ? 'observe' : 'bank') : phase;
     if (pan !== lastPan && viewport.clientWidth < viewport.scrollWidth && !reduced.matches) {
       const positions = {observe: 0, bank: 170, query: 470, retrieve: 380, fuse: 300, action: 470};
