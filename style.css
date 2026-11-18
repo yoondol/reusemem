@@ -151,3 +151,79 @@
 nav{gap:2.6rem;font-size:.88rem}
 .back-to-top{font-size:.75rem;font-weight:600;text-decoration:none}
 @media(max-width:540px){nav{gap:1.9rem;font-size:.78rem}.back-to-top{font-size:.67rem}}
+
+/* Clear body hierarchy and quantitative figures. */
+.top{border-bottom:0;box-shadow:none}
+.abstract p{color:#344967;font-size:1.14rem;line-height:1.85}
+.abstract strong,.section-intro strong{color:#214b9e;font-weight:700}
+.outcome-chart,.resource-chart,.evidence-chart{border-color:#cbd8ee;box-shadow:0 5px 24px #284a7c05}
+.chart-title,.efficiency-chart figcaption,.evidence-chart figcaption{font-size:1.1rem;font-weight:700;color:#1f3b68}
+.measures{gap:1.12rem}
+.measure-name{font-size:.88rem;color:#536784;font-weight:500}
+.measure-value{font-size:1rem;color:#304d78}
+.measure-value strong{font-weight:650}
+.measure-value small{font-size:.72rem;color:#647897}
+.measure.ours .measure-name{font-size:.97rem;color:#204dae}
+.measure-track span{background:#8c9db9}
+.measure-axis{color:#596e8e;font-size:.73rem}
+.plot-field{border-color:#94a8c5;background:repeating-linear-gradient(to top,transparent 0,transparent calc(25% - 1px),#dce5f2 calc(25% - 1px),#dce5f2 25%)}
+.plot-x,.plot-y{font-size:.8rem;color:#536b8f}
+.plot-x-title,.plot-y-title{font-size:.82rem;font-weight:500;color:#486286}
+.plot-label{font-size:.85rem;color:#536b8b}
+.plot-label b{font-weight:600}
+.plot-mark::before{inset:5px;background:#879bb9;box-shadow:0 0 0 1px #879bb9}
+.plot-point.ours .plot-mark::before{inset:1px;box-shadow:0 0 0 2px #2c5fd1}
+.plot-point.ours .plot-label{font-size:1.1rem;color:#1c4da8}
+.plot-point.ours .plot-label small{font-size:.75rem;font-weight:550}
+.plot-point.variant .plot-mark::before{background:#fff;border-color:#879bb9}
+.cost-highlight>span{color:#526a8c;font-size:.86rem}
+.evidence-chart{--label-width:13rem}
+.chart-rows li{font-size:.85rem;color:#4f6382}
+.chart-rows strong{font-size:.95rem;font-weight:650;color:#274879}
+.bar-track{height:13px}
+.bar{background:#8c9db9}
+.bar.intact{background:linear-gradient(90deg,#2150b9,#4a7bef)}
+.bar.intervention{background:#a28779}
+.ticks{font-size:.66rem;color:#5d7394}
+
+/* Each physical scenario pairs one observation with one unbroken execution. */
+.real-scenarios{display:grid;gap:4rem}
+.real-scenario+.real-scenario{border-top:1px solid #d5dff0;padding-top:3.6rem}
+.real-scenario-heading{display:grid;grid-template-columns:auto minmax(0,1fr);gap:1.1rem;align-items:start;margin-bottom:1.8rem}
+.scenario-number{display:grid;place-items:center;width:42px;height:42px;background:linear-gradient(130deg,#244cae,#4c7ae7);border-radius:7px;color:#fff;font-size:.87rem;font-weight:700;font-variant-numeric:tabular-nums}
+.real-scenario-heading h3{font-size:1.6rem;font-weight:700;letter-spacing:-.035em;color:#203c68;line-height:1.3}
+.real-scenario-heading p{color:#60728f;font-size:.97rem;line-height:1.7;margin-top:.6rem;max-width:84ch}
+.real-scenario-heading strong{color:#294f8d;font-weight:650}
+.real-clips{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.real-clip{min-width:0}
+.real-clip figcaption{min-height:5.5rem;margin-bottom:1rem}
+.real-clip figcaption>strong{display:block;font-size:.88rem;letter-spacing:.06em;color:#285ccc;font-weight:750;text-transform:uppercase;margin-bottom:.5rem}
+.real-clip figcaption p{font-size:1.04rem;line-height:1.55;color:#566b8c}
+.real-clip figcaption b{font-weight:700;color:#294f8d}
+.real-media{position:relative;aspect-ratio:4/3;border:1px solid #c5d3eb;border-radius:8px;overflow:hidden;background:#eef3fb}
+.real-media img,.real-media video{width:100%;height:100%;object-fit:contain}
+.real-caption{display:grid;grid-template-columns:4.4rem 1fr;gap:.75rem;align-items:start;padding:1rem 1.2rem;background:#183b7b;border-radius:0 0 7px 7px;color:#fff;min-height:5rem}
+.real-caption span{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:#b9d0ff;font-weight:700;padding-top:.1rem}
+.real-caption p{font-size:.92rem;line-height:1.5}
+.real-goals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.8rem;list-style:none;padding:0;margin:1.2rem 0 0}
+.real-goals li{min-width:0}
+.real-goals button{display:block;width:100%;height:100%;min-height:128px;padding:1rem 1.1rem;text-align:left;border:1px solid #cedcf3;border-radius:7px;background:#f1f6ff;color:#344f76;line-height:1.55}
+.real-goals button:disabled{opacity:1;cursor:default}
+.real-goals button>span{display:block;font-size:.73rem;color:#2a5cc8;font-weight:750;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.45rem}
+.real-goals button>strong{display:block;font-size:.92rem;font-weight:600}
+.real-goals button:not(:disabled):hover{border-color:#4579dc;background:#e8f0ff}
+.real-goals button.is-current{background:#2357c6;border-color:#2357c6;color:#fff;box-shadow:0 4px 15px #2459b51c}
+.real-goals button.is-current>span{color:#cce0ff}
+@media(max-width:1000px){.evidence-chart{--label-width:16rem}.real-clips{gap:1.1rem}.real-goals button{padding:.9rem;min-height:144px}}
+@media(max-width:800px){.real-clip figcaption{min-height:6.8rem}.real-goals{grid-template-columns:1fr}.real-goals button{min-height:0;display:grid;grid-template-columns:3.7rem 1fr;gap:.6rem;align-items:baseline}.real-goals button>span{margin:0}.real-scenario-heading h3{font-size:1.4rem}.real-scenario-heading p{font-size:.9rem}}
+@media(max-width:540px){
+ .abstract p{font-size:1rem}.chart-title,.efficiency-chart figcaption,.evidence-chart figcaption{font-size:.94rem}
+ .measure-name{font-size:.76rem}.measure-value{font-size:.86rem}.measure-value small{font-size:.65rem}.measure.ours .measure-name{font-size:.82rem}.measure-axis{font-size:.59rem}
+ .plot-x,.plot-y{font-size:.69rem}.plot-x-title,.plot-y-title{font-size:.73rem}.plot-label{font-size:.73rem}.plot-point.ours .plot-label{font-size:.97rem}.plot-point.ours .plot-label small{font-size:.65rem}.cost-highlight>span{font-size:.77rem}
+ .evidence-chart{--label-width:7.5rem}.chart-rows li{font-size:.74rem}.chart-rows strong{font-size:.82rem}.ticks{font-size:.55rem}
+ .real-scenarios{gap:2.8rem}.real-scenario+.real-scenario{padding-top:2.6rem}.real-scenario-heading{gap:.8rem;margin-bottom:1.5rem}.scenario-number{width:34px;height:34px;font-size:.76rem}.real-scenario-heading h3{font-size:1.3rem}.real-scenario-heading p{font-size:.9rem}
+ .real-clips{grid-template-columns:1fr;gap:1.8rem}.real-clip figcaption{min-height:0;margin-bottom:.8rem}.real-clip figcaption>strong{font-size:.8rem}.real-clip figcaption p{font-size:.95rem}
+ .real-goals{gap:.6rem}.real-goals button{padding:.9rem;grid-template-columns:3.3rem 1fr}.real-goals button>strong{font-size:.86rem}.real-goals button>span{font-size:.67rem}.real-caption{padding:.9rem 1rem;gap:.5rem;grid-template-columns:3.4rem 1fr}.real-caption p{font-size:.85rem}
+}
+/* Keep the tightly grouped fast baselines clear of neighboring markers. */
+[data-cost-axis="response"] .plot-point[data-model="No-Memory"] .plot-label{left:26px;bottom:3px}

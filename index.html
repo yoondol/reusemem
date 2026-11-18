@@ -12,9 +12,9 @@
   <link rel="canonical" href="https://yoondol.github.io/reusemem/">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
   <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=strong-blue-2">
-  <link rel="stylesheet" href="flow.css?v=strong-blue-2">
-  <script src="page.js?v=strong-blue-2" defer></script>
+  <link rel="stylesheet" href="style.css?v=body-clear-3">
+  <link rel="stylesheet" href="flow.css?v=body-clear-3">
+  <script src="page.js?v=body-clear-3" defer></script>
   <script src="flow.js?v=growing-memory-v1" defer></script>
 </head>
 <body>
@@ -75,7 +75,7 @@
     <div class="section-rule abstract-band">
       <section class="wrap section abstract" id="abstract" aria-labelledby="abstract-title">
         <h2 id="abstract-title">Abstract</h2>
-        <p>Robots experience the world before they know how that experience will be used. ReuseMem learns to retrieve visual evidence from one memory for multiple later manipulation goals. It connects past observations to the current scene, so the same experience remains useful after earlier actions move objects. Across four simulation tasks and two physical scenarios, we evaluate independent requests and continuous sequences. ReuseMem improves joint goal completion by 24.5 percentage points over uniform memory.</p>
+        <p>Robots experience the world before they know how that experience will be used. ReuseMem learns to retrieve visual evidence from <strong>one memory for multiple later manipulation goals</strong>. It connects past observations to the current scene, so the same experience remains useful <strong>after earlier actions move objects</strong>. Across four simulation tasks and two physical scenarios, we evaluate independent requests and continuous sequences. ReuseMem improves joint goal completion by 24.5 percentage points over uniform memory.</p>
       </section>
     </div>
 
@@ -279,50 +279,50 @@
     <div class="section-rule" id="demos">
       <section class="wrap section" id="real-world" aria-labelledby="real-title">
         <div class="section-intro">
-          <p class="eyebrow">Real-world manipulation</p><h2 id="real-title">Memory at the desk</h2>
-          <p>Two SO101 scenarios reuse what the robot saw for three different manipulation goals.</p>
+          <p class="eyebrow">Real-world manipulation</p><h2 id="real-title">One memory. Three requests.</h2>
+          <p>See what the robot remembers, then follow <strong>three goals without a scene reset</strong>. Each request begins where the previous action ends.</p>
         </div>
-        <div class="demo-grid real-grid">
-          <article class="demo-card">
-            <figure class="poster" data-media="case">
-              <img src="assets/photo-09.jpg" width="1280" height="960" alt="The closed cases sit in separate trays after they have been identified by their observed contents." loading="lazy">
-            </figure>
-            <div class="card-copy">
-              <h3>Case preparation and return</h3>
-              <p>Select two closed cases by their contents, then return the USB case to the position seen earlier.</p>
-              <ol class="steps" aria-label="Requests"><li>USB to left tray</li><li>SD to right tray</li><li>Return USB case</li></ol>
+        <div class="real-scenarios">
+          <article class="real-scenario" id="real-case" data-real-scenario="case">
+            <header class="real-scenario-heading"><span class="scenario-number">01</span><div><h3>Case preparation and return</h3><p>Remember <strong>what is inside</strong> each case and <strong>where it started</strong>. Use those facts after the cases are closed and moved.</p></div></header>
+            <div class="real-clips">
+              <figure class="real-clip">
+                <figcaption><strong>Observation</strong><p>See the contents and origins. Then close and relocate the cases.</p></figcaption>
+                <div class="real-media" data-real-slot="case-observation"><img src="assets/photo-06.jpg" width="1280" height="960" alt="Open USB and SD-card cases at their original desk positions." loading="lazy"></div>
+              </figure>
+              <figure class="real-clip real-sequence">
+                <figcaption><strong>Goal 1 → Goal 2 → Goal 3</strong><p><b>One continuous execution.</b> No scene reset between requests.</p></figcaption>
+                <div class="real-media" data-real-slot="case-sequence"><img src="assets/photo-09.jpg" width="1280" height="960" alt="The closed cases in separate trays after transfer." loading="lazy"></div>
+                <div class="real-caption" data-real-context="case" hidden><span>Sequence</span><p>Goal 1 → Goal 2 → Goal 3. No reset.</p></div>
+              </figure>
             </div>
+            <ol class="real-goals" aria-label="Three successive requests">
+              <li><button type="button" data-real-goal="1" disabled><span>Goal 1</span><strong>Move the case containing the USB drive to the left tray.</strong></button></li>
+              <li><button type="button" data-real-goal="2" disabled><span>Goal 2</span><strong>Move the case containing the SD card to the right tray.</strong></button></li>
+              <li><button type="button" data-real-goal="3" disabled><span>Goal 3</span><strong>Return the USB case to its original position.</strong></button></li>
+            </ol>
           </article>
-          <article class="demo-card">
-            <figure class="poster" data-media="toy">
-              <img src="assets/photo-04.jpg" width="1280" height="960" alt="The robot holds a brush over the spot the dragon toy occupied before it was moved." loading="lazy">
-            </figure>
-            <div class="card-copy">
-              <h3>Toy relocation, cleaning, and return</h3>
-              <p>Use the toy’s original position to select it, brush the spot it has vacated, and put it back.</p>
-              <ol class="steps" aria-label="Requests"><li>Move the toy</li><li>Brush its spot</li><li>Return the toy</li></ol>
+          <article class="real-scenario" id="real-toy" data-real-scenario="toy">
+            <header class="real-scenario-heading"><span class="scenario-number">02</span><div><h3>Toy relocation, cleaning and return</h3><p>Remember <strong>which toy stood on the left</strong> and <strong>where it stood</strong>. The same origin guides selection, brushing and return.</p></div></header>
+            <div class="real-clips">
+              <figure class="real-clip">
+                <figcaption><strong>Observation</strong><p>See both toys and their origins. Then gather both toys in the left tray.</p></figcaption>
+                <div class="real-media" data-real-slot="toy-observation"><img src="assets/photo-01.jpg" width="1280" height="960" alt="The blue dragon on the left, the chick on the right, and the brush between them." loading="lazy"></div>
+              </figure>
+              <figure class="real-clip real-sequence">
+                <figcaption><strong>Goal 1 → Goal 2 → Goal 3</strong><p><b>One continuous execution.</b> No scene reset between requests.</p></figcaption>
+                <div class="real-media" data-real-slot="toy-sequence"><img src="assets/photo-04.jpg" width="1280" height="960" alt="The robot brushing the dragon toy’s original position after moving it to the right tray." loading="lazy"></div>
+                <div class="real-caption" data-real-context="toy" hidden><span>Sequence</span><p>Goal 1 → Goal 2 → Goal 3. No reset.</p></div>
+              </figure>
             </div>
+            <ol class="real-goals" aria-label="Three successive requests">
+              <li><button type="button" data-real-goal="1" disabled><span>Goal 1</span><strong>Move the toy that was originally on the left to the right tray.</strong></button></li>
+              <li><button type="button" data-real-goal="2" disabled><span>Goal 2</span><strong>Brush the spot where that toy originally stood, then return the brush.</strong></button></li>
+              <li><button type="button" data-real-goal="3" disabled><span>Goal 3</span><strong>Return the toy to its original position.</strong></button></li>
+            </ol>
           </article>
         </div>
-        <p class="note">In each scenario, all three independent requests succeeded on <strong>14 of 20 recordings</strong>. All three requests succeeded without a reset in <strong>13 of 20 sequences</strong>.</p>
-      </section>
-    </div>
-
-    <div class="section-rule">
-      <section class="wrap section" id="comparison" aria-labelledby="comparison-title">
-        <div class="section-intro">
-          <p class="eyebrow">A closer look</p><h2 id="comparison-title">The right action starts with the right memory</h2>
-          <p>The same request, two different choices. The robot must follow the hidden object through the cover swap.</p>
-        </div>
-        <div class="comparison-request"><span>Request</span><strong>“Uncover the blue cube.”</strong></div>
-        <p class="comparison-disclosure">Scripted illustrations of correct and incorrect choices, not model evaluation rollouts.</p>
-        <div class="comparison-panel">
-          <div class="comparison-labels"><div><strong>ReuseMem</strong><span>Correct-choice illustration</span></div><div><strong>Uniform-Memory</strong><span>Wrong-choice illustration</span></div></div>
-          <video id="comparison-video" controls muted loop playsinline preload="none" poster="assets/simulation/unmask-choice-preview.jpg" aria-label="Scripted comparison preview: uncovering the blue cube versus uncovering the wrong red cube">
-            <source src="assets/simulation/unmask-choice-preview.mp4" type="video/mp4">
-          </video>
-          <div class="comparison-outcomes"><div><span class="caption-phase">Correct object</span><p>The blue cube is revealed.</p></div><div><span class="caption-phase">Wrong object</span><p>The red cube is revealed.</p></div></div>
-        </div>
+        <p class="note">All three independent goals succeed on <strong>14 of 20 recordings</strong> in each scenario. All three requests succeed in <strong>13 of 20 continuous sequences</strong>.</p>
       </section>
     </div>
 
@@ -477,7 +477,7 @@
     <section class="wrap section evidence-section" id="evidence" aria-labelledby="evidence-title">
       <div class="section-intro">
         <p class="eyebrow">Memory in use</p><h2 id="evidence-title">The evidence makes the difference</h2>
-        <p>Removing the relevant history reduces success. Removing unrelated observations has little effect.</p>
+        <p>Removing <strong>relevant history</strong> reduces success. Removing unrelated observations has little effect.</p>
       </div>
       <figure class="evidence-chart" aria-labelledby="evidence-caption">
         <figcaption id="evidence-caption">Goal success when the history changes</figcaption>

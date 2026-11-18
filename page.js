@@ -1,29 +1,70 @@
-// Set an entry to a published relative MP4 path to activate that player.
-const videoSources = {
-  case: "",
-  toy: "",
-};
+// Newly supplied real videos join the same viewport-aware playback system.
+let registerGalleryVideo = video => { video.muted = video.defaultMuted = true; video.loop = true; };
 
-for (const poster of document.querySelectorAll("[data-media]")) {
-  const src = videoSources[poster.dataset.media];
-  if (!src) continue;
-  const image = poster.querySelector("img");
-  const kind = poster.dataset.kind;
-  const video = document.createElement("video");
-  const title = poster.closest("article").querySelector("h3").textContent;
-  video.controls = true;
-  video.playsInline = true;
-  video.preload = "none";
-  video.poster = image.src;
-  video.setAttribute("aria-label", title + " demonstration");
-  video.addEventListener("error", () => {
-    video.replaceWith(image);
-    if (kind) poster.dataset.kind = kind;
-  });
-  video.src = src;
-  image.replaceWith(video);
-  delete poster.dataset.kind;
+async function loadRealWorldMedia() {
+  try {
+    const response = await fetch('assets/real-world/clips.json', {cache:'no-store'});
+    if (!response.ok) return;
+    const clips = await response.json();
+    for (const media of document.querySelectorAll('[data-real-slot]')) {
+      const clip = clips[media.dataset.realSlot];
+      if (!clip || typeof clip.src !== 'string' || !clip.src) continue;
+      const poster = media.querySelector('img');
+      const scenario = media.closest('[data-real-scenario]');
+      const isSequence = media.dataset.realSlot.endsWith('-sequence');
+      const video = document.createElement('video');
+      video.controls = true; video.playsInline = true; video.preload = 'metadata';
+      video.poster = poster.src;
+      video.setAttribute('aria-label', scenario.querySelector('h3').textContent + (isSequence ? ', continuous three-goal execution' : ', observation'));
+      video.src = clip.src;
+      const buttons = [...scenario.querySelectorAll('[data-real-goal]')];
+      const panel = scenario.querySelector('[data-real-context]');
+      video.addEventListener('loadedmetadata', () => {
+        if (video.videoWidth && video.videoHeight) media.style.aspectRatio = `${video.videoWidth} / ${video.videoHeight}`;
+      });
+      if (isSequence) {
+        const chapters = (Array.isArray(clip.chapters) ? clip.chapters : [])
+          .filter(c => [1,2,3].includes(c.goal) && Number.isFinite(c.start) && c.start >= 0)
+          .sort((a,b) => a.start-b.start);
+        panel.hidden = false;
+        for (const button of buttons) {
+          const chapter = chapters.find(c => c.goal === Number(button.dataset.realGoal));
+          if (!chapter) continue;
+          button.disabled = false;
+          button.setAttribute('aria-label', `Play Goal ${chapter.goal}: ${button.querySelector('strong').textContent}`);
+          button.addEventListener('click', () => {
+            video.currentTime=chapter.start;
+            video.scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+            video.play().catch(()=>{});
+          });
+        }
+        const update = () => {
+          const active = chapters.filter(c => c.start <= video.currentTime).pop();
+          for (const button of buttons) {
+            const current=!!active && Number(button.dataset.realGoal)===active.goal;
+            button.classList.toggle('is-current',current);
+            if (current) button.setAttribute('aria-current','step');
+            else button.removeAttribute('aria-current');
+          }
+          if (active) {
+            panel.querySelector('span').textContent=`Goal ${active.goal}`;
+            panel.querySelector('p').textContent=buttons.find(b => Number(b.dataset.realGoal)===active.goal).querySelector('strong').textContent;
+          } else {
+            panel.querySelector('span').textContent='Sequence';
+            panel.querySelector('p').textContent='Goal 1 → Goal 2 → Goal 3. No reset.';
+          }
+        };
+        video.addEventListener('timeupdate',update); video.addEventListener('seeked',update);
+      }
+      video.addEventListener('error', () => {
+        video.replaceWith(poster);
+        if (isSequence) {panel.hidden=true;for (const b of buttons) {b.disabled=true;b.classList.remove('is-current');b.removeAttribute('aria-current');}}
+      }, {once:true});
+      poster.replaceWith(video); registerGalleryVideo(video);
+    }
+  } catch { /* Keep the native photographs if no video manifest is available. */ }
 }
+loadRealWorldMedia();
 
 const taskButtons = document.querySelectorAll("[data-task]");
 function selectTask(id) {
@@ -75,7 +116,7 @@ if (cueSource) {
 
 const autoplayControl = document.querySelector("#autoplay-control");
 const motionPreference = matchMedia("(prefers-reduced-motion: reduce)");
-const galleryVideos = document.querySelectorAll("#demos video, #simulation video, #comparison video");
+const galleryVideos = document.querySelectorAll("#real-world video, #simulation video");
 
 if (autoplayControl && "IntersectionObserver" in window) {
   let enabled = !motionPreference.matches;
@@ -100,12 +141,12 @@ if (autoplayControl && "IntersectionObserver" in window) {
       }
     }
   }, { threshold: 0.25 });
-  for (const video of galleryVideos) {
-    video.muted = true;
-    video.defaultMuted = true;
+  registerGalleryVideo = video => {
+    video.muted = video.defaultMuted = true;
     video.loop = true;
     observer.observe(video);
-  }
+  };
+  for (const video of galleryVideos) registerGalleryVideo(video);
   autoplayControl.addEventListener("click", () => {
     enabled = !enabled;
     updatePlayback();
@@ -211,19 +252,6 @@ if (navigator.clipboard) {
       copy.textContent = "Select BibTeX to copy";
     }
   });
-}
-
-const comparison = document.querySelector("#comparison-video");
-if (comparison) {
-  const lines = document.querySelectorAll(".comparison-outcomes p");
-  function updateComparison() {
-    const revealed = comparison.currentTime >= 5.3;
-    lines[0].textContent = revealed ? "The blue cube is revealed." : "Lift the cover hiding the blue cube.";
-    lines[1].textContent = revealed ? "The red cube is revealed." : "Lift the cover hiding the red cube.";
-  }
-  comparison.addEventListener("timeupdate", updateComparison);
-  comparison.addEventListener("seeked", updateComparison);
-  updateComparison();
 }
 
 // A quiet section indicator in the persistent research-page navigation.

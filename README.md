@@ -36,16 +36,25 @@ and measurements. The site ships DM Sans locally under its OFL license.
 
 ## Adding the real-world demonstrations
 
-Place the MP4 files under `assets/` and set the `case` and `toy` entries in
-`videoSources` in `page.js`. The cards show Figure 9 photos until a video is
-available. Keep the full no-reset sequences with the actual request
-transitions identifiable.
+Each physical scenario now has its own full-width row, with Observation and a
+continuous three-goal execution side by side. Native photographs remain until
+actual videos are supplied. Source paths are explicit in
+`assets/real-world/clips.json`; null entries never request nonexistent videos.
 
-- `real-case.mp4` — Show the open USB and SD cases and their starting
-  positions, then the closed and relocated cases. Show USB to left tray,
-  SD to right tray, and USB returned to its original position.
-- `real-toy.mp4` — Show the toys’ original positions, then relocation,
-  brushing of the vacated position and brush parking, and the toy’s return.
+The final four files are `case-observation.mp4`, `case-sequence.mp4`,
+`toy-observation.mp4`, and `toy-sequence.mp4`, all under `assets/real-world/`.
+Put each published relative path in the matching `src`. For each sequence, set
+`chapters` to actual `{ "goal": 1, "start": <seconds> }` entries for goals 1–3.
+Starts are measured in the final sequence clip, not the original full master.
+The goal buttons activate only when their real start times are supplied. Captions
+and active-goal emphasis follow playback, without covering the camera image.
+Videos join the same muted autoplay and off-screen pause system as simulation.
+
+Record one uninterrupted master per scenario, including the observation period,
+then split it only into observation and execution for the page. Do not reset or
+re-stage between requests. Case goals are USB to left tray, SD to right tray,
+and USB to its original position. Toy goals are the originally left toy to the
+right tray, brushing its original spot and parking the brush, and toy restoration.
 
 ## Growing memory and execution context
 
@@ -80,15 +89,12 @@ adjacent Play/Pause button, Replay, chapter selection and Similar gate remain
 available. Off-screen playback pauses and reduced-motion settings are respected.
 Mobile uses an internal viewport. The v52 architecture is expandable below.
 
-## Comparison layout preview
+## Model comparisons
 
-`assets/simulation/unmask-choice-preview.mp4` is a synchronized, scripted
-illustration of correct-object and wrong-object choices for the same blue-cube
-request. The model headings preview a comparison layout; these are **not**
-ReuseMem or Uniform-Memory evaluation rollouts. A visible disclosure immediately
-above the player states this distinction. The MP4 itself contains no explanatory
-text or production labels. Quantitative results elsewhere are independent of
-this illustrative video.
+The public page uses quantitative plots for comparisons. It does not include
+baseline comparison footage in either simulation or the physical scenarios.
+The archived `unmask-choice-preview.mp4` is a scripted illustration and is no
+longer embedded or loaded. Keep it separate from model evaluation rollouts.
 
 ## Editorial design
 
@@ -100,7 +106,7 @@ a larger continuous sequence follows. Native videos keep their aspect ratio,
 autoplay muted when visible, and pause off screen. The same video sources, cue
 times, evaluation data, and v52 memory-flow logic are retained.
 
-The top navigation stays available and indicates the current section. Desktop,
+The top navigation stays available without a separator line and indicates the current section. Desktop,
 tablet and mobile layouts adapt without shrinking all media into one fixed grid.
 Evidence, performance, latency and storage plots share the same accent for
 ReuseMem; comparison methods use a consistent neutral color. Original numeric
