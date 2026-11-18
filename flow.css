@@ -84,7 +84,7 @@
  .flow-footnote { padding:0 1rem 0.8rem; font-size:0.69rem; }
 }
 @media(prefers-reduced-motion:reduce) { .flow-wire { animation:none!important; } }
-/* One bank, with the return path integrated into the action loop. */
+/* Memory rendering and goal transitions. */
 .memory-flow { position:relative; }
 .experience-title { fill:#344764; font-size:25px; font-weight:700; letter-spacing:-0.5px; }
 .bank-region-label { fill:#8b769f; font-size:13px; font-weight:650; }
@@ -112,3 +112,8 @@
 .feedback-wire { marker-end:url(#flow-arrow-write); }
 .memory-flow[data-goal="none"] .feedback-wire { opacity:0.24; }
 .bank-region-label { font-size:14px; }
+/* The paper keeps recent execution context outside the recorded bank. */
+.bank-scope { fill:#8b7f9b; font-size:13px; }
+.recent-title { fill:#6b7d93; font-size:17px; font-weight:650; }
+.memory-flow[data-goal="none"] .recent-context { opacity:0.2; }
+.memory-flow[data-goal="2"][data-phase="fuse"] .recent-card > rect { stroke:#ba9951; stroke-width:2.3px; }

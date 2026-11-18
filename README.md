@@ -47,32 +47,35 @@ transitions identifiable.
 - `real-toy.mp4` — Show the toys’ original positions, then relocation,
   brushing of the vacated position and brush parking, and the toy’s return.
 
-## Memory loop and goal transitions
+## Recorded memory and execution context
 
-`flow.js` and `flow.css` explain VideoPlaceButton with three chapters: Observe,
-Goal 1 and Goal 2. New observations are written during action; they are not a
-separate stage. Large temporary goal cards and the active chapter button make
-instruction changes explicit. The source video pauses at the verified 10.75 s
-boundary while Goal 2 is revealed, then resumes from that exact scene.
+The animation follows the paper’s Problem setting and Algorithm 3. Writer and
+Similar form the recorded bank before goals arrive. Both goals retrieve from
+this same bank. Its six illustrated temporal entries and four appearances stay
+unchanged during execution. No action-time frame receives a new bank key or
+bank timestamp in this visualization.
 
-One outer Memory bank display contains two regions: Recorded and Recent.
-Recorded holds the original shared experience, its appearance references,
-temporal entries and retrieval keys. Recent receives action-time observations
-through the visible return loop. This is a visual grouping of the paper’s
-retained bank and execution context, not a change to the model: new execution
-frames do not overwrite the original recorded bank, and recent context feeds
-fusion directly. The duplicate Record node has been removed.
+New camera observations appear in a separate small Recent frames stack beneath
+the current scene. Goal 2 uses these Goal 1 execution views through fusion,
+together with the current scene and evidence retrieved from the original bank.
+Recent frames are not new Reader candidates. This corrects the previous visual
+grouping that placed Recent inside the bank.
 
-Six native history snapshots in `assets/flow-button/` illustrate four stored
-appearances and six temporal entries. Similarity decisions, key glyphs and
-evidence selections are explanatory illustrations rather than logged Reader
-outputs. Seven native sequence snapshots supply the current and recent views.
-The action endpoint uses the existing continuous scripted sequence MP4. The
-full paper architecture remains expandable below the animation.
+The visible stages remain Observe, Goal 1 and Goal 2. A temporary large stage
+card announces each goal. New observations are handled during action rather
+than as a separate chapter. The native continuous video pauses at 10.75 s while
+Goal 2 is revealed, then resumes from that scene without resetting.
+
+Current snapshots use 0, 3, 6, 10.75, 14, 17 and 19.8 s. Recent snapshots use
+2.8, 5.8, 10.4, 13.8, 16.8 and 19.6 s, and appear only at the corresponding
+later current checkpoint. Thus each recent image is strictly earlier than the
+current snapshot it accompanies. These are explanatory sample views; admission,
+key glyphs and retrieval selections do not claim to be logged Reader outputs.
+The action footage is the existing scripted simulator sequence.
 
 Pause, Replay, chapter selection and the Similar gate control the explanation.
 Off-screen playback pauses; reduced-motion settings are respected. Mobile uses
-an internal viewport that follows the active part of the diagram.
+an internal viewport. The full paper architecture remains expandable below.
 
 ## Comparison layout preview
 

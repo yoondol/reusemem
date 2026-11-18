@@ -1,10 +1,11 @@
-/* One visual memory display: retained experience plus recent execution context.
+/* Paper-faithful flow: retained recorded bank and separate execution context.
    Native clips illustrate one continuous scripted sequence, not Reader traces. */
 (() => {
   const root=document.getElementById('memory-flow'); if(!root)return;
   const $=id=>document.getElementById(id);
   const history=Array.from({length:6},(_,i)=>`assets/flow-button/history-${i}.jpg`);
   const execution=Array.from({length:7},(_,i)=>`assets/flow-button/execution-${i}.jpg`);
+  const recentSources=Array.from({length:7},(_,i)=>i?`assets/flow-button/recent-${i}.jpg`:null);
   const references=[0,0,1,2,2,3], protoXY=[[569,176],[722,176],[569,264],[722,264]];
   const entries=Array.from(root.querySelectorAll('[data-entry]'));
   const prototypes=Array.from(root.querySelectorAll('[data-prototype]'));
@@ -34,7 +35,7 @@
     else if(complete){label='Done';title='Sequence complete.';copy='Same experience. Two goals. No reset.';}
     else{label={query:'Goal',retrieve:'Read',fuse:'Fuse',action:'Act'}[phase];
       title=goal===0?'Goal 1 — last location before the press.':'Goal 2 — first location after the press.';
-      copy=goal===0?'New views return to memory while the robot acts.':'Continue from the updated scene. No reset.';
+      copy=goal===0?'Current and recent views guide each action.':'Same recorded bank, updated current and recent views.';
     }
     const key=label+title+copy;if(key===previousStory)return;previousStory=key;
     text('flow-phase-label',label);text('flow-story-title',title);text('flow-story-copy',copy);
@@ -101,7 +102,7 @@
         const p=(elapsed-3800)/1200;
         travel('flow-past-pulse',[[1080,403],[1080,445],[1024,445],[1024,480]],p);
         travel('flow-current-pulse',[[420,560],[500,560],[500,590],[925,590],[925,540],[955,540]],p);
-        if(goal===1)travel('flow-recent-pulse',[[888,510],[955,510]],p);
+        if(goal===1)travel('flow-recent-pulse',[[380,670],[380,642],[925,642],[925,552],[955,552]],p);
       }
       if(phase==='action'){
         const p=((elapsed-5000)%1200)/1200;
@@ -123,13 +124,13 @@
     thresholds.forEach((t,i)=>{if(native>=t)current=i;});image('flow-current-image',execution[current]);
     text('flow-current-label',time>=T.goal2&&time<T.act2?'After Goal 1':complete?'After Goal 2':'');
     let recent=[1,2,3];if(native>=14)recent=[2,3,4];if(native>=17)recent=[3,4,5];if(native>=19.8)recent=[4,5,6];
-    recent.forEach((index,i)=>{image(`flow-recent-image-${i}`,execution[index]);attr($(`flow-recent-image-${i}`).parentElement,'opacity',native>=thresholds[index]?1:0);});
+    recent.forEach((index,i)=>{image(`flow-recent-image-${i}`,recentSources[index]);attr($(`flow-recent-image-${i}`).closest('.recent-card'),'opacity',native>=thresholds[index]?1:0);});
     // New views are written continuously during action, not as a separate stage.
     if(phase==='action'&&current>0){
       const p=((time-(goal===0?T.act1:T.act2))%1700)/1700;
-      image('flow-feedback-image',execution[current]);
-      const destination=569+Math.min(2,Math.max(0,recent.indexOf(current)))*101;
-      travel('flow-feedback-flight',[[1140,618],[1160,707],[730,707],[destination,477]],p);
+      image('flow-feedback-image',recentSources[current]);
+      const slot=Math.min(2,Math.max(0,recent.indexOf(current)));
+      travel('flow-feedback-flight',[[1140,618],[1080,660],[455,680],[230+slot*55,672+slot*4]],p);
     }
     const transitionVisible=!reduced.matches&&(recording?time<1050:complete?time-T.complete<1700:elapsed<1450);
     const card=$('flow-transition');card.classList.toggle('is-visible',transitionVisible);attr(card,'aria-hidden',!transitionVisible);
