@@ -47,35 +47,38 @@ transitions identifiable.
 - `real-toy.mp4` — Show the toys’ original positions, then relocation,
   brushing of the vacated position and brush parking, and the toy’s return.
 
-## Recorded memory and execution context
+## Growing memory and execution context
 
-The animation follows the paper’s Problem setting and Algorithm 3. Writer and
-Similar form the recorded bank before goals arrive. Both goals retrieve from
-this same bank. Its six illustrated temporal entries and four appearances stay
-unchanged during execution. No action-time frame receives a new bank key or
-bank timestamp in this visualization.
+The animation matches the v52 paper: observations before and during execution
+use the same Writer and Similar gate. Similar appearances share features while
+each observation appends its own time and key entry. Six initial observations
+become eight after Goal 1 and ten after Goal 2; four appearances become six.
+These small counts illustrate the mechanism, not the full evaluation bank size.
 
-New camera observations appear in a separate small Recent frames stack beneath
-the current scene. Goal 2 uses these Goal 1 execution views through fusion,
-together with the current scene and evidence retrieved from the original bank.
-Recent frames are not new Reader candidates. This corrects the previous visual
-grouping that placed Recent inside the bank.
+Goal 1 reads the six observations available when its request arrives. Goal 2
+reads the eight then available, including the result of Goal 1. Its illustrated
+selection combines the original post-press evidence and a Goal 1 observation.
+Selected historical entries remain fixed within a request. Current and strictly
+past Recent frames refresh separately; Recent is not part of the archive pool.
+The dashed time-entry boundary marks the request's eligible memory prefix.
 
-The visible stages remain Observe, Goal 1 and Goal 2. A temporary large stage
-card announces each goal. New observations are handled during action rather
-than as a separate chapter. The native continuous video pauses at 10.75 s while
-Goal 2 is revealed, then resumes from that scene without resetting.
+The visible stages remain Observe, Goal 1 and Goal 2, with no reset between goals.
+The 45.9-second explanation includes short action-end holds for showing the
+Writer. The native video pauses at 10.75 s for the Goal 2 request and ends at
+19.8 s. Current checkpoints include 10.15 and 19.35 s. New archive occurrences
+use 10.05, 10.4, 19.25 and 19.6 s. The first and second pair each share one
+appearance. Each observation is strictly earlier than the current checkpoint
+when its writing begins. Existing Recent sources remain strictly past as well.
 
-Current snapshots use 0, 3, 6, 10.75, 14, 17 and 19.8 s. Recent snapshots use
-2.8, 5.8, 10.4, 13.8, 16.8 and 19.6 s, and appear only at the corresponding
-later current checkpoint. Thus each recent image is strictly earlier than the
-current snapshot it accompanies. These are explanatory sample views; admission,
-key glyphs and retrieval selections do not claim to be logged Reader outputs.
-The action footage is the existing scripted simulator sequence.
+Frames come from the existing native scripted simulator sequence. Feature
+admission, key glyphs and retrieval selections are explanatory illustrations,
+not logged model outputs. Quantitative results are unchanged. The PDF button
+serves the latest v52 manuscript as `assets/ReuseMem.pdf`; Paper links to arXiv.
 
-Pause, Replay, chapter selection and the Similar gate control the explanation.
-Off-screen playback pauses; reduced-motion settings are respected. Mobile uses
-an internal viewport. The full paper architecture remains expandable below.
+The full timeline supports dragging and resumes from the selected point. The
+adjacent Play/Pause button, Replay, chapter selection and Similar gate remain
+available. Off-screen playback pauses and reduced-motion settings are respected.
+Mobile uses an internal viewport. The v52 architecture is expandable below.
 
 ## Comparison layout preview
 

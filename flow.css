@@ -112,7 +112,7 @@
 .feedback-wire { marker-end:url(#flow-arrow-write); }
 .memory-flow[data-goal="none"] .feedback-wire { opacity:0.24; }
 .bank-region-label { font-size:14px; }
-/* The paper keeps recent execution context outside the recorded bank. */
+/* Recent context is a separate fast path alongside the growing archive. */
 .bank-scope { fill:#8b7f9b; font-size:13px; }
 .recent-title { fill:#6b7d93; font-size:17px; font-weight:650; }
 .memory-flow[data-goal="none"] .recent-context { opacity:0.2; }
@@ -146,3 +146,12 @@
 .flow-timeline #flow-play:focus-visible { outline:2px solid #88a5d1; outline-offset:3px; }
 #flow-play[aria-pressed="true"] .flow-play-glyph,#flow-play[aria-pressed="false"] .flow-pause-glyph { display:none; }
 @media(max-width:760px) { .flow-timeline { column-gap:0.6rem; } }
+
+/* Continuous writing uses the same pipeline while the action policy runs. */
+.memory-flow[data-write-phase="capture"] .feedback-wire,
+.memory-flow:is([data-write-phase="observe"],[data-write-phase="encode"],[data-write-phase="compare"]) .record-wire,
+.memory-flow[data-write-phase="append"] .new-wire,
+.memory-flow[data-write-phase="share"] .share-wire { stroke:#b89a5e; marker-end:url(#flow-arrow-write); }
+.memory-flow:is([data-write-phase="compare"],[data-write-phase="share"]) .similar-node path { fill:#f7f0df; stroke:#b89a5e; stroke-width:2.2px; }
+.temporal-entry.is-new .entry-outline { fill:#fff7e7; stroke:#bc9e61; stroke-width:1.7px; }
+.prototype-label { font-size:11px; }
