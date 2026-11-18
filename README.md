@@ -106,7 +106,8 @@ a larger continuous sequence follows. Native videos keep their aspect ratio,
 autoplay muted when visible, and pause off screen. The same video sources, cue
 times, evaluation data, and v52 memory-flow logic are retained.
 
-The top navigation stays available without a separator line and indicates the current section. Desktop,
+There is no persistent top navigation. Large Overview, Method, Simulation,
+Real World and Results headings divide the page. Desktop,
 tablet and mobile layouts adapt without shrinking all media into one fixed grid.
 Evidence, performance, latency and storage plots share the same accent for
 ReuseMem; comparison methods use a consistent neutral color. Original numeric
@@ -124,3 +125,14 @@ table, with 20 test recordings per scenario. They switch between Sequence
 (default, matching the demonstrations) and independent All-goal success. Success
 counts are exact percentage conversions for n=20. The plots add no new trials
 and do not alter the simulation or resource measurements.
+
+## Core narrative
+
+Overview introduces why the same experience should support later requests,
+using the physical case example. A three-part contribution strip follows the
+paper's contributions: reusable memory, action-guided retrieval learning, and
+efficient reuse. It replaces the repeated full abstract. Short Method,
+Simulation, Real World and Results chapters lead into the existing interactive
+architecture, demonstrations and quantitative plots. Functional line icons
+identify ideas and chapters; there is no project logo or extra cover tagline.
+Exact requests, metric definitions and media provenance remain where needed.

@@ -12,22 +12,13 @@
   <link rel="canonical" href="https://yoondol.github.io/reusemem/">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
   <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=body-clear-4">
-  <link rel="stylesheet" href="flow.css?v=body-clear-4">
-  <script src="page.js?v=body-clear-4" defer></script>
+  <link rel="stylesheet" href="style.css?v=core-sections-5">
+  <link rel="stylesheet" href="flow.css?v=core-sections-5">
+  <script src="page.js?v=core-sections-5" defer></script>
   <script src="flow.js?v=growing-memory-v1" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
-  <header class="top">
-    <div class="wrap top-inner">
-      <nav aria-label="Sections">
-        <a href="#method">Method</a><a href="#simulation">Demos</a>
-        <a href="#results">Results</a><a href="#citation">Citation</a>
-      </nav>
-    </div>
-  </header>
-
   <main id="main">
     <section class="hero" aria-labelledby="title">
       <div class="hero-copy wrap">
@@ -43,9 +34,9 @@
     </section>
 
     <section class="wrap story-section" id="demo" aria-labelledby="story-title">
-      <div class="story-intro">
-        <div><p class="eyebrow">The idea</p><h2 id="story-title">One memory.<br> Different requests.</h2></div>
-        <p>A robot sees what is inside two cases and where they started. Once the cases are closed and moved, the same memory tells it which case to bring and where to return it.</p>
+      <div class="section-intro chapter-intro overview-intro">
+        <h2 id="story-title">Overview</h2>
+        <p>Robots should be able to use what they have seen for requests that arrive later. <strong>ReuseMem learns to use one visual memory for multiple manipulation goals, even as the scene changes.</strong></p>
       </div>
       <div class="story-sequence">
         <figure class="story-card story-history">
@@ -72,18 +63,17 @@
       </div>
     </section>
 
-    <div class="section-rule abstract-band">
-      <section class="wrap section abstract" id="abstract" aria-labelledby="abstract-title">
-        <h2 id="abstract-title">Abstract</h2>
-        <p>Robots experience the world before they know how that experience will be used. ReuseMem learns to retrieve visual evidence from <strong>one memory for multiple later manipulation goals</strong>. It connects past observations to the current scene, so the same experience remains useful <strong>after earlier actions move objects</strong>. Across four simulation tasks and two physical scenarios, we evaluate independent requests and continuous sequences. ReuseMem improves joint goal completion by 24.5 percentage points over uniform memory.</p>
-      </section>
-    </div>
+    <section class="wrap key-ideas" aria-labelledby="ideas-title">
+      <h2 id="ideas-title">Key contributions</h2>
+      <div class="ideas-grid">
+<article><span class="idea-symbol"><svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="18" height="14" rx="2"/><path d="M8 23h18V9M22 12h7m-3-3 3 3-3 3M22 23h7m-3-3 3 3-3 3"/></svg></span><div><h3>One memory, multiple goals</h3><p>Record experience before later goals are known, then reuse the same visual memory for different manipulations.</p></div></article>
+<article><span class="idea-symbol"><svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="13" height="11" rx="2"/><path d="m6 12 3-3 4 4M16 11h8m-3-3 3 3-3 3"/><circle cx="23" cy="23" r="5"/><path d="M23 15v3m0 10v3m-8-8h3m10 0h3"/></svg></span><div><h3>Learn memory for action</h3><p>Train memory selection through action prediction, connecting useful past evidence to the current scene.</p></div></article>
+<article><span class="idea-symbol"><svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 6a11 11 0 1 1-5 17M10 6H4v6"/><path d="m18 9-5 9h6l-3 7"/></svg></span><div><h3>Efficient memory reuse</h3><p>Share repeated visual features and reuse fixed memory computations during action generation.</p></div></article>
+      </div>
+    </section>
 
     <section class="wrap section" id="method" aria-labelledby="method-title">
-      <div class="section-intro">
-        <p class="eyebrow">Method</p><h2 id="method-title">From experience to action</h2>
-        <p>Record before the goals are known. Keep recording what happens next.</p>
-      </div>
+<div class="section-intro chapter-intro"><span class="section-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="11" width="7" height="10" rx="2"/><rect x="23" y="11" width="7" height="10" rx="2"/><path d="M9 16h14m-4-4 4 4-4 4M16 5v5m0 12v5"/></svg></span><h2 id="method-title">Method</h2><p>Write experience, retrieve evidence for each goal, and act on the current scene.</p></div>
       <div class="memory-flow" id="memory-flow" data-playing="true" data-phase="record" data-goal="none">
         <div class="flow-toolbar"><div class="flow-chapters" role="group" aria-label="Explore the sequence"><button type="button" data-flow-chapter="record" aria-pressed="true">1 <span>Observe</span></button><button type="button" data-flow-chapter="goal1" aria-pressed="false">2 <span>Goal 1</span></button><button type="button" data-flow-chapter="goal2" aria-pressed="false">3 <span>Goal 2</span></button></div></div>
         <p class="flow-mobile-hint" id="flow-mobile-status">Future goals unknown. Swipe to follow the flow.</p>
@@ -125,10 +115,7 @@
 
     <div class="section-rule tinted">
       <section class="wrap section" id="simulation" aria-labelledby="sim-title">
-        <div class="section-intro">
-          <p class="eyebrow">Simulation</p><h2 id="sim-title">Different goals, the same history</h2>
-          <p>Watch the experience, explore each request, then follow both goals in one continuous sequence.</p>
-        </div>
+<div class="section-intro chapter-intro"><span class="section-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 2 12 7v14l-12 7L4 23V9Z M4 9l12 7 12-7M16 16v14M10 6l12 7"/></svg></span><h2 id="sim-title">Simulation</h2><p>Four tasks. The same observation history supports two different goals.</p></div>
         <div class="simulation-toolbar">
           <div class="task-select" role="group" aria-label="Simulation task">
             <button data-task="video-place-button" type="button" aria-controls="video-place-button" aria-pressed="true">Button press</button>
@@ -278,20 +265,17 @@
 
     <div class="section-rule" id="demos">
       <section class="wrap section" id="real-world" aria-labelledby="real-title">
-        <div class="section-intro">
-          <p class="eyebrow">Real-world manipulation</p><h2 id="real-title">One memory. Three requests.</h2>
-          <p>See what the robot remembers, then follow <strong>three goals without a scene reset</strong>. Each request begins where the previous action ends.</p>
-        </div>
+<div class="section-intro chapter-intro"><span class="section-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 28h28M7 28v-5h10v5M12 23v-7l7-6M7 14l5 2M19 10l5 6m-2 2 4-4 4 4"/><circle cx="7" cy="12" r="3"/><circle cx="19" cy="7" r="3"/></svg></span><h2 id="real-title">Real World</h2><p>Two desk scenarios. Three requests, carried out without resetting the scene.</p></div>
         <div class="real-scenarios">
           <article class="real-scenario" id="real-case" data-real-scenario="case">
-            <header class="real-scenario-heading"><span class="scenario-number">01</span><div><h3>Case preparation and return</h3><p>Remember <strong>what is inside</strong> each case and <strong>where it started</strong>. Use those facts after the cases are closed and moved.</p></div></header>
+            <header class="real-scenario-heading"><span class="scenario-number">01</span><div><h3>Case preparation and return</h3><p>Remember the <strong>contents</strong> to select a case and its <strong>origin</strong> to return it.</p></div></header>
             <div class="real-clips">
               <figure class="real-clip">
-                <figcaption><strong>Observation</strong><p>See the contents and origins. Then close and relocate the cases.</p></figcaption>
+                <figcaption><strong>Observation</strong><p>Contents and origins, before the cases are closed and moved.</p></figcaption>
                 <div class="real-media" data-real-slot="case-observation"><img src="assets/photo-06.jpg" width="1280" height="960" alt="Open USB and SD-card cases at their original desk positions." loading="lazy"></div>
               </figure>
               <figure class="real-clip real-sequence">
-                <figcaption><strong>Goal 1 → Goal 2 → Goal 3</strong><p><b>One continuous execution.</b> No scene reset between requests.</p></figcaption>
+                <figcaption><strong>Continuous sequence</strong><p>Goal 1 → Goal 2 → Goal 3. <b>No scene reset.</b></p></figcaption>
                 <div class="real-media" data-real-slot="case-sequence"><img src="assets/photo-09.jpg" width="1280" height="960" alt="The closed cases in separate trays after transfer." loading="lazy"></div>
                 <div class="real-caption" data-real-context="case" hidden><span>Sequence</span><p>Goal 1 → Goal 2 → Goal 3. No reset.</p></div>
               </figure>
@@ -303,14 +287,14 @@
             </ol>
           </article>
           <article class="real-scenario" id="real-toy" data-real-scenario="toy">
-            <header class="real-scenario-heading"><span class="scenario-number">02</span><div><h3>Toy relocation, cleaning and return</h3><p>Remember <strong>which toy stood on the left</strong> and <strong>where it stood</strong>. The same origin guides selection, brushing and return.</p></div></header>
+            <header class="real-scenario-heading"><span class="scenario-number">02</span><div><h3>Toy relocation, cleaning and return</h3><p>The same recorded origin guides <strong>toy selection, brushing and return</strong>.</p></div></header>
             <div class="real-clips">
               <figure class="real-clip">
-                <figcaption><strong>Observation</strong><p>See both toys and their origins. Then gather both toys in the left tray.</p></figcaption>
+                <figcaption><strong>Observation</strong><p>Original positions, before both toys are gathered in the left tray.</p></figcaption>
                 <div class="real-media" data-real-slot="toy-observation"><img src="assets/photo-01.jpg" width="1280" height="960" alt="The blue dragon on the left, the chick on the right, and the brush between them." loading="lazy"></div>
               </figure>
               <figure class="real-clip real-sequence">
-                <figcaption><strong>Goal 1 → Goal 2 → Goal 3</strong><p><b>One continuous execution.</b> No scene reset between requests.</p></figcaption>
+                <figcaption><strong>Continuous sequence</strong><p>Goal 1 → Goal 2 → Goal 3. <b>No scene reset.</b></p></figcaption>
                 <div class="real-media" data-real-slot="toy-sequence"><img src="assets/photo-04.jpg" width="1280" height="960" alt="The robot brushing the dragon toy’s original position after moving it to the right tray." loading="lazy"></div>
                 <div class="real-caption" data-real-context="toy" hidden><span>Sequence</span><p>Goal 1 → Goal 2 → Goal 3. No reset.</p></div>
               </figure>
@@ -322,13 +306,12 @@
             </ol>
           </article>
         </div>
-        <p class="note">All three independent goals succeed on <strong>14 of 20 recordings</strong> in each scenario. All three requests succeed in <strong>13 of 20 continuous sequences</strong>.</p>
       </section>
     </div>
 
     <div class="section-rule tinted">
       <section class="wrap section" id="results" aria-labelledby="results-title">
-        <div class="section-intro"><p class="eyebrow">Evaluation</p><h2 id="results-title">One memory, measured across goals</h2></div>
+<div class="section-intro chapter-intro"><span class="section-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v26h27M8 24V14h5v10m4 0V8h5v16m4 0V4h4v20"/></svg></span><h2 id="results-title">Results</h2></div>
         <div class="outcome-panel">
           <div class="outcome-intro">
             <p class="stat-value" id="gain-value">+24.5 pp</p>
@@ -381,7 +364,7 @@
           <summary>Per-task results and evaluation protocol</summary>
           <div class="detail-body">
             <p>The initial recording is collected before the later requests are revealed. Independent requests start from the same post-recording scene and memory. In a sequence, each request starts from the state and accumulated memory left by the preceding action.</p>
-            <p>Simulation uses 50 common recordings per task and two requests per recording. Each real-world scenario uses 20 recordings and three requests. The policy receives camera observations, robot state, timestamps, and the revealed request. Evaluator labels for identities, origins, and cues are held out.</p>
+            <p>Simulation uses 50 test recordings per task and two goals per recording. Each physical scenario uses 20 recordings and three goals.</p>
             <div class="table-scroll" tabindex="0" role="region" aria-label="Per-task simulation results">
               <table>
                 <caption>ReuseMem simulation successes out of 50 recordings per task</caption>
@@ -418,7 +401,7 @@
         <script type="application/json" id="physical-outcome-data">{"case":{"all":[[5,1,20],[45,9,20],[70,14,20]],"sequence":[[20,4,20],[50,10,20],[65,13,20]]},"toy":{"all":[[10,2,20],[60,12,20],[70,14,20]],"sequence":[[10,2,20],[55,11,20],[65,13,20]]}}</script>
         <div class="efficiency" id="efficiency">
           <div class="efficiency-heading">
-            <div class="section-intro"><h3>Performance and efficiency</h3><p>Higher success across later goals, with a fast response and a compact memory bank.</p></div>
+            <div class="section-intro"><h3>Efficiency</h3></div>
             <div class="cost-controls" role="group" aria-label="Efficiency success metric">
               <button type="button" data-cost-metric="all" aria-pressed="true">All-goal</button>
               <button type="button" data-cost-metric="sequence" aria-pressed="false">Sequence</button>
@@ -496,8 +479,8 @@
 
     <section class="wrap section evidence-section" id="evidence" aria-labelledby="evidence-title">
       <div class="section-intro">
-        <p class="eyebrow">Memory in use</p><h2 id="evidence-title">The evidence makes the difference</h2>
-        <p>Removing <strong>relevant history</strong> reduces success. Removing unrelated observations has little effect.</p>
+        <h2 id="evidence-title">Does the policy use memory?</h2>
+        <p>Removing <strong>relevant evidence</strong> sharply reduces success.</p>
       </div>
       <figure class="evidence-chart" aria-labelledby="evidence-caption">
         <figcaption id="evidence-caption">Goal success when the history changes</figcaption>
@@ -513,7 +496,7 @@
 
     <section class="wrap section" id="citation" aria-labelledby="citation-title">
       <div class="citation-heading">
-        <div><p class="eyebrow">ReuseMem</p><h2 id="citation-title">Citation</h2></div>
+        <h2 id="citation-title">Citation</h2>
         <button id="copy-citation" type="button" hidden>Copy BibTeX</button>
       </div>
       <pre id="bibtex"><code>@misc{kang2026reusemem,
@@ -529,7 +512,7 @@
       <p id="copy-status" class="sr-only" role="status"></p>
     </section>
   </main>
-  <footer class="site-footer"><div class="wrap"><a class="back-to-top" href="#main">Back to top ↑</a><span>One Memory, Multiple Goals in Robot Manipulation</span><a href="https://arxiv.org/abs/2611.21115">arXiv ↗</a></div></footer>
+  <footer class="site-footer"><div class="wrap"><a class="back-to-top" href="#main">Back to top ↑</a><a href="https://arxiv.org/abs/2611.21115">arXiv ↗</a></div></footer>
 <script id="video-cue-data" type="application/json">{"video-place-button-observation":[{"start":0.0,"end":3.389,"phase":"Observation","text":"Watch the cube placements."},{"start":3.389,"end":5.667,"phase":"Observation","text":"Last placement before the press."},{"start":5.667,"end":8.222,"phase":"Observation","text":"The button is pressed."},{"start":8.222,"end":13.556,"phase":"Observation","text":"First placement after the press."},{"start":13.556,"end":22.5,"phase":"Observation","text":"Remember the two locations."}],"video-place-button-sequence":[{"start":0.0,"end":10.75,"phase":"Goal 1","text":"Return the cube to its last location before the press."},{"start":10.75,"end":19.85,"phase":"Goal 2","text":"Return the cube to its first location after the press."}],"video-place-order-observation":[{"start":0.0,"end":3.389,"phase":"Observation","text":"Watch the order of the placements."},{"start":3.389,"end":8.167,"phase":"Observation","text":"First recorded location."},{"start":8.167,"end":13.278,"phase":"Observation","text":"Second recorded location."},{"start":13.278,"end":22.722,"phase":"Observation","text":"Remember which location came first."}],"video-place-order-sequence":[{"start":0.0,"end":11.8,"phase":"Goal 1","text":"Return the cube to the first recorded location."},{"start":11.8,"end":21.0,"phase":"Goal 2","text":"Return the cube to the second recorded location."}],"video-unmask-swap-observation":[{"start":0.0,"end":1.4,"phase":"Observation","text":"See both cubes."},{"start":1.4,"end":3.2,"phase":"Observation","text":"The cubes are covered."},{"start":3.2,"end":5.7,"phase":"Observation","text":"The covers swap positions."},{"start":5.7,"end":8.1,"phase":"Observation","text":"Remember where each cube is hidden."}],"video-unmask-swap-sequence":[{"start":0.0,"end":11.4,"phase":"Goal 1","text":"Uncover the blue cube."},{"start":11.4,"end":23.45,"phase":"Goal 2","text":"Uncover the red cube."}],"pick-highlight-observation":[{"start":0.0,"end":3.0,"phase":"Observation","text":"First highlighted cube."},{"start":3.0,"end":4.8,"phase":"Observation","text":"Second highlighted cube."},{"start":4.8,"end":7.6,"phase":"Observation","text":"The highlights disappear."}],"pick-highlight-sequence":[{"start":0.0,"end":12.35,"phase":"Goal 1","text":"Bring the first highlighted cube to the front."},{"start":12.35,"end":28.2,"phase":"Goal 2","text":"Bring the second highlighted cube to the front."}]}</script>
 </body>
 </html>
