@@ -26,3 +26,128 @@
 /* Keep chart labels readable against light scientific-plot surfaces. */
 .plot-x,.plot-y{color:#6c717c;font-size:.72rem}.plot-x-title,.plot-y-title{color:#616773;font-size:.77rem}.measure-axis,.ticks{color:#737985}.measure-value small{color:#747982}.chart-rows li{color:#565d6a}
 @media(max-width:540px){.plot-x,.plot-y{font-size:.65rem}.plot-x-title,.plot-y-title{font-size:.69rem}.chart-rows li{font-size:.74rem}.chart-rows strong{font-size:.8rem}}
+
+/* A more assertive cover and large, explicit task controls. */
+.hero {
+  padding-block:clamp(4.4rem,7vw,6.4rem) clamp(3.6rem,5.5vw,5rem);
+  background:
+    radial-gradient(ellipse at 15% 0%,#bbd6ff 0%,#dce9ff55 43%,transparent 72%),
+    radial-gradient(ellipse at 90% 5%,#bdceff 0%,#e1e7ff55 38%,transparent 68%),
+    linear-gradient(180deg,#dce8ff 0%,#f2f6ff 64%,#fcfdff 100%);
+}
+.hero h1 {
+  color:#153e92;
+  font-size:clamp(5.3rem,14vw,11.6rem);
+  line-height:.98;
+  font-weight:800;
+  letter-spacing:-.075em;
+}
+.hero h1 .title-subtitle {
+  max-width:1050px;
+  margin-top:1.7rem;
+  color:#172d52;
+  font-size:clamp(2rem,4.25vw,3.7rem);
+  line-height:1.12;
+  font-weight:650;
+  letter-spacing:-.045em;
+}
+@supports (background-clip:text) {
+  .hero h1 {
+    background:linear-gradient(110deg,#112d70 5%,#1548b6 49%,#4b83ff 100%);
+    background-clip:text;
+    -webkit-background-clip:text;
+    color:transparent;
+  }
+}
+.authors{margin-top:3rem;font-size:1rem;color:#314767}
+.affiliation{color:#62738e}
+.links{margin-top:1.7rem;gap:.65rem}
+.links a{min-height:47px;padding:.6rem 1.25rem;font-size:.85rem;font-weight:650;border-color:#c6d4ed;background:#ffffffa3}
+.links .primary{background:linear-gradient(120deg,#1d45aa,#2e66e5);border-color:#2b59c6;box-shadow:0 4px 14px #2556b41c}
+.links .primary:hover{background:linear-gradient(120deg,#17388c,#255bd2)}
+.section-intro h2,.story-intro h2,.citation-heading h2{font-weight:650;color:#1b3154}
+.eyebrow{font-weight:750;color:#285ac5;font-size:.73rem;letter-spacing:.12em}
+.story-card strong{font-weight:650;font-size:1.04rem;color:#233c63}
+.story-card i{background:#eaf0ff;border-color:#cad8f7;color:#285ac5;font-weight:700}
+.simulation-toolbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:1rem;border:0;margin-bottom:2.5rem;align-items:center}
+.task-select{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.75rem;width:100%}
+.task-select button{
+  display:flex;align-items:center;justify-content:center;
+  min-height:76px;padding:1.1rem .8rem;
+  border:1px solid #c6d4ed;border-radius:8px;
+  background:#fff;color:#425a7b;
+  font-size:1rem;line-height:1.3;font-weight:650;
+  transition:background 150ms,border-color 150ms,box-shadow 150ms;
+}
+.task-select button:hover{background:#eaf1ff;border-color:#84a7ec;color:#2453ae}
+.task-select button[aria-pressed=true]{
+  color:#fff;background:linear-gradient(120deg,#1b43a9,#326eeb);
+  border-color:#295bd0;box-shadow:0 5px 16px #2a5ccd24;
+  font-weight:750;
+}
+.playback-button{font-size:.76rem;padding:.6rem .8rem;background:#fff;min-height:42px}
+.sim-task h3{font-size:1.4rem;font-weight:650;color:#1f365a}
+.sim-clip figcaption{min-height:7.2rem;gap:.55rem}
+.sim-clip figcaption>strong{font-size:.88rem;font-weight:750;letter-spacing:.07em;color:#295ccd}
+.sim-clip figcaption>p{font-size:1.2rem;color:#3b506f;line-height:1.45;font-weight:450}
+.sim-clip figcaption b{font-weight:750;color:#204ea9}
+.sim-clip.goal-1 figcaption,.sim-clip.goal-2 figcaption{border-left:3px solid #376cdb;padding-left:.9rem}
+.sim-clip.observation figcaption>p{font-size:1.07rem;color:#61718a;font-weight:400}
+.sim-clip.sequence figcaption{border:0;padding-left:0;min-height:0}
+.sim-clip.sequence figcaption>strong{font-size:1.55rem;color:#223d68;letter-spacing:-.035em;font-weight:650;text-transform:none}
+.sim-clip.sequence figcaption>p{font-size:.96rem;color:#68758a;line-height:1.7}
+.card-copy h3{font-weight:650;color:#243c63}
+.stat-value{font-weight:750;color:#265bd1}
+.stat-description{font-weight:600;color:#243c63}
+.chart-title,.efficiency-chart figcaption{font-weight:650;color:#29436b}
+.measure-track{height:14px}
+.measure.ours .measure-track span{background:linear-gradient(90deg,#2150b9,#4a7bef)}
+.measure.ours .measure-name{font-size:.87rem;font-weight:750}
+.measure.ours .measure-value strong{font-weight:750}
+.cost-highlight>strong{font-size:3rem;font-weight:750;color:#285bd0}
+.plot-point.ours .plot-label{font-size:1.05rem;color:#214da9}
+.efficiency h3{font-weight:650;color:#243c63}
+@media(max-width:1000px){
+  .simulation-toolbar{grid-template-columns:1fr}
+  .playback-button{justify-self:end}
+  .task-select button{min-height:72px;font-size:.94rem}
+}
+@media(max-width:800px){
+  .hero{padding-top:4.3rem}
+  .hero h1{font-size:clamp(5rem,14vw,8.5rem)}
+  .hero h1 .title-subtitle{font-size:clamp(2rem,4.5vw,2.9rem)}
+  .sim-clip.observation figcaption,.sim-clip.sequence figcaption{min-height:0}
+}
+@media(max-width:540px){
+  .hero{padding-block:3.5rem 3.7rem}
+  .hero h1{font-size:clamp(3.3rem,17.8vw,6rem)}
+  .hero h1 .title-subtitle{font-size:clamp(1.65rem,7.5vw,2.2rem);margin-top:1.3rem;line-height:1.18;font-weight:650}
+  .authors{margin-top:2.2rem;font-size:.83rem}
+  .affiliation{font-size:.74rem}
+  .links{gap:.45rem;margin-top:1.5rem}
+  .links a{min-height:43px;padding:.5rem .85rem;font-size:.76rem}
+  .story-card strong{font-size:.88rem}
+  .eyebrow{font-size:.67rem}
+  .task-select{grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
+  .task-select button{min-height:72px;font-size:.94rem;padding:.9rem .65rem}
+  .simulation-toolbar{gap:.75rem;margin-bottom:2rem}
+  .playback-button{font-size:.7rem;min-height:38px}
+  .sim-task h3{font-size:1.2rem}
+  .sim-clip figcaption{min-height:0}
+  .sim-clip figcaption>strong{font-size:.8rem}
+  .sim-clip figcaption>p{font-size:1.12rem}
+  .sim-clip.observation figcaption>p{font-size:1rem}
+  .sim-clip.sequence figcaption>strong{font-size:1.3rem}
+  .sim-clip.sequence figcaption>p{font-size:.9rem}
+  .measure.ours .measure-name{font-size:.76rem}
+  .cost-highlight>strong{font-size:2.7rem}
+  .plot-point.ours .plot-label{font-size:.9rem}
+}
+.chart-controls select{min-height:36px;font-size:.83rem}
+.cost-controls button{min-height:39px;font-size:.79rem}
+.plot-x,.plot-y{font-size:.76rem;color:#68758a}
+@media(max-width:540px){.chart-controls select{font-size:.75rem}.cost-controls button{font-size:.71rem}.plot-x,.plot-y{font-size:.68rem}}
+.top-inner{justify-content:center}
+nav{gap:2.6rem;font-size:.88rem}
+.back-to-top{font-size:.75rem;font-weight:600;text-decoration:none}
+@media(max-width:540px){nav{gap:1.9rem;font-size:.78rem}.back-to-top{font-size:.67rem}}

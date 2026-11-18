@@ -105,3 +105,8 @@ tablet and mobile layouts adapt without shrinking all media into one fixed grid.
 Evidence, performance, latency and storage plots share the same accent for
 ReuseMem; comparison methods use a consistent neutral color. Original numeric
 values are embedded in the existing data blocks and are not altered by styling.
+
+The cover uses a larger, heavier title and a strong blue gradient. No graphical
+logo or extra tagline appears. Simulation task selection uses four large
+buttons, arranged in two columns on phones. Goal instructions and ReuseMem's
+result marks use stronger type and contrast without changing the data.
