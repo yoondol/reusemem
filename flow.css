@@ -7,7 +7,7 @@
 .flow-chapters button[aria-pressed="true"] { border-color:#ccd9f1; background:#eaf0fc; color:#3159a3; }
 .flow-chapters button[aria-pressed="true"] span { color:#2a51a2; }
 .flow-playback { display:flex; align-items:center; gap:0.9rem; }
-.sequence-badge { font-size:0.7rem; color:#658476; white-space:nowrap; }
+.sequence-badge { font-size:0.7rem; color:#656f84; white-space:nowrap; }
 #flow-play { min-width:4.4rem; border:1px solid #d5dfed; border-radius:6px; background:#fff; padding:0.35rem 0.7rem; color:#48607f; font-size:0.79rem; }
 .flow-viewport { overflow-x:auto; scrollbar-width:thin; }
 .flow-scene { position:relative; }
@@ -28,7 +28,7 @@
 .prototype.is-selected .prototype-outline { stroke:#9c82c3; stroke-width:2px; }
 .prototype.is-admitting .prototype-outline { stroke:#577dbd; stroke-width:2.5px; }
 .entry-outline { fill:#fff; stroke:#d6cce6; stroke-width:1px; }
-.temporal-entry.is-selected .entry-outline { fill:#eef5eb; stroke:#82a27b; stroke-width:2px; }
+.temporal-entry.is-selected .entry-outline { fill:#ebeef5; stroke:#7b88a2; stroke-width:2px; }
 .flow-legend { fill:#8b809e; font-size:11px; }
 .flow-retained-text { fill:#7a649e; font-size:13px; font-weight:600; }
 .evidence-label { fill:#837198; font-size:11px; }
@@ -155,3 +155,36 @@
 .memory-flow:is([data-write-phase="compare"],[data-write-phase="share"]) .similar-node path { fill:#f7f0df; stroke:#b89a5e; stroke-width:2.2px; }
 .temporal-entry.is-new .entry-outline { fill:#fff7e7; stroke:#bc9e61; stroke-width:1.7px; }
 .prototype-label { font-size:11px; }
+
+/* Page palette: navy and blue, with distinct semantic memory colors. */
+.memory-flow{border-color:#d9dce3;border-radius:10px;box-shadow:0 8px 36px #20293b05}
+.flow-toolbar{background:#f5f7fa;border-color:#e1e4eb;padding:1rem 1.25rem}
+.flow-chapters button{color:#8c919a;border-radius:4px;font-weight:500;padding:.45rem .7rem}
+.flow-chapters button span{color:#686f7c;font-weight:500}
+.flow-chapters button[aria-pressed=true]{background:#e5e9f0;border-color:#c8cfdc;color:#1d3462}
+.flow-chapters button[aria-pressed=true] span{font-weight:650;color:#24375e}
+.flow-node-title{fill:#343b48;font-weight:600;letter-spacing:-.55px}
+.flow-small{fill:#7a7e87}.flow-time{fill:#7d738b}.bank-scope{fill:#8b8293}
+#flow-experience-banner>rect{fill:#ebeef3}.experience-title{fill:#2c374e;font-weight:600}
+#flow-request-bg{fill:#eceff4}.flow-overline{fill:#6e7789}.flow-request-text{fill:#31405d;font-weight:650}.flow-request-sub{fill:#5b6579}
+.writer-module>path{fill:#edeff3;stroke:#8a94a7}.writer-module>text{fill:#38455e}
+.action-module>rect{fill:#eff0f3;stroke:#a4a9b4}
+#flow-arrow-active path{fill:#546689}
+.memory-flow:is([data-phase=record],[data-phase=compare]) .record-wire,
+.memory-flow[data-phase=append] .new-wire,.memory-flow[data-phase=share] .share-wire,
+.memory-flow[data-phase=query] .query-wire,.memory-flow[data-phase=retrieve] :is(.keys-wire,.read-wire),
+.memory-flow[data-phase=fuse] :is(.past-wire,.current-wire,.recent-wire),.memory-flow[data-phase=action] .action-wire{stroke:#6a7997}
+.memory-flow[data-phase=retrieve] .reader-module path,.memory-flow[data-phase=fuse] .fusion-module rect,.memory-flow[data-phase=action] .action-module rect{stroke:#677694}
+.prototype.is-admitting .prototype-outline{stroke:#758095}.recent-title{fill:#747a86;font-weight:550}
+.flow-story{background:#f5f7fa;border-color:#dfe2e9;padding:1.3rem 1.5rem;min-height:7rem}
+.flow-story h3{font-size:1.06rem;font-weight:600;color:#343f56;letter-spacing:-.025em}.flow-story p{color:#747982;font-size:.86rem}.flow-phase-label{color:#4b5c7d;font-size:.64rem;font-weight:600}
+#flow-restart{color:#878d98;font-size:.72rem}.flow-mobile-hint{color:#7d828c}
+.full-architecture{border-color:#d9dde6;border-radius:6px}.full-architecture>summary{color:#60697b;padding:1rem 1.1rem;font-weight:500;font-size:.81rem}.full-architecture img{padding:1.5rem}
+.flow-transition{border-color:#bcc5d7;box-shadow:0 12px 40px #24324f20;color:#2b3d62}.flow-transition strong{font-weight:600}
+.flow-timeline{border-color:#e1e4eb;padding:1rem 1.5rem .6rem}.flow-timeline-labels,.flow-timeline-clock{color:#878d98}
+.memory-flow[data-stage=record] [data-timeline-stage=record],.memory-flow[data-stage=goal1] [data-timeline-stage=goal1],.memory-flow[data-stage=goal2] [data-timeline-stage=goal2]{color:#425273;font-weight:650}
+#flow-timeline::-webkit-slider-runnable-track{background:linear-gradient(to right,#717c92 0 var(--timeline-progress),#e0e3ea var(--timeline-progress) 100%)}
+#flow-timeline::-webkit-slider-thumb{background:#4e5e7f;box-shadow:0 0 0 1px #4e5e7f,0 2px 5px #28354e20}
+#flow-timeline::-moz-range-track{background:#e0e3ea}#flow-timeline::-moz-range-progress{background:#717c92}#flow-timeline::-moz-range-thumb{background:#4e5e7f;box-shadow:0 0 0 1px #4e5e7f}
+.flow-timeline #flow-play{color:#4e5e7f;background:#eff2f7;border-color:#ced4e1}.flow-timeline #flow-play:hover{background:#dfe4ef;border-color:#aeb8cb}
+@media(max-width:760px){.flow-story{padding:1rem;min-height:9.1rem}.flow-story h3{font-size:1rem}.flow-story p{font-size:.8rem}.flow-timeline{padding:.85rem 1rem .5rem}.flow-toolbar{padding:.75rem}.full-architecture img{padding:.5rem}}

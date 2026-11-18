@@ -89,3 +89,19 @@ ReuseMem or Uniform-Memory evaluation rollouts. A visible disclosure immediately
 above the player states this distinction. The MP4 itself contains no explanatory
 text or production labels. Quantitative results elsewhere are independent of
 this illustrative video.
+
+## Editorial design
+
+The page uses a locally hosted DM Sans type family, an off-white, navy and cobalt-blue
+palette, and a restrained hierarchy. The visit progresses from the everyday
+example to the interactive method, simulator examples, physical scenarios, and
+quantitative evaluation. Each task keeps Observation, Goal 1 and Goal 2 together;
+a larger continuous sequence follows. Native videos keep their aspect ratio,
+autoplay muted when visible, and pause off screen. The same video sources, cue
+times, evaluation data, and v52 memory-flow logic are retained.
+
+The top navigation stays available and indicates the current section. Desktop,
+tablet and mobile layouts adapt without shrinking all media into one fixed grid.
+Evidence, performance, latency and storage plots share the same accent for
+ReuseMem; comparison methods use a consistent neutral color. Original numeric
+values are embedded in the existing data blocks and are not altered by styling.

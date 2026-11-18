@@ -225,3 +225,23 @@ if (comparison) {
   comparison.addEventListener("seeked", updateComparison);
   updateComparison();
 }
+
+// A quiet section indicator in the persistent research-page navigation.
+if ('IntersectionObserver' in window) {
+  const links = [...document.querySelectorAll('nav[aria-label="Sections"] a')];
+  const navObserver = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      for (const link of links) {
+        if (link.hash === '#' + entry.target.id) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      }
+    }
+  }, { rootMargin: '-15% 0px -65% 0px', threshold: 0 });
+  for (const link of links) {
+    const section = document.querySelector(link.hash);
+    if (section) navObserver.observe(section);
+  }
+  const cover = document.querySelector('.hero');
+  if (cover) navObserver.observe(cover);
+}
