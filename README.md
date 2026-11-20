@@ -143,3 +143,10 @@ The edits remove only the closing tails. Observation and all three goals
 remain contiguous at original speed, without crops, overlays or inserted
 frames. HEVC is converted to H.264 with fast-start metadata; audio is omitted.
 Quantitative results are unchanged.
+
+## Link sharing preview
+
+Open Graph and Twitter large-image cards use `assets/reusemem-social.png`,
+a 1200 × 630 title card matching the blue-gradient cover and local DM Sans
+typeface. Absolute public image URLs, dimensions, type and alt text appear
+in the static HTML head so link crawlers do not need JavaScript.
