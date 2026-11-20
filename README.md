@@ -138,11 +138,13 @@ Time compression and editorial holds do not change the sequence of actions.
 
 ## Research overview
 
-The Overview video runs for 94 seconds. Real manipulation footage introduces
-the problem. Custom animated diagrams show recording, retrieval, action and
-learning before the physical and simulation results. Method includes a
-two-request interaction that pairs the same earlier recording with the
-current scene and the matching action excerpt.
+The 102-second Overview in `assets/reusemem-efficiency-film.mp4` starts with
+the physical case setup and explains how one recording supports both target
+identity and a remembered destination. Animated examples show appearance
+sharing, action-guided retrieval, and within-call memory projections.
+Dedicated result scenes show the evidence intervention, retained bank size,
+response to a new request and the continuing-goal cache control. The site
+links the three headline metrics under the video to the detailed results.
 
 ## Link sharing preview
 

@@ -386,3 +386,37 @@ html{scroll-padding-top:0}
  .recall-sequence p{font-size:.82rem}
  .recall-sequence figcaption strong{font-size:.92rem}
 }
+
+/* Keep capability and cost together under the film. */
+.overview-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:1.35rem;border-block:1px solid #cbdaf0;background:#edf4ff}
+.overview-results a{display:grid;align-content:start;gap:.23rem;padding:1.2rem 1.4rem;color:#193b73;text-decoration:none}
+.overview-results a+a{border-left:1px solid #cbdaf0}
+.overview-results a:hover{background:#e2edff}
+.overview-results strong{color:#225abb;font-size:clamp(1.8rem,3.5vw,2.65rem);line-height:1;letter-spacing:-.04em;font-weight:800}
+.overview-results strong b{font-size:.55em;letter-spacing:0}
+.overview-results span{font-size:.99rem;font-weight:700;margin-top:.25rem}
+.overview-results small{font-size:.82rem;color:#4f678a;line-height:1.4}
+#efficiency .section-intro p{max-width:65ch;margin:.6rem 0 0}
+.efficiency-explain{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem;margin-top:1rem;align-items:start}
+.efficiency-detail{background:white;border:1px solid #c9d9ee;border-radius:9px}
+.efficiency-detail summary{padding:.9rem 1.15rem;color:#254c87;font-weight:750;cursor:pointer}
+.efficiency-detail-body{padding:.15rem 1.15rem 1.15rem;color:#455f82;font-size:.93rem;line-height:1.6}
+.efficiency-detail-body p{margin-top:1rem}
+.sharing-diagram{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:.75rem}
+.sharing-diagram>div{background:#edf4ff;color:#345e99;border-radius:7px;text-align:center;padding:.65rem}
+.sharing-diagram strong,.sharing-diagram span{display:block}
+.sharing-diagram strong{font-size:1.65rem;color:#225abb;line-height:1.15}
+.response-segments{display:flex;gap:2px;overflow:hidden;border-radius:5px;height:12px;margin:.35rem 0 .7rem;transform-origin:left}
+.response-segments span{flex:var(--ms);background:var(--shade)}
+.efficiency-detail[open] .response-segments{animation:reveal-response .52s ease-out}
+@keyframes reveal-response{from{transform:scaleX(.15);opacity:.45}to{transform:scaleX(1);opacity:1}}
+.response-breakdown div{display:flex;justify-content:space-between;gap:1rem;border-bottom:1px solid #e0e8f6;padding:.37rem 0}
+.response-breakdown dd{font-weight:750;color:#21488a;white-space:nowrap}
+@media(prefers-reduced-motion:reduce){.efficiency-detail[open] .response-segments{animation:none}}
+@media(max-width:760px){
+ .overview-results a{padding:.9rem .65rem}
+ .overview-results span{font-size:.84rem}
+ .overview-results small{font-size:.74rem}
+ .efficiency-explain{grid-template-columns:1fr}
+}
+@media(max-width:390px){.overview-results strong{font-size:1.55rem}}

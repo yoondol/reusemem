@@ -25,7 +25,7 @@
   <link rel="canonical" href="https://yoondol.github.io/reusemem/">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
   <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=overview-14">
+  <link rel="stylesheet" href="style.css?v=evidence-efficiency-15">
   <link rel="stylesheet" href="flow.css?v=story-13">
   <script src="page.js?v=overview-14" defer></script>
   <script src="flow.js?v=growing-memory-v1" defer></script>
@@ -50,16 +50,28 @@
     <section class="wrap section research-film" id="research-video" aria-labelledby="research-film-title">
       <div class="research-film-heading">
         <h2 id="research-film-title">Overview</h2>
-        <p>The robot sees what is inside two cases before the lids close. A later request needs to know <strong>which case to move</strong>. Another needs to know <strong>where it started</strong>. ReuseMem learns to use the same recording for both actions, even after the scene changes.</p>
+        <p>The robot sees what is inside two cases before the lids close. A later request needs to know <strong>which case to move</strong>. Another needs to know <strong>where it started</strong>. ReuseMem learns to use the same recording for both actions, even after the scene changes. The memory must also stay small enough to keep and fast enough to act on.</p>
       </div>
-      <video controls playsinline preload="none" poster="assets/reusemem-film-poster.jpg?v=overview-14" aria-label="ReuseMem research overview video">
-        <source src="assets/reusemem-overview.mp4?v=overview-14" type="video/mp4">
-        <a href="assets/reusemem-overview.mp4?v=overview-14">Download the research overview</a>
+      <video controls playsinline preload="none" poster="assets/reusemem-efficiency-poster.jpg" aria-label="ReuseMem research overview video">
+        <source src="assets/reusemem-efficiency-film.mp4" type="video/mp4">
+        <a href="assets/reusemem-efficiency-film.mp4">Download the research overview</a>
       </video>
-      <div class="overview-takeaways">
-        <div><strong>Before the goal</strong><p>Record observations before the next request is known.</p></div>
-        <div><strong>When the goal arrives</strong><p>Find the past evidence that helps the robot act now.</p></div>
-        <div><strong>As experience grows</strong><p>Share visual features across similar views and keep their timing distinct.</p></div>
+      <div class="overview-results" aria-label="Overview of measured outcomes">
+        <a href="#results">
+          <strong>60.5%</strong>
+          <span>Both simulation goals succeed</span>
+          <small>121 of 200 recordings</small>
+        </a>
+        <a href="#efficiency">
+          <strong>175 <b>ms</b></strong>
+          <span>New request to first command</span>
+          <small>Includes retrieval, action and dispatch</small>
+        </a>
+        <a href="#efficiency">
+          <strong>33.7%</strong>
+          <span>Less retained memory</span>
+          <small>Same 2,048 temporal entries</small>
+        </a>
       </div>
     </section>
 
@@ -440,7 +452,10 @@
         <script type="application/json" id="physical-outcome-data">{"case":{"all":[[5,1,20],[45,9,20],[70,14,20]],"sequence":[[20,4,20],[50,10,20],[65,13,20]]},"toy":{"all":[[10,2,20],[60,12,20],[70,14,20]],"sequence":[[10,2,20],[55,11,20],[65,13,20]]}}</script>
         <div class="efficiency" id="efficiency">
           <div class="efficiency-heading">
-            <div class="section-intro"><h3>Efficiency</h3></div>
+            <div class="section-intro">
+              <h3>Efficiency</h3>
+              <p>The same memory bank supports stronger goal completion. ReuseMem adds 12 ms over uniform retrieval and stores matching visual features once.</p>
+            </div>
             <div class="cost-controls" role="group" aria-label="Efficiency success metric">
               <button type="button" data-cost-metric="all" aria-pressed="true">All-goal</button>
               <button type="button" data-cost-metric="sequence" aria-pressed="false">Sequence</button>
@@ -450,7 +465,7 @@
           <div class="efficiency-grid">
 <figure class="resource-chart efficiency-chart" data-cost-axis="response">
               <figcaption><span>Success vs. response time</span></figcaption>
-              <div class="cost-highlight"><strong>6.4×</strong><span>faster response than MemER</span></div>
+              <div class="cost-highlight"><strong>6.4×</strong><span>175 ms vs. 1,112 ms for MemER (RoboMME)</span></div>
               <p class="plot-y-title"><span class="cost-metric-name">All-goal success</span> (%)</p>
               <div class="cost-plot">
                 <div class="plot-y" aria-hidden="true"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div>
@@ -482,7 +497,7 @@
             </figure>
 <figure class="resource-chart efficiency-chart" data-cost-axis="storage">
               <figcaption><span>Success vs. memory storage</span></figcaption>
-              <div class="cost-highlight"><strong>33.7%</strong><span>less storage with appearance sharing</span></div>
+              <div class="cost-highlight"><strong>33.7%</strong><span>43.98 MiB vs. 66.38 MiB without feature sharing</span></div>
               <p class="plot-y-title"><span class="cost-metric-name">All-goal success</span> (%)</p>
               <div class="cost-plot">
                 <div class="plot-y" aria-hidden="true"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div>
@@ -509,6 +524,39 @@
               <p class="plot-x-title">Retained memory (MiB)</p>
             </figure>
           </div>
+          <div class="efficiency-explain">
+            <details class="efficiency-detail">
+              <summary>What is stored?</summary>
+              <div class="efficiency-detail-body">
+                <div class="sharing-diagram" aria-label="2,048 retained temporal entries reference 1,331 appearance entries">
+                  <div><strong>2,048</strong><span>Temporal entries</span></div>
+                  <span aria-hidden="true">→</span>
+                  <div><strong>1,331</strong><span>Stored appearances</span></div>
+                </div>
+                <p>Similar views can point to one set of visual features. Each observation still keeps its own time and key. At this bank size, All-goal success was 60.5% with sharing and 61.0% without it.</p>
+              </div>
+            </details>
+            <details class="efficiency-detail">
+              <summary>What takes time?</summary>
+              <div class="efficiency-detail-body">
+                <div class="response-segments" aria-hidden="true">
+                  <span style="--ms:90;--shade:#9aafd0"></span>
+                  <span style="--ms:37;--shade:#5776ad"></span>
+                  <span style="--ms:11;--shade:#245dcc"></span>
+                  <span style="--ms:10;--shade:#5a8ded"></span>
+                  <span style="--ms:27;--shade:#28467f"></span>
+                </div>
+                <dl class="response-breakdown">
+                  <div><dt>Observation, I/O and dispatch</dt><dd>90 ms</dd></div>
+                  <div><dt>Current vision and language</dt><dd>37 ms</dd></div>
+                  <div><dt>Reader</dt><dd>11 ms</dd></div>
+                  <div><dt>Reconstruction, fusion and memory projection</dt><dd>10 ms</dd></div>
+                  <div><dt>Action sampling</dt><dd>27 ms</dd></div>
+                </dl>
+                <p>For a continuing goal, reusing the fixed memory projections during action sampling reduces response from 174 to 165 ms.</p>
+              </div>
+            </details>
+          </div>
           <span id="cost-update" class="sr-only" role="status"></span>
         </div>
       </section>
@@ -519,7 +567,7 @@
     <section class="wrap section evidence-section" id="evidence" aria-labelledby="evidence-title">
       <div class="section-intro">
         <h2 id="evidence-title">Does the policy use memory?</h2>
-        <p>Removing <strong>relevant evidence</strong> sharply reduces success.</p>
+        <p>The request and current scene stay fixed. Removing <strong>relevant past observations</strong> drops individual goal success from 74.5% to 27.5%.</p>
       </div>
       <figure class="evidence-chart" aria-labelledby="evidence-caption">
         <figcaption id="evidence-caption">Goal success when the history changes</figcaption>
