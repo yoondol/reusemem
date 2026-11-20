@@ -34,12 +34,12 @@ above the independent goal players.
 Quantitative policy outcomes and resource plots use the published paper’s tables
 and measurements. The site ships DM Sans locally under its OFL license.
 
-## Adding the real-world demonstrations
+## Real-world demonstrations
 
-Each physical scenario now has its own full-width row, with Observation and a
-continuous three-goal execution side by side. Native photographs remain until
-actual videos are supplied. Source paths are explicit in
-`assets/real-world/clips.json`; null entries never request nonexistent videos.
+Each physical scenario has its own full-width row, with Observation and a
+continuous three-goal execution side by side. Both supplied recordings are
+embedded. Source paths and chapter times are defined in
+`assets/real-world/clips.json`.
 
 The final four files are `case-observation.mp4`, `case-sequence.mp4`,
 `toy-observation.mp4`, and `toy-sequence.mp4`, all under `assets/real-world/`.
@@ -149,5 +149,17 @@ the execution. The scene and full robot movement remain visible in native
 Goal 1 starts at sequence 0 s, Goal 2 at 31 s and Goal 3 at 61 s
 (source 11, 42 and 72 seconds). Synchronized web panels and optional English
 WebVTT captions follow these boundaries; the three goal buttons seek to them.
-Both videos use muted autoplay when visible and pause off screen. The case
-scenario still uses photographs while its real video is pending.
+Both videos use muted autoplay when visible and pause off screen.
+
+## Physical case demonstration
+
+The case scenario uses the supplied recording with open USB and SD-card cases.
+Source 0–8 seconds forms Observation; source 8–113.767 seconds forms the
+continuous three-goal sequence. Sequence goal starts are 0, 32 and 66 seconds
+(source 8, 40 and 74 seconds). No internal cuts, resets, image crops or speed
+changes are made. Both clips preserve native 1080p framing, converted from
+HEVC to H.264 with fast-start metadata and audio omitted. Thumbnails come
+from the same recording. Fixed panels below the videos and optional English
+WebVTT captions explain the observation and active request. Goal buttons seek
+to the corresponding action stage. Existing toy footage and numeric results
+remain unchanged.

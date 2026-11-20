@@ -1,11 +1,45 @@
 {
   "case-observation": {
-    "src": null,
+    "src": "assets/real-world/case-observation.mp4?v=real-complete-11",
+    "poster": "assets/real-world/case-observation.jpg?v=real-complete-11",
+    "captions": "assets/real-world/case-observation.vtt?v=real-complete-11",
+    "cues": [
+      {
+        "start": 0,
+        "end": 2,
+        "text": "Remember the contents and original positions of both cases."
+      },
+      {
+        "start": 2,
+        "end": 6,
+        "text": "The cases are closed, hiding the USB drive and SD card."
+      },
+      {
+        "start": 6,
+        "end": 8,
+        "text": "Use the observed contents to select each case."
+      }
+    ],
     "chapters": []
   },
   "case-sequence": {
-    "src": null,
-    "chapters": []
+    "src": "assets/real-world/case-sequence.mp4?v=real-complete-11",
+    "poster": "assets/real-world/case-sequence.jpg?v=real-complete-11",
+    "captions": "assets/real-world/case-sequence.vtt?v=real-complete-11",
+    "chapters": [
+      {
+        "goal": 1,
+        "start": 0
+      },
+      {
+        "goal": 2,
+        "start": 32
+      },
+      {
+        "goal": 3,
+        "start": 66
+      }
+    ]
   },
   "toy-observation": {
     "src": "assets/real-world/toy-observation.mp4?v=toy-final-10",
