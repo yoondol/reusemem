@@ -268,3 +268,21 @@ html{scroll-padding-top:0}
 
 /* Supplied physical footage retains its native widescreen composition. */
 #real-world .real-media{aspect-ratio:16/9}
+
+/* One continuous player per task: observation becomes action in the same frame. */
+.real-presentation{max-width:1040px;margin-inline:auto}
+.real-continuous-player .real-media{border-bottom-left-radius:0;border-bottom-right-radius:0}
+.real-current-step{position:relative;display:grid;grid-template-columns:5.4rem minmax(0,1fr);align-items:center;gap:1rem;padding:1.15rem 1.5rem 1.35rem;background:#183b7b;color:#fff;border-radius:0 0 8px 8px;min-height:92px;overflow:hidden}
+.real-current-step>span{font-size:.82rem;font-weight:750;letter-spacing:.045em;text-transform:uppercase;color:#c1d7ff}
+.real-current-step>p{font-size:1.1rem;line-height:1.55;font-weight:550}
+.real-stage-progress{position:absolute;bottom:0;left:0;width:100%;height:3px;background:#ffffff16}
+.real-stage-progress i{display:block;height:100%;width:0;background:#84adff;transition:width .15s linear}
+.real-stage-buttons{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.75rem;margin-top:1rem}
+.real-stage-buttons button{padding:.85rem 1rem;border:1px solid #cfdbef;border-radius:7px;background:#f1f6ff;color:#294b7b;text-align:left;min-height:82px}
+.real-stage-buttons button>span{display:block;font-size:.69rem;text-transform:uppercase;letter-spacing:.06em;color:#4970af;margin-bottom:.35rem;font-weight:700}
+.real-stage-buttons button>strong{display:block;font-size:.96rem;line-height:1.4;font-weight:650}
+.real-stage-buttons button:disabled{opacity:1;cursor:default}
+.real-stage-buttons button:not(:disabled):hover{background:#e5eeff;border-color:#638cdb}
+.real-stage-buttons button.is-current{background:#2357c6;border-color:#2357c6;color:white;box-shadow:0 4px 15px #2459b51c}
+.real-stage-buttons button.is-current>span{color:#d0e1ff}
+@media(max-width:650px){.real-current-step{grid-template-columns:4rem 1fr;gap:.65rem;padding:1rem;min-height:106px}.real-current-step>span{font-size:.72rem}.real-current-step>p{font-size:.95rem}.real-stage-buttons{grid-template-columns:1fr 1fr;gap:.6rem}.real-stage-buttons button{min-height:75px;padding:.8rem}.real-stage-buttons button>strong{font-size:.88rem}}

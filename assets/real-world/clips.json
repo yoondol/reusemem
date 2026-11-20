@@ -1,85 +1,63 @@
 {
-  "case-observation": {
-    "src": "assets/real-world/case-observation.mp4?v=real-complete-11",
-    "poster": "assets/real-world/case-observation.jpg?v=real-complete-11",
-    "captions": "assets/real-world/case-observation.vtt?v=real-complete-11",
-    "cues": [
+  "case-demo": {
+    "src": "assets/real-world/case-demo.mp4?v=continuous-real-12",
+    "poster": "assets/real-world/case-demo.jpg?v=continuous-real-12",
+    "captions": "assets/real-world/case-demo.vtt?v=continuous-real-12",
+    "chapters": [
       {
+        "goal": 0,
         "start": 0,
-        "end": 2,
+        "label": "Observe",
         "text": "Remember the contents and original positions of both cases."
       },
       {
-        "start": 2,
-        "end": 6,
-        "text": "The cases are closed, hiding the USB drive and SD card."
-      },
-      {
-        "start": 6,
-        "end": 8,
-        "text": "Use the observed contents to select each case."
-      }
-    ],
-    "chapters": []
-  },
-  "case-sequence": {
-    "src": "assets/real-world/case-sequence.mp4?v=real-complete-11",
-    "poster": "assets/real-world/case-sequence.jpg?v=real-complete-11",
-    "captions": "assets/real-world/case-sequence.vtt?v=real-complete-11",
-    "chapters": [
-      {
         "goal": 1,
-        "start": 0
+        "start": 8,
+        "label": "Goal 1",
+        "text": "Move the case containing the USB drive to the left tray."
       },
       {
         "goal": 2,
-        "start": 32
+        "start": 40,
+        "label": "Goal 2",
+        "text": "Move the case containing the SD card to the right tray."
       },
       {
         "goal": 3,
-        "start": 66
+        "start": 74,
+        "label": "Goal 3",
+        "text": "Return the USB case to its original position."
       }
     ]
   },
-  "toy-observation": {
-    "src": "assets/real-world/toy-observation.mp4?v=toy-final-10",
-    "poster": "assets/real-world/toy-observation.jpg?v=toy-final-10",
-    "captions": "assets/real-world/toy-observation.vtt?v=toy-final-10",
-    "cues": [
-      {
-        "start": 0,
-        "end": 2.5,
-        "text": "Remember where each toy started."
-      },
-      {
-        "start": 2.5,
-        "end": 7.4,
-        "text": "Both toys are moved into the left tray."
-      },
-      {
-        "start": 7.4,
-        "end": 11,
-        "text": "The toys have moved. Remember their original positions."
-      }
-    ],
-    "chapters": []
-  },
-  "toy-sequence": {
-    "src": "assets/real-world/toy-sequence.mp4?v=toy-final-10",
-    "poster": "assets/real-world/toy-sequence.jpg?v=toy-final-10",
-    "captions": "assets/real-world/toy-sequence.vtt?v=toy-final-10",
+  "toy-demo": {
+    "src": "assets/real-world/toy-demo.mp4?v=continuous-real-12",
+    "poster": "assets/real-world/toy-demo.jpg?v=continuous-real-12",
+    "captions": "assets/real-world/toy-demo.vtt?v=continuous-real-12",
     "chapters": [
       {
+        "goal": 0,
+        "start": 0,
+        "label": "Observe",
+        "text": "Remember where each toy started before they are moved into the left tray."
+      },
+      {
         "goal": 1,
-        "start": 0
+        "start": 11,
+        "label": "Goal 1",
+        "text": "Move the toy that was originally on the left to the right tray."
       },
       {
         "goal": 2,
-        "start": 31
+        "start": 42,
+        "label": "Goal 2",
+        "text": "Brush the spot where that toy originally stood, then return the brush."
       },
       {
         "goal": 3,
-        "start": 61
+        "start": 72,
+        "label": "Goal 3",
+        "text": "Return the toy to its original position."
       }
     ]
   }

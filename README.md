@@ -36,25 +36,19 @@ and measurements. The site ships DM Sans locally under its OFL license.
 
 ## Real-world demonstrations
 
-Each physical scenario has its own full-width row, with Observation and a
-continuous three-goal execution side by side. Both supplied recordings are
-embedded. Source paths and chapter times are defined in
-`assets/real-world/clips.json`.
+Each physical scenario has one full-width continuous player. The first phase
+shows the observation; the three requests then execute in the same video,
+without any scene reset or internal edit. No observation clip loops beside
+the execution. A fixed panel below the image shows the active phase and full
+instruction. Four chapter buttons seek to Observe or Goals 1–3, and a slim
+progress indicator follows the current phase. On phones the buttons form a
+2 × 2 grid. Videos retain their native 1080p 16:9 framing and original speed.
+They autoplay muted in view and pause off-screen. English WebVTT captions
+are optional through the native player controls.
 
-The final four files are `case-observation.mp4`, `case-sequence.mp4`,
-`toy-observation.mp4`, and `toy-sequence.mp4`, all under `assets/real-world/`.
-Put each published relative path in the matching `src`. For each sequence, set
-`chapters` to actual `{ "goal": 1, "start": <seconds> }` entries for goals 1–3.
-Starts are measured in the final sequence clip, not the original full master.
-The goal buttons activate only when their real start times are supplied. Captions
-and active-goal emphasis follow playback, without covering the camera image.
-Videos join the same muted autoplay and off-screen pause system as simulation.
-
-Record one uninterrupted master per scenario, including the observation period,
-then split it only into observation and execution for the page. Do not reset or
-re-stage between requests. Case goals are USB to left tray, SD to right tray,
-and USB to its original position. Toy goals are the originally left toy to the
-right tray, brushing its original spot and parking the brush, and toy restoration.
+Source paths and verified chapter times are defined in
+`assets/real-world/clips.json`. The case clip is `case-demo.mp4`; the toy clip
+is `toy-demo.mp4`. Camera photographs remain as posters and fallback images.
 
 ## Growing memory and execution context
 
@@ -137,29 +131,15 @@ architecture, demonstrations and quantitative plots. Functional line icons
 identify ideas and chapters; there is no project logo or extra cover tagline.
 Exact requests, metric definitions and media provenance remain where needed.
 
-## Physical toy demonstration
+## Physical recording edits
 
-The finalized toy scenario uses the latest supplied camera recording, replacing
-all earlier camera-comparison embeds. Its last three seconds are removed.
-Observation is source 0–11 seconds; the continuous execution is source
-11–106.833 seconds. No cuts, resets, crops or speed changes are made inside
-the execution. The scene and full robot movement remain visible in native
-1920 × 1080 framing. Audio is omitted.
+Case: supplied 113.767-second recording, final 3 seconds removed. Published
+length 110.767 s; phase starts 0, 8, 40 and 74 seconds.
 
-Goal 1 starts at sequence 0 s, Goal 2 at 31 s and Goal 3 at 61 s
-(source 11, 42 and 72 seconds). Synchronized web panels and optional English
-WebVTT captions follow these boundaries; the three goal buttons seek to them.
-Both videos use muted autoplay when visible and pause off screen.
+Toy: selected 109.833-second recording, final 3 seconds removed. Published
+length 106.833 s; phase starts 0, 11, 42 and 72 seconds.
 
-## Physical case demonstration
-
-The case scenario uses the supplied recording with open USB and SD-card cases.
-Source 0–8 seconds forms Observation; source 8–113.767 seconds forms the
-continuous three-goal sequence. Sequence goal starts are 0, 32 and 66 seconds
-(source 8, 40 and 74 seconds). No internal cuts, resets, image crops or speed
-changes are made. Both clips preserve native 1080p framing, converted from
-HEVC to H.264 with fast-start metadata and audio omitted. Thumbnails come
-from the same recording. Fixed panels below the videos and optional English
-WebVTT captions explain the observation and active request. Goal buttons seek
-to the corresponding action stage. Existing toy footage and numeric results
-remain unchanged.
+The edits remove only the closing tails. Observation and all three goals
+remain contiguous at original speed, without crops, overlays or inserted
+frames. HEVC is converted to H.264 with fast-start metadata; audio is omitted.
+Quantitative results are unchanged.

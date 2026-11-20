@@ -12,9 +12,9 @@
   <link rel="canonical" href="https://yoondol.github.io/reusemem/">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
   <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=real-complete-11">
-  <link rel="stylesheet" href="flow.css?v=real-complete-11">
-  <script src="page.js?v=toy-final-10" defer></script>
+  <link rel="stylesheet" href="style.css?v=continuous-real-12">
+  <link rel="stylesheet" href="flow.css?v=continuous-real-12">
+  <script src="page.js?v=continuous-real-12" defer></script>
   <script src="flow.js?v=growing-memory-v1" defer></script>
 </head>
 <body>
@@ -269,43 +269,33 @@
         <div class="real-scenarios">
           <article class="real-scenario" id="real-case" data-real-scenario="case">
             <header class="real-scenario-heading"><span class="scenario-number">01</span><div><h3>Case preparation and return</h3><p>Remember the <strong>contents</strong> to select a case and its <strong>origin</strong> to return it.</p></div></header>
-            <div class="real-clips">
-              <figure class="real-clip">
-                <figcaption><strong>Observation</strong><p>Observe the contents and original positions before the cases are closed.</p></figcaption>
-                <div class="real-media" data-real-slot="case-observation"><img src="assets/real-world/case-observation.jpg?v=real-complete-11" width="1920" height="1080" alt="Open cases reveal a USB drive and an SD card at their original desk positions." loading="lazy"></div>
-                <div class="real-caption" data-real-observation-context="case" hidden><span>Observe</span><p>Remember the contents and original positions of both cases.</p></div>
+            <div class="real-presentation">
+              <figure class="real-continuous-player">
+                <div class="real-media" data-real-slot="case-demo"><img src="assets/real-world/case-demo.jpg?v=continuous-real-12" width="1920" height="1080" alt="Remember the contents and original positions of both cases." loading="lazy"></div>
+                <figcaption class="real-current-step" data-real-context="case"><span>Observe</span><p>Remember the contents and original positions of both cases.</p><div class="real-stage-progress" aria-hidden="true"><i></i></div></figcaption>
               </figure>
-              <figure class="real-clip real-sequence">
-                <figcaption><strong>Continuous sequence</strong><p>Goal 1 → Goal 2 → Goal 3. <b>No scene reset.</b></p></figcaption>
-                <div class="real-media" data-real-slot="case-sequence"><img src="assets/real-world/case-sequence.jpg?v=real-complete-11" width="1920" height="1080" alt="The robot moves the closed USB case into the left tray." loading="lazy"></div>
-                <div class="real-caption" data-real-context="case" hidden><span>Sequence</span><p>Goal 1 → Goal 2 → Goal 3. No reset.</p></div>
-              </figure>
+              <div class="real-stage-buttons" role="group" aria-label="Case preparation and return chapters">
+                <button type="button" data-real-stage="0" disabled><span>Start</span><strong>Observe</strong></button>
+                <button type="button" data-real-stage="1" disabled><span>Goal 1</span><strong>Retrieve USB</strong></button>
+                <button type="button" data-real-stage="2" disabled><span>Goal 2</span><strong>Retrieve SD card</strong></button>
+                <button type="button" data-real-stage="3" disabled><span>Goal 3</span><strong>Return USB</strong></button>
+              </div>
             </div>
-            <ol class="real-goals" aria-label="Three successive requests">
-              <li><button type="button" data-real-goal="1" disabled><span>Goal 1</span><strong>Move the case containing the USB drive to the left tray.</strong></button></li>
-              <li><button type="button" data-real-goal="2" disabled><span>Goal 2</span><strong>Move the case containing the SD card to the right tray.</strong></button></li>
-              <li><button type="button" data-real-goal="3" disabled><span>Goal 3</span><strong>Return the USB case to its original position.</strong></button></li>
-            </ol>
           </article>
           <article class="real-scenario" id="real-toy" data-real-scenario="toy">
             <header class="real-scenario-heading"><span class="scenario-number">02</span><div><h3>Toy relocation, cleaning and return</h3><p>The same recorded origin guides <strong>toy selection, brushing and return</strong>.</p></div></header>
-            <div class="real-clips">
-              <figure class="real-clip">
-                <figcaption><strong>Observation</strong><p>Original positions, before both toys are gathered in the left tray.</p></figcaption>
-                <div class="real-media" data-real-slot="toy-observation"><img src="assets/real-world/toy-observation.jpg?v=toy-final-10" width="1920" height="1080" alt="The dragon and chick at their original desk positions, before being gathered in the left tray." loading="lazy"></div>
-                <div class="real-caption" data-real-observation-context="toy" hidden><span>Observe</span><p>Remember where each toy started.</p></div>
+            <div class="real-presentation">
+              <figure class="real-continuous-player">
+                <div class="real-media" data-real-slot="toy-demo"><img src="assets/real-world/toy-demo.jpg?v=continuous-real-12" width="1920" height="1080" alt="Remember where each toy started before they are moved into the left tray." loading="lazy"></div>
+                <figcaption class="real-current-step" data-real-context="toy"><span>Observe</span><p>Remember where each toy started before they are moved into the left tray.</p><div class="real-stage-progress" aria-hidden="true"><i></i></div></figcaption>
               </figure>
-              <figure class="real-clip real-sequence">
-                <figcaption><strong>Continuous sequence</strong><p>Goal 1 → Goal 2 → Goal 3. <b>No scene reset.</b></p></figcaption>
-                <div class="real-media" data-real-slot="toy-sequence"><img src="assets/real-world/toy-sequence.jpg?v=toy-final-10" width="1920" height="1080" alt="The robot moving the dragon from the left tray toward the right tray." loading="lazy"></div>
-                <div class="real-caption" data-real-context="toy" hidden><span>Sequence</span><p>Goal 1 → Goal 2 → Goal 3. No reset.</p></div>
-              </figure>
+              <div class="real-stage-buttons" role="group" aria-label="Toy relocation, cleaning and return chapters">
+                <button type="button" data-real-stage="0" disabled><span>Start</span><strong>Observe</strong></button>
+                <button type="button" data-real-stage="1" disabled><span>Goal 1</span><strong>Move toy</strong></button>
+                <button type="button" data-real-stage="2" disabled><span>Goal 2</span><strong>Clean original spot</strong></button>
+                <button type="button" data-real-stage="3" disabled><span>Goal 3</span><strong>Return toy</strong></button>
+              </div>
             </div>
-            <ol class="real-goals" aria-label="Three successive requests">
-              <li><button type="button" data-real-goal="1" disabled><span>Goal 1</span><strong>Move the toy that was originally on the left to the right tray.</strong></button></li>
-              <li><button type="button" data-real-goal="2" disabled><span>Goal 2</span><strong>Brush the spot where that toy originally stood, then return the brush.</strong></button></li>
-              <li><button type="button" data-real-goal="3" disabled><span>Goal 3</span><strong>Return the toy to its original position.</strong></button></li>
-            </ol>
           </article>
         </div>
       </section>
