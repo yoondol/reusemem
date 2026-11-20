@@ -290,27 +290,16 @@ html{scroll-padding-top:0}
 /* Research overview and paper details. */
 .research-film{max-width:940px;padding-block:3.2rem}
 .research-film-heading{text-align:center;margin-bottom:1.5rem}
-.research-film-heading h2,.memory-details>h3{font-size:clamp(1.55rem,3vw,2.35rem);color:#203f74;letter-spacing:-.035em;font-weight:750}
+.research-film-heading h2{font-size:clamp(1.55rem,3vw,2.35rem);color:#203f74;letter-spacing:-.035em;font-weight:750}
 .research-film-heading p{max-width:63ch;margin:.75rem auto 0;color:#526a8b;line-height:1.65}
 .research-film video{display:block;width:100%;aspect-ratio:16/9;background:#172b4b;border:1px solid #bed0ee;border-radius:10px}
 #method{padding-top:clamp(2.25rem,5vh,4rem)}
 #method .chapter-intro{margin-bottom:1.55rem}
 #method .section-symbol{display:none}
 #method .chapter-intro h2{font-size:clamp(2.4rem,4vw,3.3rem)}
-.memory-details{max-width:1100px;margin:3.25rem auto 0}
-.memory-details>h3{margin-bottom:1.3rem}
-.memory-detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.1rem}
-.memory-detail{border:1px solid #d2def0;border-radius:9px;padding:1.2rem;background:#fff}
-.memory-detail h4{font-size:1.12rem;color:#234c8e;margin:0 0 .9rem;font-weight:750}
-.memory-detail p,.method-learning p{font-size:.96rem;line-height:1.65;color:#435d80}
-.memory-diagram{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:.5rem;margin-bottom:1rem}
-.memory-diagram span{display:grid;align-items:center;text-align:center;padding:.5rem;background:#edf3ff;border-radius:6px;min-height:60px;font-size:.85rem;font-weight:700;color:#254f97}
-.memory-diagram b{color:#3a68ba}
+.method-learning p{font-size:.96rem;line-height:1.65;color:#435d80}
 .method-detail-disclosure{margin-top:1rem;border:1px solid #d2def0;border-radius:8px;background:#fff}
 .method-detail-disclosure summary{padding:1rem 1.2rem;font-weight:700;color:#284f8d;cursor:pointer}
-.method-detail-figures{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;padding:0 1.2rem 1.2rem}
-.method-detail-figures img{width:100%;height:clamp(160px,23vw,300px);object-fit:contain}
-.method-detail-figures figcaption{margin-top:.8rem;color:#4c6486;line-height:1.6}
 .method-learning{display:grid;grid-template-columns:2fr 1fr;align-items:center;gap:1.5rem;padding:0 1.2rem 1.2rem}
 .task-select button{overflow-wrap:anywhere}
 
@@ -323,23 +312,77 @@ html{scroll-padding-top:0}
 .real-request-overlay span{display:block;color:#b8d3ff;font-size:.77rem;font-weight:750;text-transform:uppercase;letter-spacing:.065em;margin-bottom:.45rem}
 .real-request-overlay strong{display:block;font-size:clamp(1.05rem,2.15vw,1.65rem);line-height:1.3;font-weight:750}
 .real-speed{position:absolute;top:.65rem;right:.7rem;color:#fff;background:#142744e8;border-radius:5px;padding:.18rem .5rem;font-weight:750;pointer-events:none;font-size:.88rem}
-.real-evidence{background:#f0f5ff;border:1px solid #cbdcf6;border-radius:8px;padding:1rem;min-width:0}
-.evidence-kicker{color:#3464b7;font-weight:750;font-size:.82rem;margin-bottom:.7rem}
+.real-evidence{min-width:0}
 .real-evidence img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:5px}
 .real-evidence h4{margin:.85rem 0 .4rem;font-size:1.06rem;color:#21477f}
-.real-evidence p{color:#405d82;line-height:1.55;font-size:.92rem}
-.real-evidence small{display:block;color:#536c91;margin-top:.8rem;font-size:.79rem}
 @media(max-width:800px){
- .real-demo-layout,.memory-detail-grid,.method-detail-figures,.method-learning{grid-template-columns:1fr}
- .real-evidence{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.55rem .9rem}
- .evidence-kicker,.real-evidence small{grid-column:1/-1;margin:0}
- .real-evidence img{grid-row:2/4}
- .real-evidence h4{margin:0}
+ .method-learning{grid-template-columns:1fr}
 }
 @media(max-width:480px){
  .real-request-overlay{padding:1rem}
  .real-request-overlay>div{padding:.7rem .85rem}
  .real-request-overlay span{font-size:.69rem}
- .real-evidence p{font-size:.83rem}
  .research-film{padding-block:2.3rem}
+}
+
+/* Front page and the shared-memory example. */
+.hero{padding-block:clamp(3.1rem,6vw,5.65rem) clamp(2.65rem,4.3vw,4rem)}
+.hero h1{background:none;color:#163d88;font-size:inherit;line-height:1;letter-spacing:normal}
+.hero-word{display:inline-block;font-weight:800;letter-spacing:-.072em;font-size:clamp(4.25rem,12.5vw,10.25rem);line-height:1.05}
+@supports (background-clip:text){
+ .hero-word{background:linear-gradient(110deg,#142e6f,#1a52ba 62%,#4379ed);background-clip:text;color:transparent}
+}
+.hero h1 .title-subtitle{margin:1.4rem auto 0;line-height:1.15;font-size:clamp(1.8rem,4.05vw,3.2rem);text-wrap:balance}
+.hero .authors{display:flex;flex-wrap:wrap;justify-content:center;gap:.33rem .6rem;margin:2.15rem auto .35rem;max-width:58rem;line-height:1.6}
+.hero .authors span{white-space:nowrap}
+.hero .affiliation{margin-top:.25rem;line-height:1.55}
+.research-film{max-width:1040px;padding-block:2.6rem 3.3rem}
+.research-film-heading p{max-width:72ch}
+.research-film-heading p strong{color:#234e98}
+.research-film video{box-shadow:0 14px 38px #143c7d12}
+.overview-takeaways{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.45rem;margin-top:1.45rem}
+.overview-takeaways>div{border-left:2px solid #adc7f5;padding:.06rem .85rem}
+.overview-takeaways strong{color:#224a89;font-size:.96rem}
+.overview-takeaways p{margin-top:.3rem;font-size:.93rem;line-height:1.55;color:#475f81}
+
+.recall-demo{margin:3.3rem auto 0;max-width:1080px}
+.recall-heading h3{color:#203f74;font-size:clamp(1.55rem,3vw,2.25rem);letter-spacing:-.037em;line-height:1.2}
+.recall-heading p{margin:.6rem 0 1.05rem;color:#4c6486}
+.recall-choices{display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:1rem}
+.recall-choices button{border:1px solid #b9ceee;border-radius:6px;padding:.6rem .85rem;min-height:44px;font:inherit;color:#285397;background:#f3f7ff;font-weight:650}
+.recall-choices button[aria-pressed=true]{background:#244eab;border-color:#244eab;color:white}
+.recall-sequence{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.recall-sequence figure{display:flex;flex-direction:column;min-width:0;padding:.86rem;border:1px solid #cfdbef;border-radius:8px;background:#fff}
+.recall-sequence .recall-past{border-color:#9db9ec;background:#edf4ff}
+.recall-sequence figcaption{font-size:.8rem;color:#4a6590;line-height:1.4;min-height:3.4rem}
+.recall-sequence figcaption strong{display:block;font-size:1rem;color:#234b8b;font-weight:750}
+.recall-sequence img,.recall-sequence video{width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;border-radius:5px;background:#eaf0fb}
+.recall-sequence p{padding-top:.6rem;color:#465f81;line-height:1.5;font-size:.9rem}
+.real-demo-layout{grid-template-columns:minmax(0,3fr) minmax(205px,1fr);align-items:center}
+.real-evidence{display:grid;grid-template-columns:1fr;gap:.6rem;background:transparent;border:0;border-radius:0;padding:0}
+.real-evidence img{grid-row:1;border:1px solid #c5d6ef}
+.real-evidence h4{grid-row:2;color:#224f99;margin:0;font-size:1.01rem;line-height:1.35}
+.real-evidence figcaption{grid-row:3;font-size:.77rem;line-height:1.35;color:#536c91}
+.baseline-gains{display:grid;gap:.4rem;margin-top:.25rem}
+.baseline-gains div{display:flex;justify-content:space-between;align-items:baseline;gap:.6rem;padding:.55rem .05rem;border-top:1px solid #c9d8ee}
+.baseline-gains dt{font-size:.88rem;color:#4b6385}
+.baseline-gains dd{font-size:1.15rem;color:#2354b3;font-weight:750;white-space:nowrap;font-variant-numeric:tabular-nums}
+@media(max-width:800px){
+ .recall-sequence{grid-template-columns:1fr 1fr}
+ .recall-sequence figure:last-child{grid-column:1/-1;width:min(100%,420px)}
+ .real-demo-layout{grid-template-columns:1fr;gap:.85rem}
+ .real-evidence{display:grid;grid-template-columns:minmax(110px,41%) 1fr;gap:.3rem .75rem;align-items:center}
+ .real-evidence img{grid-column:1;grid-row:1/3}
+ .real-evidence h4{grid-column:2;grid-row:1;align-self:end}
+ .real-evidence figcaption{grid-column:2;grid-row:2;align-self:start}
+}
+@media(max-width:540px){
+ .hero-word{font-size:clamp(3rem,16vw,5.25rem)}
+ .hero h1 .title-subtitle{margin-top:1.05rem;font-size:clamp(1.55rem,6.2vw,2.3rem)}
+ .hero .authors{margin-top:1.55rem;gap:.1rem .42rem}
+ .overview-takeaways{grid-template-columns:1fr;gap:.8rem}
+ .recall-sequence{gap:.65rem}
+ .recall-sequence figure{padding:.65rem}
+ .recall-sequence p{font-size:.82rem}
+ .recall-sequence figcaption strong{font-size:.92rem}
 }

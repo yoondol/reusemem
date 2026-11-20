@@ -20,7 +20,7 @@
         "hold": 1.8,
         "label": "Goal 1",
         "text": "Move the case containing the USB drive to the left tray.",
-        "evidence": "assets/real-world/case-evidence-1.jpg?v=story-13",
+        "evidence": "assets/real-world/case-evidence-1.jpg?v=overview-14",
         "evidenceTitle": "USB case identity",
         "evidenceText": "The exposed USB drive identifies the case before its lid closes."
       },

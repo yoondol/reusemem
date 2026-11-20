@@ -46,7 +46,6 @@ async function loadRealWorldMedia() {
           evidence.querySelector('img').src = active.evidence;
           evidence.querySelector('img').alt = active.evidenceTitle;
           evidence.querySelector('h4').textContent = active.evidenceTitle;
-          evidence.querySelector('p').textContent = active.evidenceText;
         }
         request.hidden = active.goal === 0 || video.currentTime >= active.start + active.hold;
         const next = chapters.find(c => c.start > active.start);
@@ -188,9 +187,11 @@ if (outcomes) {
   function updateOutcomes() {
     const values = data[task.value][metric.value];
     const [name, definition] = metrics[metric.value];
-    const [uniform, reuse] = values.slice(-2);
-    const delta = reuse[0] - uniform[0];
-    const gain = (delta >= 0 ? "+" : "") + delta.toFixed(1) + "%p";
+    const [, mme, , uniform, reuse] = values;
+    const difference = (baseline) => {
+      const points = reuse[0] - baseline[0];
+      return (points >= 0 ? "+" : "−") + Math.abs(points).toFixed(1) + "%p";
+    };
     const scope = task.value === "all-tasks" ? "across four tasks" : "on " + task.selectedOptions[0].textContent;
 
     rows.forEach((row, i) => {
@@ -199,8 +200,10 @@ if (outcomes) {
       row.querySelector(".measure-value strong").textContent = rate.toFixed(1) + "%";
       row.querySelector(".measure-value small").textContent = count + "/" + total;
     });
-    document.querySelector("#gain-value").textContent = gain;
-    document.querySelector("#gain-description").textContent = name + " over Uniform-Memory " + scope;
+    document.querySelector("#gain-value").textContent = reuse[0].toFixed(1) + "%";
+    document.querySelector("#gain-description").textContent = "ReuseMem " + name;
+    document.querySelector("#gain-mme").textContent = difference(mme);
+    document.querySelector("#gain-uniform").textContent = difference(uniform);
     document.querySelector("#metric-context").textContent = definition;
     document.querySelector("#chart-update").textContent = name + " " + scope + ". ReuseMem " + reuse[0].toFixed(1) + " percent.";
   }
@@ -287,4 +290,63 @@ if (physicalSource) {
     document.querySelector('#physical-definition').textContent=(metric==='sequence' ? 'All three requests succeed in one continuous execution.' : 'All three independent requests succeed from the same recording.')+' 20 test recordings per scenario.';
     document.querySelector('#physical-update').textContent='Both real-world plots show '+(metric==='sequence'?'Sequence':'All-goal')+' success.';
   });
+}
+
+
+const recall = document.querySelector("[data-recall-demo]");
+if (recall) {
+  const choices = [...recall.querySelectorAll("[data-recall-choice]")];
+  const action = recall.querySelector("[data-recall-action]");
+  const present = recall.querySelector("[data-recall-present]");
+  const past = recall.querySelector("[data-recall-past]");
+  const sequence = recall.querySelector(".recall-sequence");
+  const demonstrations = {
+    select: {
+      cue: "Which case?",
+      pastImage: "case-evidence-1.jpg?v=overview-14",
+      pastText: "The exposed USB drive identifies the case.",
+      presentTitle: "Where is it now?",
+      presentText: "The lid is closed. The current view shows where to grasp.",
+      actionTitle: "Place it in the left tray",
+      actionText: "The robot moves the closed case using its current pose."
+    },
+    return: {
+      cue: "Where did it start?",
+      pastImage: "case-evidence-3.jpg",
+      pastText: "The same earlier view now supplies the original position.",
+      presentTitle: "Where is it now?",
+      presentText: "The USB case is now in the left tray.",
+      actionTitle: "Return it to its starting position",
+      actionText: "The robot grasps it from the tray and places it at the remembered spot."
+    }
+  };
+  for (const choice of choices) {
+    choice.addEventListener("click", () => {
+      const key = choice.dataset.recallChoice;
+      const example = demonstrations[key];
+      for (const button of choices) {
+        button.setAttribute("aria-pressed", String(button === choice));
+      }
+      for (const [name, value] of Object.entries({
+        cue: example.cue, "past-text": example.pastText,
+        "present-title": example.presentTitle, "present-text": example.presentText,
+        "action-title": example.actionTitle, "action-text": example.actionText
+      })) {
+        recall.querySelector(`[data-recall-${name}]`).textContent = value;
+      }
+      past.src = "assets/real-world/" + example.pastImage;
+      past.alt = example.pastText;
+      present.src = `assets/method/case-${key}-present.jpg`;
+      present.alt = example.presentText;
+      action.poster = `assets/method/case-${key}-action.jpg`;
+      action.src = `assets/method/case-${key}-action.mp4`;
+      action.setAttribute("aria-label", example.actionTitle);
+      sequence.dataset.choice = key;
+      sequence.getAnimations?.().forEach(animation => animation.cancel());
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        sequence.animate?.([{ opacity: 0.64 }, { opacity: 1 }], { duration: 320 });
+        action.play().catch(() => {});
+      }
+    });
+  }
 }

@@ -138,14 +138,14 @@ Time compression and editorial holds do not change the sequence of actions.
 
 ## Research overview
 
-`assets/reusemem-overview.mp4` runs for 103 seconds. It uses excerpts from
-both physical recordings, manuscript method figures, the four scripted
-RoboMME-based task examples and the paper's reported outcomes. The compact
-explainer links to the retrieval, action and training figures below it.
+The Overview video runs for 94 seconds. Real manipulation footage introduces
+the problem. Custom animated diagrams show recording, retrieval, action and
+learning before the physical and simulation results. Method includes a
+two-request interaction that pairs the same earlier recording with the
+current scene and the matching action excerpt.
 
 ## Link sharing preview
 
-Open Graph and Twitter large-image cards use `assets/reusemem-social.png`,
-a 1200 × 630 title card matching the blue-gradient cover and local DM Sans
-typeface. Absolute public image URLs, dimensions, type and alt text appear
-in the static HTML head so link crawlers do not need JavaScript.
+Open Graph and Twitter large-image cards use `assets/reusemem-social-v2.png`,
+a 1200 × 630 title card with the complete author line and affiliation. The
+image, dimensions and alt text appear in the static HTML head.

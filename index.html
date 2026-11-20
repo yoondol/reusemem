@@ -9,8 +9,8 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yoondol.github.io/reusemem/">
   <meta property="og:site_name" content="ReuseMem">
-  <meta property="og:image" content="https://yoondol.github.io/reusemem/assets/reusemem-social.png">
-  <meta property="og:image:secure_url" content="https://yoondol.github.io/reusemem/assets/reusemem-social.png">
+  <meta property="og:image" content="https://yoondol.github.io/reusemem/assets/reusemem-social-v2.png">
+  <meta property="og:image:secure_url" content="https://yoondol.github.io/reusemem/assets/reusemem-social-v2.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -18,16 +18,16 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="ReuseMem: One Memory, Multiple Goals in Robot Manipulation">
   <meta name="twitter:description" content="One visual memory for multiple later manipulation goals, even as the scene changes.">
-  <meta name="twitter:image" content="https://yoondol.github.io/reusemem/assets/reusemem-social.png">
+  <meta name="twitter:image" content="https://yoondol.github.io/reusemem/assets/reusemem-social-v2.png">
   <meta name="twitter:image:alt" content="ReuseMem — One Memory, Multiple Goals in Robot Manipulation">
   <meta name="theme-color" content="#193e7c">
   <link rel="icon" href="data:,">
   <link rel="canonical" href="https://yoondol.github.io/reusemem/">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
   <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=story-13">
+  <link rel="stylesheet" href="style.css?v=overview-14">
   <link rel="stylesheet" href="flow.css?v=story-13">
-  <script src="page.js?v=story-13" defer></script>
+  <script src="page.js?v=overview-14" defer></script>
   <script src="flow.js?v=growing-memory-v1" defer></script>
 </head>
 <body>
@@ -35,8 +35,8 @@
   <main id="main">
     <section class="hero" aria-labelledby="title">
       <div class="hero-copy wrap">
-        <h1 id="title">ReuseMem<span class="title-subtitle">One Memory, Multiple Goals<br>in Robot Manipulation</span></h1>
-        <p class="authors"><span>Yoonseok Kang</span>, <span>Dayeon Jung</span>, <span>Seunghoon Jeon</span>, <span>Wonjib Kim</span>, and <span>Dongchul Park</span></p>
+        <h1 id="title"><span class="hero-word">ReuseMem</span><span class="title-subtitle">One Memory, Multiple Goals<br>in Robot Manipulation</span></h1>
+        <p class="authors"><span>Yoonseok Kang,</span> <span>Dayeon Jung,</span> <span>Seunghoon Jeon,</span> <span>Wonjib Kim,</span> <span>Dongchul Park</span></p>
         <p class="affiliation">Chung-Ang University</p>
         <div class="links">
           <a class="primary" href="https://arxiv.org/abs/2611.21115">Paper <span aria-hidden="true">↗</span></a>
@@ -47,54 +47,20 @@
       </div>
     </section>
 
-    <section class="wrap story-section" id="demo" aria-labelledby="story-title">
-      <div class="section-intro chapter-intro overview-intro">
-        <h2 id="story-title">Overview</h2>
-        <p>Robots should be able to use what they have seen for requests that arrive later. <strong>ReuseMem learns to use one visual memory for multiple manipulation goals, even as the scene changes.</strong></p>
-      </div>
-      <div class="story-sequence">
-        <figure class="story-card story-history">
-          <img src="assets/photo-06.jpg" width="1280" height="960" alt="The robot observes the open USB and SD card cases at their original positions." fetchpriority="high">
-          <figcaption>
-            <span><i>01</i> Observe before the request</span>
-            <strong>Record the contents and starting positions</strong>
-          </figcaption>
-        </figure>
-        <figure class="story-card">
-          <img src="assets/photo-08.jpg" width="1280" height="960" alt="The closed USB case has been moved into the left tray.">
-          <figcaption>
-            <span><i>02</i> Recall the contents</span>
-            <strong>“Move the USB case to the left tray.”</strong>
-          </figcaption>
-        </figure>
-        <figure class="story-card">
-          <img src="assets/photo-10.jpg" width="1280" height="960" alt="The USB case has been returned to the position seen earlier, while the SD case remains in the right tray.">
-          <figcaption>
-            <span><i>03</i> Recall the original position</span>
-            <strong>“Return the USB case to where it started.”</strong>
-          </figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <section class="wrap key-ideas" aria-labelledby="ideas-title">
-      <h2 id="ideas-title">Key contributions</h2>
-      <div class="ideas-grid">
-<article><span class="idea-symbol"><svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="18" height="14" rx="2"/><path d="M8 23h18V9M22 12h7m-3-3 3 3-3 3M22 23h7m-3-3 3 3-3 3"/></svg></span><div><h3>One memory, multiple goals</h3><p>Record experience before later goals are known, then reuse the same visual memory for different manipulations.</p></div></article>
-<article><span class="idea-symbol"><svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="13" height="11" rx="2"/><path d="m6 12 3-3 4 4M16 11h8m-3-3 3 3-3 3"/><circle cx="23" cy="23" r="5"/><path d="M23 15v3m0 10v3m-8-8h3m10 0h3"/></svg></span><div><h3>Learn memory for action</h3><p>Train memory selection through action prediction, connecting useful past evidence to the current scene.</p></div></article>
-<article><span class="idea-symbol"><svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 6a11 11 0 1 1-5 17M10 6H4v6"/><path d="m18 9-5 9h6l-3 7"/></svg></span><div><h3>Efficient memory reuse</h3><p>Share repeated visual features and reuse fixed memory computations during action generation.</p></div></article>
-      </div>
-    </section>
-
     <section class="wrap section research-film" id="research-video" aria-labelledby="research-film-title">
       <div class="research-film-heading">
-        <h2 id="research-film-title">ReuseMem in 103 seconds</h2>
-        <p>Follow a robot from its first observation to three requests, then see how it learns to reuse that experience.</p>
+        <h2 id="research-film-title">Overview</h2>
+        <p>The robot sees what is inside two cases before the lids close. A later request needs to know <strong>which case to move</strong>. Another needs to know <strong>where it started</strong>. ReuseMem learns to use the same recording for both actions, even after the scene changes.</p>
       </div>
-      <video controls playsinline preload="none" poster="assets/reusemem-social.png" aria-labelledby="research-film-title">
-        <source src="assets/reusemem-overview.mp4?v=story-13" type="video/mp4">
-        <a href="assets/reusemem-overview.mp4">Download the research overview</a>
+      <video controls playsinline preload="none" poster="assets/reusemem-film-poster.jpg?v=overview-14" aria-label="ReuseMem research overview video">
+        <source src="assets/reusemem-overview.mp4?v=overview-14" type="video/mp4">
+        <a href="assets/reusemem-overview.mp4?v=overview-14">Download the research overview</a>
       </video>
+      <div class="overview-takeaways">
+        <div><strong>Before the goal</strong><p>Record observations before the next request is known.</p></div>
+        <div><strong>When the goal arrives</strong><p>Find the past evidence that helps the robot act now.</p></div>
+        <div><strong>As experience grows</strong><p>Share visual features across similar views and keep their timing distinct.</p></div>
+      </div>
     </section>
 
     <section class="wrap section" id="method" aria-labelledby="method-title">
@@ -136,46 +102,40 @@
         <div class="flow-story"><span class="flow-phase-label" id="flow-phase-label">Record</span><div><h3 id="flow-story-title">Observe before goals are known.</h3><p id="flow-story-copy">Similar views share features. Time and keys remain distinct.</p></div><button type="button" id="flow-restart" aria-label="Restart the animation">Replay ↻</button></div>
       </div>
       <details class="full-architecture"><summary>Full model architecture</summary><a href="assets/architecture.png?v=52" target="_blank" rel="noopener"><img src="assets/architecture.png?v=52" width="1480" height="960" alt="Full ReuseMem Writer, memory bank, Reader, fusion and action-expert architecture." loading="lazy"></a></details>
-      <div class="memory-details" aria-labelledby="memory-details-title">
-        <h3 id="memory-details-title">How the same experience supports a new action</h3>
-        <div class="memory-detail-grid">
-          <article class="memory-detail">
-            <h4>Share appearance, keep time</h4>
-            <div class="memory-diagram" aria-hidden="true">
-              <span>Two similar views</span><b>→</b><span>One visual feature<br>Two time entries</span>
-            </div>
-            <p>A nearby view can reuse its visual features while keeping its own timestamp and retrieval key. A local feature check protects small changes that a whole-image comparison can miss.</p>
-          </article>
-          <article class="memory-detail">
-            <h4>Retrieve connected moments</h4>
-            <div class="memory-diagram" aria-hidden="true">
-              <span>Reference<br>+ nearby support</span><b>→</b><span>24 historical<br>slots</span>
-            </div>
-            <p>The Reader picks reference frames and related moments. An evenly spaced sample fills in broader context. A request can use several moments to resolve one action.</p>
-          </article>
-          <article class="memory-detail">
-            <h4>Act on the scene as it is now</h4>
-            <div class="memory-diagram" aria-hidden="true">
-              <span>Past evidence<br>+ recent views</span><b>→</b><span>Action in the<br>current scene</span>
-            </div>
-            <p>The past supplies the return location. Current observations locate the object to grasp. The policy also records what happens during execution for later requests.</p>
-          </article>
+      <section class="recall-demo" aria-labelledby="recall-title" data-recall-demo>
+        <header class="recall-heading">
+          <h3 id="recall-title">One recording, two ways to use it</h3>
+          <p>Choose a request to see which part of the earlier view matters.</p>
+        </header>
+        <div class="recall-choices" role="group" aria-label="Choose a request">
+          <button type="button" data-recall-choice="select" aria-pressed="true">Move the USB case</button>
+          <button type="button" data-recall-choice="return" aria-pressed="false">Return it to its original spot</button>
+        </div>
+        <div class="recall-sequence" data-choice="select">
+          <figure class="recall-past">
+            <figcaption>Past <strong data-recall-cue>Which case?</strong></figcaption>
+            <img data-recall-past src="assets/real-world/case-evidence-1.jpg?v=overview-14" width="960" height="540" alt="An earlier frame shows the USB drive inside its case." loading="lazy">
+            <p data-recall-past-text>The exposed USB drive identifies the case.</p>
+          </figure>
+          <figure>
+            <figcaption>Present <strong data-recall-present-title>Where is it now?</strong></figcaption>
+            <img data-recall-present src="assets/method/case-select-present.jpg" width="768" height="432" alt="The USB case is closed on the desk." loading="lazy">
+            <p data-recall-present-text>The lid is closed. The current view shows where to grasp.</p>
+          </figure>
+          <figure>
+            <figcaption>Action <strong data-recall-action-title>Place it in the left tray</strong></figcaption>
+            <video data-recall-action src="assets/method/case-select-action.mp4" poster="assets/method/case-select-action.jpg" width="768" height="432" muted playsinline controls preload="none" aria-label="The robot puts the USB case in the left tray"></video>
+            <p data-recall-action-text>The robot moves the closed case using its current pose.</p>
+          </figure>
         </div>
         <details class="method-detail-disclosure">
-          <summary>Memory retrieval and action inputs</summary>
-          <div class="method-detail-figures">
-            <figure><img src="assets/method/retrieval.png" alt="Reader selects references and temporal support, then adds coverage observations." loading="lazy"><figcaption>The Reader supplies up to 24 observations for each request.</figcaption></figure>
-            <figure><img src="assets/method/action.png" alt="Historical observations, seven recent observations and the current view feed the action policy." loading="lazy"><figcaption>Past evidence stays fixed for the request. The seven recent views and current view refresh during execution.</figcaption></figure>
-          </div>
-        </details>
-        <details class="method-detail-disclosure">
-          <summary>Learning which memories help the robot act</summary>
+          <summary>What the Reader learns</summary>
           <div class="method-learning">
             <img src="assets/method/training.png" alt="Expert-action prediction supervises retrieval before training the action interface on the chosen evidence." loading="lazy">
-            <p>For the same recording and request, we compare candidate memories by how well they help predict expert actions across different current scenes. The Reader learns from those comparisons, then its chosen evidence trains the action interface.</p>
+            <p>The same goal can start from different scenes. Training rewards memory selections that improve expert-action prediction across those scenes. The selected history then helps train the action interface.</p>
           </div>
         </details>
-      </div>
+      </section>
     </section>
 
     <div class="section-rule tinted">
@@ -342,13 +302,11 @@
                 <span class="real-speed" aria-label="Two times speed">2×</span>
                 <figcaption class="real-current-step" data-real-context="case"><span>Observe</span><p>Observe both open cases before their contents are hidden.</p><div class="real-stage-progress" aria-hidden="true"><i></i></div></figcaption>
               </figure>
-              <aside class="real-evidence" aria-label="Relevant past observation">
-                <div class="evidence-kicker">Earlier observation</div>
+              <figure class="real-evidence" aria-label="Task-relevant past view">
                 <img src="assets/real-world/case-evidence-0.jpg?v=story-13" width="960" height="540" alt="Relevant frame from the opening observation" loading="lazy">
                 <h4>Contents and starting positions</h4>
-                <p>The open cases reveal which item is inside each case and where each case starts.</p>
-                <small>Example evidence from the recording.</small>
-              </aside>
+                <figcaption>Past view from the recording</figcaption>
+              </figure>
               </div>
               <div class="real-stage-buttons" role="group" aria-label="Case preparation and return chapters">
                 <button type="button" data-real-stage="0" disabled><span>Start</span><strong>Observe</strong></button>
@@ -368,13 +326,11 @@
                 <span class="real-speed" aria-label="Two times speed">2×</span>
                 <figcaption class="real-current-step" data-real-context="toy"><span>Observe</span><p>Observe where both toys start before they are gathered in the left tray.</p><div class="real-stage-progress" aria-hidden="true"><i></i></div></figcaption>
               </figure>
-              <aside class="real-evidence" aria-label="Relevant past observation">
-                <div class="evidence-kicker">Earlier observation</div>
+              <figure class="real-evidence" aria-label="Task-relevant past view">
                 <img src="assets/real-world/toy-evidence-0.jpg?v=story-13" width="960" height="540" alt="Relevant frame from the opening observation" loading="lazy">
                 <h4>Original toy layout</h4>
-                <p>The blue toy and yellow chick start at separate positions on the desk.</p>
-                <small>Example evidence from the recording.</small>
-              </aside>
+                <figcaption>Past view from the recording</figcaption>
+              </figure>
               </div>
               <div class="real-stage-buttons" role="group" aria-label="Toy relocation, cleaning and return chapters">
                 <button type="button" data-real-stage="0" disabled><span>Start</span><strong>Observe</strong></button>
@@ -393,9 +349,13 @@
 <div class="section-intro chapter-intro"><span class="section-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v26h27M8 24V14h5v10m4 0V8h5v16m4 0V4h4v20"/></svg></span><h2 id="results-title">Results</h2></div>
         <div class="outcome-panel">
           <div class="outcome-intro">
-            <p class="stat-value" id="gain-value">+24.5%p</p>
-            <p class="stat-description" id="gain-description">All-goal success over Uniform-Memory across four tasks</p>
+            <p class="stat-value" id="gain-value">60.5%</p>
+            <p class="stat-description" id="gain-description">ReuseMem All-goal success</p>
             <p class="stat-context" id="metric-context">Both requests succeed using the same observation history.</p>
+            <dl class="baseline-gains">
+              <div><dt>vs. MME-VLA</dt><dd id="gain-mme">+46.0%p</dd></div>
+              <div><dt>vs. Uniform-Memory</dt><dd id="gain-uniform">+24.5%p</dd></div>
+            </dl>
           </div>
           <figure class="outcome-chart" aria-labelledby="outcome-caption">
             <div class="chart-heading">
