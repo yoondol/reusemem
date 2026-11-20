@@ -36,19 +36,17 @@ and measurements. The site ships DM Sans locally under its OFL license.
 
 ## Real-world demonstrations
 
-Each physical scenario has one full-width continuous player. The first phase
-shows the observation; the three requests then execute in the same video,
-without any scene reset or internal edit. No observation clip loops beside
-the execution. A fixed panel below the image shows the active phase and full
-instruction. Four chapter buttons seek to Observe or Goals 1–3, and a slim
-progress indicator follows the current phase. On phones the buttons form a
-2 × 2 grid. Videos retain their native 1080p 16:9 framing and original speed.
-They autoplay muted in view and pause off-screen. English WebVTT captions
-are optional through the native player controls.
+Each scenario is a continuous recording at twice the original speed. At each
+request boundary the video holds for 1.8 s while the page shows the instruction.
+The stage buttons seek to the corresponding hold. The fixed panel below shows
+the current request throughout execution. The earlier-observation card uses
+a frame from the same recording with the task-relevant object or location
+marked. These frames illustrate the cues described in the paper.
 
-Source paths and verified chapter times are defined in
-`assets/real-world/clips.json`. The case clip is `case-demo.mp4`; the toy clip
-is `toy-demo.mp4`. Camera photographs remain as posters and fallback images.
+The two sources and presentation timestamps are defined in
+`assets/real-world/clips.json`. The H.264 files `case-guided.mp4` and
+`toy-guided.mp4` keep full 1080p framing. Optional VTT captions match the
+edited timelines. Both players retain muted, viewport-aware autoplay.
 
 ## Growing memory and execution context
 
@@ -133,16 +131,17 @@ Exact requests, metric definitions and media provenance remain where needed.
 
 ## Physical recording edits
 
-Case: supplied 113.767-second recording, final 3 seconds removed. Published
-length 110.767 s; phase starts 0, 8, 40 and 74 seconds.
+Both guided clips use the final continuous masters, with the existing
+three-second tail trim. Case chapters start at 0, 4, 21.8 and 40.6 s in
+the guided player. Toy chapters start at 0, 5.5, 22.8 and 39.6 s.
+Time compression and editorial holds do not change the sequence of actions.
 
-Toy: selected 109.833-second recording, final 3 seconds removed. Published
-length 106.833 s; phase starts 0, 11, 42 and 72 seconds.
+## Research overview
 
-The edits remove only the closing tails. Observation and all three goals
-remain contiguous at original speed, without crops, overlays or inserted
-frames. HEVC is converted to H.264 with fast-start metadata; audio is omitted.
-Quantitative results are unchanged.
+`assets/reusemem-overview.mp4` runs for 103 seconds. It uses excerpts from
+both physical recordings, manuscript method figures, the four scripted
+RoboMME-based task examples and the paper's reported outcomes. The compact
+explainer links to the retrieval, action and training figures below it.
 
 ## Link sharing preview
 

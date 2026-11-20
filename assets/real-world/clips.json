@@ -1,64 +1,98 @@
 {
   "case-demo": {
-    "src": "assets/real-world/case-demo.mp4?v=continuous-real-12",
-    "poster": "assets/real-world/case-demo.jpg?v=continuous-real-12",
-    "captions": "assets/real-world/case-demo.vtt?v=continuous-real-12",
+    "src": "assets/real-world/case-guided.mp4?v=story-13",
+    "poster": "assets/real-world/case-demo.jpg",
+    "captions": "assets/real-world/case-guided.vtt?v=story-13",
     "chapters": [
       {
         "goal": 0,
         "start": 0,
+        "hold": 0,
         "label": "Observe",
-        "text": "Remember the contents and original positions of both cases."
+        "text": "Observe both open cases before their contents are hidden.",
+        "evidence": "assets/real-world/case-evidence-0.jpg?v=story-13",
+        "evidenceTitle": "Contents and starting positions",
+        "evidenceText": "The open cases reveal which item is inside each case and where each case starts."
       },
       {
         "goal": 1,
-        "start": 8,
+        "start": 4.0,
+        "hold": 1.8,
         "label": "Goal 1",
-        "text": "Move the case containing the USB drive to the left tray."
+        "text": "Move the case containing the USB drive to the left tray.",
+        "evidence": "assets/real-world/case-evidence-1.jpg?v=story-13",
+        "evidenceTitle": "USB case identity",
+        "evidenceText": "The exposed USB drive identifies the case before its lid closes."
       },
       {
         "goal": 2,
-        "start": 40,
+        "start": 21.8,
+        "hold": 1.8,
         "label": "Goal 2",
-        "text": "Move the case containing the SD card to the right tray."
+        "text": "Move the case containing the SD card to the right tray.",
+        "evidence": "assets/real-world/case-evidence-2.jpg?v=story-13",
+        "evidenceTitle": "SD-card case identity",
+        "evidenceText": "The visible SD card identifies the second case before its lid closes."
       },
       {
         "goal": 3,
-        "start": 74,
+        "start": 40.6,
+        "hold": 1.8,
         "label": "Goal 3",
-        "text": "Return the USB case to its original position."
+        "text": "Return the USB case to its original position.",
+        "evidence": "assets/real-world/case-evidence-3.jpg?v=story-13",
+        "evidenceTitle": "Original USB case position",
+        "evidenceText": "The opening view shows the USB case’s return destination before it was moved to the tray."
       }
-    ]
+    ],
+    "duration": 60.8
   },
   "toy-demo": {
-    "src": "assets/real-world/toy-demo.mp4?v=continuous-real-12",
-    "poster": "assets/real-world/toy-demo.jpg?v=continuous-real-12",
-    "captions": "assets/real-world/toy-demo.vtt?v=continuous-real-12",
+    "src": "assets/real-world/toy-guided.mp4?v=story-13",
+    "poster": "assets/real-world/toy-demo.jpg",
+    "captions": "assets/real-world/toy-guided.vtt?v=story-13",
     "chapters": [
       {
         "goal": 0,
         "start": 0,
+        "hold": 0,
         "label": "Observe",
-        "text": "Remember where each toy started before they are moved into the left tray."
+        "text": "Observe where both toys start before they are gathered in the left tray.",
+        "evidence": "assets/real-world/toy-evidence-0.jpg?v=story-13",
+        "evidenceTitle": "Original toy layout",
+        "evidenceText": "The blue toy and yellow chick start at separate positions on the desk."
       },
       {
         "goal": 1,
-        "start": 11,
+        "start": 5.5,
+        "hold": 1.8,
         "label": "Goal 1",
-        "text": "Move the toy that was originally on the left to the right tray."
+        "text": "Move the blue toy to the right tray.",
+        "evidence": "assets/real-world/toy-evidence-1.jpg?v=story-13",
+        "evidenceTitle": "Blue toy identity",
+        "evidenceText": "The first view shows the blue toy before it is gathered with the chick in the left tray."
       },
       {
         "goal": 2,
-        "start": 42,
+        "start": 22.8,
+        "hold": 1.8,
         "label": "Goal 2",
-        "text": "Brush the spot where that toy originally stood, then return the brush."
+        "text": "Brush the blue toy’s original spot, then put the brush back.",
+        "evidence": "assets/real-world/toy-evidence-2.jpg?v=story-13",
+        "evidenceTitle": "Blue toy’s original spot",
+        "evidenceText": "The blue toy is now in the tray. Its earlier position identifies where to brush."
       },
       {
         "goal": 3,
-        "start": 72,
+        "start": 39.6,
+        "hold": 1.8,
         "label": "Goal 3",
-        "text": "Return the toy to its original position."
+        "text": "Return the blue toy to its original position.",
+        "evidence": "assets/real-world/toy-evidence-3.jpg?v=story-13",
+        "evidenceTitle": "Blue toy’s starting position",
+        "evidenceText": "The same earlier position gives the return destination. The robot picks up the toy from its current tray."
       }
-    ]
+    ],
+    "duration": 58.8
   }
 }

@@ -25,9 +25,9 @@
   <link rel="canonical" href="https://yoondol.github.io/reusemem/">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
   <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=continuous-real-12">
-  <link rel="stylesheet" href="flow.css?v=continuous-real-12">
-  <script src="page.js?v=continuous-real-12" defer></script>
+  <link rel="stylesheet" href="style.css?v=story-13">
+  <link rel="stylesheet" href="flow.css?v=story-13">
+  <script src="page.js?v=story-13" defer></script>
   <script src="flow.js?v=growing-memory-v1" defer></script>
 </head>
 <body>
@@ -41,6 +41,7 @@
         <div class="links">
           <a class="primary" href="https://arxiv.org/abs/2611.21115">Paper <span aria-hidden="true">↗</span></a>
           <a class="secondary" href="assets/ReuseMem.pdf">PDF <span aria-hidden="true">↗</span></a>
+          <a class="secondary" href="#research-video">Video</a>
           <a class="secondary" href="#simulation">Demos <span aria-hidden="true">↓</span></a>
         </div>
       </div>
@@ -85,6 +86,17 @@
       </div>
     </section>
 
+    <section class="wrap section research-film" id="research-video" aria-labelledby="research-film-title">
+      <div class="research-film-heading">
+        <h2 id="research-film-title">ReuseMem in 103 seconds</h2>
+        <p>Follow a robot from its first observation to three requests, then see how it learns to reuse that experience.</p>
+      </div>
+      <video controls playsinline preload="none" poster="assets/reusemem-social.png" aria-labelledby="research-film-title">
+        <source src="assets/reusemem-overview.mp4?v=story-13" type="video/mp4">
+        <a href="assets/reusemem-overview.mp4">Download the research overview</a>
+      </video>
+    </section>
+
     <section class="wrap section" id="method" aria-labelledby="method-title">
 <div class="section-intro chapter-intro"><span class="section-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="11" width="7" height="10" rx="2"/><rect x="23" y="11" width="7" height="10" rx="2"/><path d="M9 16h14m-4-4 4 4-4 4M16 5v5m0 12v5"/></svg></span><h2 id="method-title">Method</h2><p>Write experience, retrieve evidence for each goal, and act on the current scene.</p></div>
       <div class="memory-flow" id="memory-flow" data-playing="true" data-phase="record" data-goal="none">
@@ -124,17 +136,57 @@
         <div class="flow-story"><span class="flow-phase-label" id="flow-phase-label">Record</span><div><h3 id="flow-story-title">Observe before goals are known.</h3><p id="flow-story-copy">Similar views share features. Time and keys remain distinct.</p></div><button type="button" id="flow-restart" aria-label="Restart the animation">Replay ↻</button></div>
       </div>
       <details class="full-architecture"><summary>Full model architecture</summary><a href="assets/architecture.png?v=52" target="_blank" rel="noopener"><img src="assets/architecture.png?v=52" width="1480" height="960" alt="Full ReuseMem Writer, memory bank, Reader, fusion and action-expert architecture." loading="lazy"></a></details>
+      <div class="memory-details" aria-labelledby="memory-details-title">
+        <h3 id="memory-details-title">How the same experience supports a new action</h3>
+        <div class="memory-detail-grid">
+          <article class="memory-detail">
+            <h4>Share appearance, keep time</h4>
+            <div class="memory-diagram" aria-hidden="true">
+              <span>Two similar views</span><b>→</b><span>One visual feature<br>Two time entries</span>
+            </div>
+            <p>A nearby view can reuse its visual features while keeping its own timestamp and retrieval key. A local feature check protects small changes that a whole-image comparison can miss.</p>
+          </article>
+          <article class="memory-detail">
+            <h4>Retrieve connected moments</h4>
+            <div class="memory-diagram" aria-hidden="true">
+              <span>Reference<br>+ nearby support</span><b>→</b><span>24 historical<br>slots</span>
+            </div>
+            <p>The Reader picks reference frames and related moments. An evenly spaced sample fills in broader context. A request can use several moments to resolve one action.</p>
+          </article>
+          <article class="memory-detail">
+            <h4>Act on the scene as it is now</h4>
+            <div class="memory-diagram" aria-hidden="true">
+              <span>Past evidence<br>+ recent views</span><b>→</b><span>Action in the<br>current scene</span>
+            </div>
+            <p>The past supplies the return location. Current observations locate the object to grasp. The policy also records what happens during execution for later requests.</p>
+          </article>
+        </div>
+        <details class="method-detail-disclosure">
+          <summary>Memory retrieval and action inputs</summary>
+          <div class="method-detail-figures">
+            <figure><img src="assets/method/retrieval.png" alt="Reader selects references and temporal support, then adds coverage observations." loading="lazy"><figcaption>The Reader supplies up to 24 observations for each request.</figcaption></figure>
+            <figure><img src="assets/method/action.png" alt="Historical observations, seven recent observations and the current view feed the action policy." loading="lazy"><figcaption>Past evidence stays fixed for the request. The seven recent views and current view refresh during execution.</figcaption></figure>
+          </div>
+        </details>
+        <details class="method-detail-disclosure">
+          <summary>Learning which memories help the robot act</summary>
+          <div class="method-learning">
+            <img src="assets/method/training.png" alt="Expert-action prediction supervises retrieval before training the action interface on the chosen evidence." loading="lazy">
+            <p>For the same recording and request, we compare candidate memories by how well they help predict expert actions across different current scenes. The Reader learns from those comparisons, then its chosen evidence trains the action interface.</p>
+          </div>
+        </details>
+      </div>
     </section>
 
     <div class="section-rule tinted">
       <section class="wrap section" id="simulation" aria-labelledby="sim-title">
-<div class="section-intro chapter-intro"><span class="section-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 2 12 7v14l-12 7L4 23V9Z M4 9l12 7 12-7M16 16v14M10 6l12 7"/></svg></span><h2 id="sim-title">Simulation</h2><p>Four tasks. The same observation history supports two different goals.</p></div>
+<div class="section-intro chapter-intro"><span class="section-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 2 12 7v14l-12 7L4 23V9Z M4 9l12 7 12-7M16 16v14M10 6l12 7"/></svg></span><h2 id="sim-title">Simulation</h2><p>Four <a href="https://robomme.github.io/">RoboMME</a>-based tasks. The same observation history supports two different goals.</p></div>
         <div class="simulation-toolbar">
           <div class="task-select" role="group" aria-label="Simulation task">
-            <button data-task="video-place-button" type="button" aria-controls="video-place-button" aria-pressed="true">Button press</button>
-            <button data-task="video-place-order" type="button" aria-controls="video-place-order" aria-pressed="false">Placement order</button>
-            <button data-task="video-unmask-swap" type="button" aria-controls="video-unmask-swap" aria-pressed="false">Hidden cubes</button>
-            <button data-task="pick-highlight" type="button" aria-controls="pick-highlight" aria-pressed="false">Temporary highlights</button>
+            <button data-task="video-place-button" type="button" aria-controls="video-place-button" aria-pressed="true">VideoPlaceButton</button>
+            <button data-task="video-place-order" type="button" aria-controls="video-place-order" aria-pressed="false">VideoPlaceOrder</button>
+            <button data-task="video-unmask-swap" type="button" aria-controls="video-unmask-swap" aria-pressed="false">VideoUnmaskSwap</button>
+            <button data-task="pick-highlight" type="button" aria-controls="pick-highlight" aria-pressed="false">PickHighlight</button>
           </div>
           <button id="autoplay-control" class="playback-button" type="button" aria-pressed="true">Autoplay</button>
         </div>
@@ -283,30 +335,52 @@
           <article class="real-scenario" id="real-case" data-real-scenario="case">
             <header class="real-scenario-heading"><span class="scenario-number">01</span><div><h3>Case preparation and return</h3><p>Remember the <strong>contents</strong> to select a case and its <strong>origin</strong> to return it.</p></div></header>
             <div class="real-presentation">
+              <div class="real-demo-layout">
               <figure class="real-continuous-player">
-                <div class="real-media" data-real-slot="case-demo"><img src="assets/real-world/case-demo.jpg?v=continuous-real-12" width="1920" height="1080" alt="Remember the contents and original positions of both cases." loading="lazy"></div>
-                <figcaption class="real-current-step" data-real-context="case"><span>Observe</span><p>Remember the contents and original positions of both cases.</p><div class="real-stage-progress" aria-hidden="true"><i></i></div></figcaption>
+                <div class="real-media" data-real-slot="case-demo"><img src="assets/real-world/case-demo.jpg?v=story-13" width="1920" height="1080" alt="The USB drive and SD card are visible in their open cases before execution." loading="lazy"></div>
+                <div class="real-request-overlay" aria-hidden="true" hidden><div><span>New instruction</span><strong></strong></div></div>
+                <span class="real-speed" aria-label="Two times speed">2×</span>
+                <figcaption class="real-current-step" data-real-context="case"><span>Observe</span><p>Observe both open cases before their contents are hidden.</p><div class="real-stage-progress" aria-hidden="true"><i></i></div></figcaption>
               </figure>
+              <aside class="real-evidence" aria-label="Relevant past observation">
+                <div class="evidence-kicker">Earlier observation</div>
+                <img src="assets/real-world/case-evidence-0.jpg?v=story-13" width="960" height="540" alt="Relevant frame from the opening observation" loading="lazy">
+                <h4>Contents and starting positions</h4>
+                <p>The open cases reveal which item is inside each case and where each case starts.</p>
+                <small>Example evidence from the recording.</small>
+              </aside>
+              </div>
               <div class="real-stage-buttons" role="group" aria-label="Case preparation and return chapters">
                 <button type="button" data-real-stage="0" disabled><span>Start</span><strong>Observe</strong></button>
-                <button type="button" data-real-stage="1" disabled><span>Goal 1</span><strong>Retrieve USB</strong></button>
-                <button type="button" data-real-stage="2" disabled><span>Goal 2</span><strong>Retrieve SD card</strong></button>
-                <button type="button" data-real-stage="3" disabled><span>Goal 3</span><strong>Return USB</strong></button>
+                <button type="button" data-real-stage="1" disabled><span>Goal 1</span><strong>Stage USB case</strong></button>
+                <button type="button" data-real-stage="2" disabled><span>Goal 2</span><strong>Stage SD case</strong></button>
+                <button type="button" data-real-stage="3" disabled><span>Goal 3</span><strong>Return USB case</strong></button>
               </div>
             </div>
           </article>
           <article class="real-scenario" id="real-toy" data-real-scenario="toy">
             <header class="real-scenario-heading"><span class="scenario-number">02</span><div><h3>Toy relocation, cleaning and return</h3><p>The same recorded origin guides <strong>toy selection, brushing and return</strong>.</p></div></header>
             <div class="real-presentation">
+              <div class="real-demo-layout">
               <figure class="real-continuous-player">
-                <div class="real-media" data-real-slot="toy-demo"><img src="assets/real-world/toy-demo.jpg?v=continuous-real-12" width="1920" height="1080" alt="Remember where each toy started before they are moved into the left tray." loading="lazy"></div>
-                <figcaption class="real-current-step" data-real-context="toy"><span>Observe</span><p>Remember where each toy started before they are moved into the left tray.</p><div class="real-stage-progress" aria-hidden="true"><i></i></div></figcaption>
+                <div class="real-media" data-real-slot="toy-demo"><img src="assets/real-world/toy-demo.jpg?v=story-13" width="1920" height="1080" alt="The blue dragon and yellow chick at their original desk positions." loading="lazy"></div>
+                <div class="real-request-overlay" aria-hidden="true" hidden><div><span>New instruction</span><strong></strong></div></div>
+                <span class="real-speed" aria-label="Two times speed">2×</span>
+                <figcaption class="real-current-step" data-real-context="toy"><span>Observe</span><p>Observe where both toys start before they are gathered in the left tray.</p><div class="real-stage-progress" aria-hidden="true"><i></i></div></figcaption>
               </figure>
+              <aside class="real-evidence" aria-label="Relevant past observation">
+                <div class="evidence-kicker">Earlier observation</div>
+                <img src="assets/real-world/toy-evidence-0.jpg?v=story-13" width="960" height="540" alt="Relevant frame from the opening observation" loading="lazy">
+                <h4>Original toy layout</h4>
+                <p>The blue toy and yellow chick start at separate positions on the desk.</p>
+                <small>Example evidence from the recording.</small>
+              </aside>
+              </div>
               <div class="real-stage-buttons" role="group" aria-label="Toy relocation, cleaning and return chapters">
                 <button type="button" data-real-stage="0" disabled><span>Start</span><strong>Observe</strong></button>
-                <button type="button" data-real-stage="1" disabled><span>Goal 1</span><strong>Move toy</strong></button>
-                <button type="button" data-real-stage="2" disabled><span>Goal 2</span><strong>Clean original spot</strong></button>
-                <button type="button" data-real-stage="3" disabled><span>Goal 3</span><strong>Return toy</strong></button>
+                <button type="button" data-real-stage="1" disabled><span>Goal 1</span><strong>Move blue toy</strong></button>
+                <button type="button" data-real-stage="2" disabled><span>Goal 2</span><strong>Brush original spot</strong></button>
+                <button type="button" data-real-stage="3" disabled><span>Goal 3</span><strong>Return blue toy</strong></button>
               </div>
             </div>
           </article>
@@ -319,7 +393,7 @@
 <div class="section-intro chapter-intro"><span class="section-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v26h27M8 24V14h5v10m4 0V8h5v16m4 0V4h4v20"/></svg></span><h2 id="results-title">Results</h2></div>
         <div class="outcome-panel">
           <div class="outcome-intro">
-            <p class="stat-value" id="gain-value">+24.5 pp</p>
+            <p class="stat-value" id="gain-value">+24.5%p</p>
             <p class="stat-description" id="gain-description">All-goal success over Uniform-Memory across four tasks</p>
             <p class="stat-context" id="metric-context">Both requests succeed using the same observation history.</p>
           </div>
@@ -328,7 +402,7 @@
               <span class="chart-title" id="outcome-caption">Simulation success</span>
               <div class="chart-controls">
                 <label>Task<select id="results-task"><option value="all-tasks">All four tasks</option>
-                  <option value="VideoPlaceButton">Button press</option><option value="VideoPlaceOrder">Placement order</option><option value="VideoUnmaskSwap">Hidden cubes</option><option value="PickHighlight">Temporary highlights</option>
+                  <option value="VideoPlaceButton">VideoPlaceButton</option><option value="VideoPlaceOrder">VideoPlaceOrder</option><option value="VideoUnmaskSwap">VideoUnmaskSwap</option><option value="PickHighlight">PickHighlight</option>
                 </select></label>
                 <label>Metric<select id="results-metric"><option value="all">All-goal</option><option value="sequence">Sequence</option><option value="goal">Single goal</option></select></label>
               </div>

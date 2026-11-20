@@ -12,6 +12,9 @@ async function loadRealWorldMedia() {
       const poster = media.querySelector('img');
       const scenario = media.closest('[data-real-scenario]');
       const panel = scenario.querySelector('[data-real-context]');
+      const evidence = scenario.querySelector('.real-evidence');
+      const request = scenario.querySelector('.real-request-overlay');
+      let displayedGoal = null;
       const buttons = [...scenario.querySelectorAll('[data-real-stage]')];
       const chapters = (Array.isArray(clip.chapters) ? clip.chapters : [])
         .filter(c => [0,1,2,3].includes(c.goal) && Number.isFinite(c.start) && c.start >= 0)
@@ -28,14 +31,24 @@ async function loadRealWorldMedia() {
       const update = () => {
         const active = chapters.filter(c => c.start <= video.currentTime).pop();
         if (!active) return;
-        for (const button of buttons) {
-          const current = Number(button.dataset.realStage) === active.goal;
-          button.classList.toggle('is-current', current);
-          if (current) button.setAttribute('aria-current','step');
-          else button.removeAttribute('aria-current');
+        if (active.goal !== displayedGoal) {
+          displayedGoal = active.goal;
+          for (const button of buttons) {
+            const current = Number(button.dataset.realStage) === active.goal;
+            button.classList.toggle('is-current', current);
+            if (current) button.setAttribute('aria-current', 'step');
+            else button.removeAttribute('aria-current');
+          }
+          panel.querySelector('span').textContent = active.label;
+          panel.querySelector('p').textContent = active.text;
+          request.querySelector('span').textContent = active.label + ' instruction';
+          request.querySelector('strong').textContent = active.text;
+          evidence.querySelector('img').src = active.evidence;
+          evidence.querySelector('img').alt = active.evidenceTitle;
+          evidence.querySelector('h4').textContent = active.evidenceTitle;
+          evidence.querySelector('p').textContent = active.evidenceText;
         }
-        panel.querySelector('span').textContent = active.label;
-        panel.querySelector('p').textContent = active.text;
+        request.hidden = active.goal === 0 || video.currentTime >= active.start + active.hold;
         const next = chapters.find(c => c.start > active.start);
         const end = next ? next.start : video.duration;
         const progress = Number.isFinite(end) && end > active.start ? (video.currentTime-active.start)/(end-active.start) : 0;
@@ -57,6 +70,7 @@ async function loadRealWorldMedia() {
       video.addEventListener('seeked', update);
       video.addEventListener('error', () => {
         video.replaceWith(poster);
+        request.hidden = true;
         for (const b of buttons) {b.disabled=true;b.classList.remove('is-current');b.removeAttribute('aria-current');}
       }, {once:true});
       video.src = clip.src;
@@ -176,7 +190,7 @@ if (outcomes) {
     const [name, definition] = metrics[metric.value];
     const [uniform, reuse] = values.slice(-2);
     const delta = reuse[0] - uniform[0];
-    const gain = (delta >= 0 ? "+" : "") + delta.toFixed(1) + " pp";
+    const gain = (delta >= 0 ? "+" : "") + delta.toFixed(1) + "%p";
     const scope = task.value === "all-tasks" ? "across four tasks" : "on " + task.selectedOptions[0].textContent;
 
     rows.forEach((row, i) => {

@@ -244,3 +244,14 @@
 .flow-timeline #flow-play{color:#2458ba;background:#e9f1ff;border-color:#adc6ef;width:37px;height:37px}
 .memory-flow[data-stage=record] [data-timeline-stage=record],.memory-flow[data-stage=goal1] [data-timeline-stage=goal1],.memory-flow[data-stage=goal2] [data-timeline-stage=goal2]{color:#285dc5;font-weight:750}
 @media(max-width:760px){.flow-chapters{gap:.4rem}.flow-chapters button{padding:.5rem .65rem;min-height:44px;font-size:.74rem}.flow-chapters button span{font-size:.85rem}.flow-story h3{font-size:1.03rem}.flow-story p{font-size:.85rem}.full-architecture>summary{font-size:.86rem}.full-architecture img{padding:.3rem}}
+
+/* Fit the explainer, headings and controls together on a desktop screen. */
+@media(min-width:761px){
+ #method .memory-flow,#method .full-architecture{max-width:min(100%,980px,max(660px,calc((100svh - 315px) * 1.778)));margin-inline:auto}
+ #method .flow-toolbar{padding:.52rem .85rem}
+ #method .flow-chapters button{padding:.42rem .8rem;min-height:38px}
+ #method .flow-timeline{padding:.6rem 1rem .35rem}
+ #method .flow-story{min-height:4.7rem;padding:.65rem 1rem;gap:.7rem}
+ #method .flow-story h3{font-size:1rem}
+ #method .flow-story p{font-size:.85rem}
+}
