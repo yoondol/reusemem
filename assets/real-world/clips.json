@@ -8,32 +8,32 @@
     "chapters": []
   },
   "toy-observation": {
-    "src": "assets/real-world/toy-observation.mp4",
-    "poster": "assets/real-world/toy-observation.jpg",
-    "captions": "assets/real-world/toy-observation.vtt",
+    "src": "assets/real-world/toy-observation.mp4?v=toy-final-10",
+    "poster": "assets/real-world/toy-observation.jpg?v=toy-final-10",
+    "captions": "assets/real-world/toy-observation.vtt?v=toy-final-10",
     "cues": [
       {
         "start": 0,
-        "end": 2.3,
+        "end": 2.5,
         "text": "Remember where each toy started."
       },
       {
-        "start": 2.3,
-        "end": 7.8,
+        "start": 2.5,
+        "end": 7.4,
         "text": "Both toys are moved into the left tray."
       },
       {
-        "start": 7.8,
-        "end": 12,
-        "text": "The scene has changed. The original positions remain in memory."
+        "start": 7.4,
+        "end": 11,
+        "text": "The toys have moved. Remember their original positions."
       }
     ],
     "chapters": []
   },
   "toy-sequence": {
-    "src": "assets/real-world/toy-sequence.mp4",
-    "poster": "assets/real-world/toy-sequence.jpg",
-    "captions": "assets/real-world/toy-sequence.vtt",
+    "src": "assets/real-world/toy-sequence.mp4?v=toy-final-10",
+    "poster": "assets/real-world/toy-sequence.jpg?v=toy-final-10",
+    "captions": "assets/real-world/toy-sequence.vtt?v=toy-final-10",
     "chapters": [
       {
         "goal": 1,
@@ -41,11 +41,11 @@
       },
       {
         "goal": 2,
-        "start": 26
+        "start": 31
       },
       {
         "goal": 3,
-        "start": 56
+        "start": 61
       }
     ]
   }

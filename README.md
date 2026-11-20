@@ -137,25 +137,17 @@ architecture, demonstrations and quantitative plots. Functional line icons
 identify ideas and chapters; there is no project logo or extra cover tagline.
 Exact requests, metric definitions and media provenance remain where needed.
 
-## Supplied physical toy demonstration
+## Physical toy demonstration
 
-The toy scenario uses one supplied 100-second camera recording. The first
-12 seconds show the original positions and relocation into the left tray.
-The remaining 88 seconds preserve the continuous three-request execution at
-normal speed, without internal cuts or resets. Goal starts are 0, 26 and
-56 seconds in the published sequence (12, 38 and 68 seconds in the master).
-Both files are 1920 × 1080 H.264 with fast-start metadata, with audio omitted.
-The image is not cropped, geometrically altered or overlaid with text.
-Synchronized instructions sit below the footage; English WebVTT captions
-are also available through the video controls. Case videos remain pending.
+The finalized toy scenario uses the latest supplied camera recording, replacing
+all earlier camera-comparison embeds. Its last three seconds are removed.
+Observation is source 0–11 seconds; the continuous execution is source
+11–106.833 seconds. No cuts, resets, crops or speed changes are made inside
+the execution. The scene and full robot movement remain visible in native
+1920 × 1080 framing. Audio is omitted.
 
-## Camera-view comparison
-
-Below the existing toy demonstration, two complete supplied recordings appear
-side by side as View 1 (the initial recording) and View 2 (the latest recording).
-Both retain the entire recording, native 1080p 16:9 framing and original speed,
-without captions or overlays. HEVC sources are converted to H.264 for browser
-support, with audio omitted. View 2 is the supplied 21:50 recording, about
-110 seconds long. Previous comparison Views 2–5 are no longer embedded.
-Both players use the same viewport-aware muted autoplay as the other videos.
-These are separate recordings rather than synchronized views of one execution.
+Goal 1 starts at sequence 0 s, Goal 2 at 31 s and Goal 3 at 61 s
+(source 11, 42 and 72 seconds). Synchronized web panels and optional English
+WebVTT captions follow these boundaries; the three goal buttons seek to them.
+Both videos use muted autoplay when visible and pause off screen. The case
+scenario still uses photographs while its real video is pending.
