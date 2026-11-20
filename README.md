@@ -148,3 +148,13 @@ Both files are 1920 × 1080 H.264 with fast-start metadata, with audio omitted.
 The image is not cropped, geometrically altered or overlaid with text.
 Synchronized instructions sit below the footage; English WebVTT captions
 are also available through the video controls. Case videos remain pending.
+
+## Camera-view comparison
+
+Below the existing toy demonstration, two complete supplied recordings appear
+side by side as View 1 (earlier) and View 2 (new). Both retain the entire
+recording, native 16:9 framing and original speed, without captions or overlays.
+The earlier 1080p HEVC source is converted to H.264 for browser support; the new
+720p H.264 video is remuxed without re-encoding. Audio is omitted for both.
+They use the same viewport-aware muted autoplay as the other demonstrations.
+These are separate recordings rather than synchronized views of one execution.
