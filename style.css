@@ -273,6 +273,3 @@ html{scroll-padding-top:0}
 .camera-comparison h4{margin:0 0 1.3rem;font-size:1.3rem;font-weight:700;color:#203c68;letter-spacing:-.025em}
 .camera-view figcaption{font-weight:700;color:#285ccc;font-size:1rem;margin-bottom:.8rem}
 .camera-view figcaption span{font-weight:400;color:#60728f;margin-left:.6rem;font-size:.9rem}
-
-.camera-extra-views{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:2rem}
-@media(max-width:800px){.camera-extra-views{grid-template-columns:1fr;gap:1.8rem}}

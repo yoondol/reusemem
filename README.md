@@ -152,15 +152,10 @@ are also available through the video controls. Case videos remain pending.
 ## Camera-view comparison
 
 Below the existing toy demonstration, two complete supplied recordings appear
-side by side as View 1 (earlier) and View 2 (new). Both retain the entire
-recording, native 16:9 framing and original speed, without captions or overlays.
-The earlier 1080p HEVC source is converted to H.264 for browser support; the new
-720p H.264 video is remuxed without re-encoding. Audio is omitted for both.
-They use the same viewport-aware muted autoplay as the other demonstrations.
+side by side as View 1 (the initial recording) and View 2 (the latest recording).
+Both retain the entire recording, native 1080p 16:9 framing and original speed,
+without captions or overlays. HEVC sources are converted to H.264 for browser
+support, with audio omitted. View 2 is the supplied 21:50 recording, about
+110 seconds long. Previous comparison Views 2–5 are no longer embedded.
+Both players use the same viewport-aware muted autoplay as the other videos.
 These are separate recordings rather than synchronized views of one execution.
-
-Three further supplied recordings appear below View 1 and View 2 as Views 3–5.
-They are complete 1080p recordings at original speed, with no internal cuts,
-image crops or overlays. HEVC is converted to browser-compatible H.264 and
-audio is omitted. The additional row has three columns on desktop and stacks
-on smaller screens. Existing demonstrations and all result values are unchanged.
