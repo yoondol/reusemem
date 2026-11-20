@@ -12,9 +12,9 @@
   <link rel="canonical" href="https://yoondol.github.io/reusemem/">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
   <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=core-sections-5">
-  <link rel="stylesheet" href="flow.css?v=core-sections-5">
-  <script src="page.js?v=core-sections-5" defer></script>
+  <link rel="stylesheet" href="style.css?v=real-toy-6">
+  <link rel="stylesheet" href="flow.css?v=real-toy-6">
+  <script src="page.js?v=real-toy-6" defer></script>
   <script src="flow.js?v=growing-memory-v1" defer></script>
 </head>
 <body>
@@ -291,11 +291,12 @@
             <div class="real-clips">
               <figure class="real-clip">
                 <figcaption><strong>Observation</strong><p>Original positions, before both toys are gathered in the left tray.</p></figcaption>
-                <div class="real-media" data-real-slot="toy-observation"><img src="assets/photo-01.jpg" width="1280" height="960" alt="The blue dragon on the left, the chick on the right, and the brush between them." loading="lazy"></div>
+                <div class="real-media" data-real-slot="toy-observation"><img src="assets/real-world/toy-observation.jpg" width="1920" height="1080" alt="The dragon and chick at their original desk positions, before being gathered in the left tray." loading="lazy"></div>
+                <div class="real-caption" data-real-observation-context="toy" hidden><span>Observe</span><p>Remember where each toy started.</p></div>
               </figure>
               <figure class="real-clip real-sequence">
                 <figcaption><strong>Continuous sequence</strong><p>Goal 1 → Goal 2 → Goal 3. <b>No scene reset.</b></p></figcaption>
-                <div class="real-media" data-real-slot="toy-sequence"><img src="assets/photo-04.jpg" width="1280" height="960" alt="The robot brushing the dragon toy’s original position after moving it to the right tray." loading="lazy"></div>
+                <div class="real-media" data-real-slot="toy-sequence"><img src="assets/real-world/toy-sequence.jpg" width="1920" height="1080" alt="The robot moving the dragon from the left tray toward the right tray." loading="lazy"></div>
                 <div class="real-caption" data-real-context="toy" hidden><span>Sequence</span><p>Goal 1 → Goal 2 → Goal 3. No reset.</p></div>
               </figure>
             </div>

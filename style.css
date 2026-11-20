@@ -265,3 +265,6 @@ html{scroll-padding-top:0}
  .ideas-grid{gap:1.6rem}.ideas-grid article{grid-template-columns:38px 1fr;gap:.8rem}.idea-symbol{width:38px;height:38px}.idea-symbol svg{width:25px;height:25px}
  .ideas-grid h3{font-size:1.08rem}.ideas-grid p{font-size:.9rem;margin-top:.4rem}
 }
+
+/* Supplied physical footage retains its native widescreen composition. */
+#real-toy .real-media{aspect-ratio:16/9}

@@ -14,14 +14,30 @@ async function loadRealWorldMedia() {
       const isSequence = media.dataset.realSlot.endsWith('-sequence');
       const video = document.createElement('video');
       video.controls = true; video.playsInline = true; video.preload = 'metadata';
-      video.poster = poster.src;
+      video.poster = clip.poster || poster.src;
       video.setAttribute('aria-label', scenario.querySelector('h3').textContent + (isSequence ? ', continuous three-goal execution' : ', observation'));
       video.src = clip.src;
+      if (clip.captions) {
+        const track = document.createElement('track');
+        track.kind = 'captions'; track.srclang = 'en'; track.label = 'English';
+        track.src = clip.captions; video.append(track);
+      }
       const buttons = [...scenario.querySelectorAll('[data-real-goal]')];
       const panel = scenario.querySelector('[data-real-context]');
       video.addEventListener('loadedmetadata', () => {
         if (video.videoWidth && video.videoHeight) media.style.aspectRatio = `${video.videoWidth} / ${video.videoHeight}`;
       });
+      const observationPanel = media.closest('figure').querySelector('[data-real-observation-context]');
+      if (!isSequence && observationPanel && Array.isArray(clip.cues) && clip.cues.length) {
+        observationPanel.hidden = false;
+        const updateObservation = () => {
+          const cue = clip.cues.find(c => c.start <= video.currentTime && video.currentTime < c.end) || clip.cues[0];
+          observationPanel.querySelector('p').textContent = cue.text;
+        };
+        video.addEventListener('timeupdate', updateObservation);
+        video.addEventListener('seeked', updateObservation);
+        updateObservation();
+      }
       if (isSequence) {
         const chapters = (Array.isArray(clip.chapters) ? clip.chapters : [])
           .filter(c => [1,2,3].includes(c.goal) && Number.isFinite(c.start) && c.start >= 0)
@@ -55,9 +71,11 @@ async function loadRealWorldMedia() {
           }
         };
         video.addEventListener('timeupdate',update); video.addEventListener('seeked',update);
+        update();
       }
       video.addEventListener('error', () => {
         video.replaceWith(poster);
+        if (observationPanel) observationPanel.hidden=true;
         if (isSequence) {panel.hidden=true;for (const b of buttons) {b.disabled=true;b.classList.remove('is-current');b.removeAttribute('aria-current');}}
       }, {once:true});
       poster.replaceWith(video); registerGalleryVideo(video);

@@ -136,3 +136,15 @@ Simulation, Real World and Results chapters lead into the existing interactive
 architecture, demonstrations and quantitative plots. Functional line icons
 identify ideas and chapters; there is no project logo or extra cover tagline.
 Exact requests, metric definitions and media provenance remain where needed.
+
+## Supplied physical toy demonstration
+
+The toy scenario uses one supplied 100-second camera recording. The first
+12 seconds show the original positions and relocation into the left tray.
+The remaining 88 seconds preserve the continuous three-request execution at
+normal speed, without internal cuts or resets. Goal starts are 0, 26 and
+56 seconds in the published sequence (12, 38 and 68 seconds in the master).
+Both files are 1920 × 1080 H.264 with fast-start metadata, with audio omitted.
+The image is not cropped, geometrically altered or overlaid with text.
+Synchronized instructions sit below the footage; English WebVTT captions
+are also available through the video controls. Case videos remain pending.
