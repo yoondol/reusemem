@@ -1,227 +1,146 @@
 const motionPreference = matchMedia("(prefers-reduced-motion: reduce)");
 const videoStates = new Map();
+const VISIBLE_SHARE = 0.35;
 
-// Start muted when a player enters view. A viewer's manual pause stays in effect.
+// Every player with native controls plays muted and inline while it is in view
+// and pauses off screen. A viewer's own pause holds until they press play again.
+// Players inside a hidden simulation tab never run.
 function updatePlayback(video) {
   const state = videoStates.get(video);
-  if (state.visible && !video.closest("[hidden]") && !state.manuallyPaused && !motionPreference.matches) {
-    if (!video.ended) video.play().catch(() => {});
-  } else if (!video.paused && !video.seeking) {
+  const wanted = state.visible && !video.closest("[hidden]") && !state.manuallyPaused && !motionPreference.matches;
+  if (wanted) {
+    if (video.paused && !video.ended) video.play().catch(() => {});
+  } else if (!video.paused) {
     state.sitePaused = true;
     video.pause();
   }
 }
 
+function measureVisibility(video) {
+  const box = video.getBoundingClientRect();
+  const shown = Math.min(box.bottom, innerHeight) - Math.max(box.top, 0);
+  videoStates.get(video).visible = box.height > 0 && shown >= box.height * VISIBLE_SHARE;
+  updatePlayback(video);
+}
+
 const videoObserver = "IntersectionObserver" in window ? new IntersectionObserver(entries => {
   for (const entry of entries) {
-    const video = entry.target.matches("video") ? entry.target : entry.target.querySelector("video");
-    const visible = entry.isIntersecting && entry.intersectionRatio >= 0.25;
-    videoStates.get(video).visible = visible;
-    const panel = video.closest("[data-demo]");
-    if (visible && panel) warmClues(panel);
-    updatePlayback(video);
+    videoStates.get(entry.target).visible = entry.isIntersecting && entry.intersectionRatio >= VISIBLE_SHARE;
+    updatePlayback(entry.target);
   }
-}, {threshold: 0.25}) : null;
+}, {threshold: [0, VISIBLE_SHARE]}) : null;
 
 for (const video of document.querySelectorAll("video[controls]")) {
   const state = {visible: !videoObserver, manuallyPaused: false, sitePaused: false};
   videoStates.set(video, state);
   video.muted = true;
+  video.playsInline = true;
   video.addEventListener("pause", () => {
     if (!state.sitePaused && !video.ended && !video.seeking) state.manuallyPaused = true;
     state.sitePaused = false;
   });
   video.addEventListener("play", () => { state.manuallyPaused = false; });
-  if (videoObserver) videoObserver.observe(video.closest(".demo-screen") ?? video);
+  if (videoObserver) videoObserver.observe(video);
   else updatePlayback(video);
 }
 motionPreference.addEventListener("change", () => {
   for (const video of videoStates.keys()) updatePlayback(video);
 });
 
-const demoData = JSON.parse(document.querySelector("#demo-data").textContent);
-const cluePreloads = new Map();
+// Request cards. Each player lists its requests in data-requests as
+// {at, until, label, text} in media seconds. From `at` to `until` the card shows
+// the full instruction over the held first frame of the request; afterwards a
+// small tag keeps the goal label (and, on wide players, the request) in the
+// corner while the footage plays. The card follows currentTime only, so native
+// seeking, looping, pausing and replaying always show the right request, and
+// it never intercepts pointer input meant for the native controls.
+const AVATAR = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8.3" r="4.1"/><path d="M4.2 21c.7-4.4 3.9-7 7.8-7s7.1 2.6 7.8 7z"/></svg>';
 
-function warmClues(panel) {
-  const key = panel.dataset.demo;
-  if (cluePreloads.has(key)) return;
-  const urls = new Set(demoData[key].stages.slice(1).map(stage => stage.image));
-  const images = new Map();
-  for (const url of urls) {
-    const image = new Image();
-    image.src = url;
-    images.set(url, image);
-  }
-  cluePreloads.set(key, images);
-}
+for (const media of document.querySelectorAll(".clip-media[data-requests]")) {
+  const video = media.querySelector("video");
+  const cues = JSON.parse(media.dataset.requests).sort((a, b) => a.at - b.at);
+  const overlay = document.createElement("div");
+  overlay.className = "request";
+  overlay.dataset.state = "off";
+  overlay.setAttribute("aria-hidden", "true");
+  overlay.innerHTML =
+    `<div class="request-card"><span class="request-avatar">${AVATAR}</span>` +
+    `<p class="request-bubble"><b class="request-label"></b><span class="request-text"></span></p></div>` +
+    `<div class="request-tag"><span class="request-avatar">${AVATAR}</span>` +
+    `<b class="request-label"></b><span class="request-text"></span></div>`;
+  media.append(overlay);
+  const labels = overlay.querySelectorAll(".request-label");
+  const texts = overlay.querySelectorAll(".request-text");
+  let current = null;
 
-for (const panel of document.querySelectorAll("[data-demo]")) {
-  const {stages, history: savedFrames} = demoData[panel.dataset.demo];
-  const video = panel.querySelector("video");
-  const phase = panel.querySelector("[data-demo-phase]");
-  const request = panel.querySelector("[data-demo-request]");
-  const replay = panel.querySelector("[data-demo-replay]");
-  const image = panel.querySelector("[data-demo-image]");
-  const cue = panel.querySelector("[data-demo-cue]");
-  const cueFrame = panel.querySelector("[data-recall-frame]");
-  const marker = panel.querySelector("[data-demo-marker]");
-  const target = panel.querySelector("[data-live-target]");
-  const events = [...panel.querySelectorAll("[data-memory-event]")];
-  const rail = panel.querySelector(".memory-events");
-  const status = panel.querySelector("[data-memory-status]");
-  let currentStage;
-  let currentMode;
-  let lastFrame = -2;
-
-  function setPoint(element, point) {
-    element.hidden = !point;
-    if (!point) return;
-    element.style.setProperty("--marker-x", `${point[0]}%`);
-    element.style.setProperty("--marker-y", `${point[1]}%`);
-  }
-
-  function showClue(stage) {
-    warmClues(panel);
-    const preferred = cluePreloads.get(panel.dataset.demo).get(stage.image);
-    const showPreferred = () => {
-      if (currentStage !== stage) return;
-      image.src = stage.image;
-      setPoint(marker, stage.point);
-    };
-    if (preferred.complete && preferred.naturalWidth) {
-      showPreferred();
-      return;
-    }
-    const saved = events[stage.reads[0]].querySelector("img");
-    image.src = saved.currentSrc || saved.src;
-    setPoint(marker, null);
-    preferred.addEventListener("load", showPreferred, {once: true});
-  }
-
-  function flyFromMemory(stage) {
-    const first = stage.reads?.find(index => events[index].classList.contains("is-saved"));
-    if (motionPreference.matches || panel.hidden || first === undefined || !Element.prototype.animate) return;
-    const thumbnail = events[first].querySelector("img");
-    const origin = thumbnail.getBoundingClientRect();
-    const container = panel.getBoundingClientRect();
-    const screen = panel.querySelector(".demo-screen").getBoundingClientRect();
-    if (!origin.width || !screen.width) return;
-
-    panel.querySelector(".recall-flight")?.remove();
-    const flight = document.createElement("img");
-    flight.className = "recall-flight";
-    flight.src = thumbnail.currentSrc || thumbnail.src;
-    flight.alt = "";
-    flight.setAttribute("aria-hidden", "true");
-    Object.assign(flight.style, {
-      left: `${origin.left - container.left}px`,
-      top: `${origin.top - container.top}px`,
-      width: `${origin.width}px`,
-      height: `${origin.height}px`
-    });
-    panel.append(flight);
-    const x = screen.left + screen.width * .042 - origin.left;
-    const y = screen.top + screen.height * .5 - cueFrame.offsetHeight / 2 - origin.top;
-    const scale = cueFrame.offsetWidth / origin.width;
-    const move = flight.animate([
-      {transform: "translate(0, 0) scale(1)", opacity: .94},
-      {transform: `translate(${x}px, ${y}px) scale(${scale})`, opacity: .2}
-    ], {duration: 410, easing: "cubic-bezier(.24,.77,.33,1)"});
-    move.finished.then(() => flight.remove(), () => flight.remove());
-  }
-
-  function showMoment() {
+  function update() {
     const time = video.currentTime;
-    const stage = stages.findLast(item => item.start <= time);
-    const elapsed = time - stage.start;
-    const mode = stage.start === 0 ? "observe" : elapsed < 2.9 ? "recall" : "act";
-    const mostRecent = savedFrames.findLastIndex(frame => frame.at <= time);
-    const displayedTarget = stage.target && elapsed < (stage.targetSeconds ?? 4.7) ? stage.target : null;
-
-    if (stage !== currentStage) {
-      currentStage = stage;
-      phase.textContent = stage.label;
-      request.textContent = stage.request;
-      cue.textContent = stage.idea;
-      if (stage.start > 0) showClue(stage);
-      else setPoint(marker, null);
-      for (const [index, item] of events.entries()) {
-        item.classList.toggle("is-read", stage.reads?.includes(index) ?? false);
+    let cue = null;
+    for (const item of cues) if (time + 0.03 >= item.at) cue = item;
+    if (cue !== current) {
+      current = cue;
+      if (cue) {
+        labels.forEach(node => { node.textContent = cue.label; });
+        texts.forEach(node => { node.textContent = cue.text; });
       }
     }
-    if (mostRecent !== lastFrame) {
-      lastFrame = mostRecent;
-      rail.style.setProperty("--memory-depth", Math.max(0, mostRecent) / (events.length - 1));
-      for (const [index, item] of events.entries()) {
-        item.classList.toggle("is-saved", index <= mostRecent);
-        item.classList.toggle("is-writeback", savedFrames[index].duringAction);
-      }
-    }
-    if (mode !== currentMode) {
-      currentMode = mode;
-      panel.dataset.view = mode;
-      cueFrame.setAttribute("aria-hidden", String(mode !== "recall"));
-      replay.hidden = mode !== "act";
-      status.textContent = {observe: "Before any request", recall: "Recalling for this request", act: "Still recording during action"}[mode];
-      if (mode === "recall") flyFromMemory(stage);
-    }
-    setPoint(target, displayedTarget);
+    const state = !cue ? "off" : time < cue.until ? "card" : "tag";
+    if (overlay.dataset.state !== state) overlay.dataset.state = state;
   }
 
-  replay.addEventListener("click", () => {
-    if (!currentStage || !currentStage.start) return;
-    video.currentTime = currentStage.start + .1;
-    video.play().catch(() => {});
-  });
-  for (const eventName of ["loadedmetadata", "timeupdate", "seeking", "seeked"]) {
-    video.addEventListener(eventName, showMoment);
+  for (const type of ["loadedmetadata", "timeupdate", "seeking", "seeked", "play", "pause", "emptied"]) {
+    video.addEventListener(type, update);
   }
-  showMoment();
+  if ("requestVideoFrameCallback" in HTMLVideoElement.prototype) {
+    const onFrame = () => { update(); video.requestVideoFrameCallback(onFrame); };
+    video.requestVideoFrameCallback(onFrame);
+  }
+  update();
 }
 
-const groups = [...document.querySelectorAll("[data-demo-switcher]")].map(group => {
-  const tabs = [...group.querySelectorAll("[data-demo-tab]")];
-  const panels = tabs.map(tab => document.getElementById(tab.getAttribute("aria-controls")));
-  function select(index, writeHash = false) {
-    tabs.forEach((tab, i) => {
-      const active = index === i;
-      tab.setAttribute("aria-selected", String(active));
-      tab.tabIndex = active ? 0 : -1;
-      panels[i].hidden = !active;
-      if (active && writeHash) warmClues(panels[i]);
-      if (!active) {
-        const video = panels[i].querySelector("video");
+// Simulation task selection: only the selected task's four players are shown.
+const taskTabs = [...document.querySelectorAll('#simulation [role="tab"]')];
+const taskPanels = taskTabs.map(tab => document.getElementById(tab.getAttribute("aria-controls")));
+
+function selectTask(index, {focus = false, writeHash = false} = {}) {
+  taskTabs.forEach((tab, i) => {
+    const active = i === index;
+    tab.setAttribute("aria-selected", String(active));
+    tab.tabIndex = active ? 0 : -1;
+    taskPanels[i].hidden = !active;
+  });
+  taskPanels.forEach((panel, i) => {
+    for (const video of panel.querySelectorAll("video")) {
+      if (!videoStates.has(video)) continue;
+      if (i === index) requestAnimationFrame(() => measureVisibility(video));
+      else {
         videoStates.get(video).visible = false;
         updatePlayback(video);
       }
-    });
-    if (writeHash) window.history.replaceState(null, "", `#${panels[index].id}`);
-  }
-  tabs.forEach((tab, i) => {
-    tab.addEventListener("click", () => select(i, true));
-    tab.addEventListener("keydown", event => {
-      const neighbors = {ArrowLeft: (i + tabs.length - 1) % tabs.length, ArrowRight: (i + 1) % tabs.length,
-                         Home: 0, End: tabs.length - 1};
-      if (!(event.key in neighbors)) return;
-      event.preventDefault();
-      const next = neighbors[event.key];
-      select(next, true);
-      tabs[next].focus();
-    });
+    }
   });
-  return {panels, select};
+  if (focus) taskTabs[index].focus();
+  if (writeHash) history.replaceState(null, "", `#${taskPanels[index].id}`);
+}
+
+taskTabs.forEach((tab, i) => {
+  tab.addEventListener("click", () => selectTask(i, {writeHash: true}));
+  tab.addEventListener("keydown", event => {
+    const next = {ArrowLeft: (i + taskTabs.length - 1) % taskTabs.length, ArrowRight: (i + 1) % taskTabs.length,
+                  Home: 0, End: taskTabs.length - 1}[event.key];
+    if (next === undefined) return;
+    event.preventDefault();
+    selectTask(next, {focus: true, writeHash: true});
+  });
 });
 
 function selectFromHash() {
-  const id = location.hash.slice(1);
-  for (const {panels, select} of groups) {
-    const index = panels.findIndex(panel => panel.id === id || panel.dataset.demo === id);
-    if (index >= 0) {
-      select(index);
-      requestAnimationFrame(() => panels[index].scrollIntoView({block: "start"}));
-      break;
-    }
-  }
+  const id = decodeURIComponent(location.hash.slice(1));
+  const index = taskPanels.findIndex(panel =>
+    panel.id === id || panel.dataset.task === id || `${panel.dataset.task}-sequence` === id);
+  if (index < 0) return;
+  selectTask(index);
+  requestAnimationFrame(() => taskPanels[index].scrollIntoView({block: "start"}));
 }
 selectFromHash();
 window.addEventListener("hashchange", selectFromHash);
@@ -390,6 +309,9 @@ if (recall) {
       action.src = `assets/method/case-${key}-action.mp4`;
       action.setAttribute("aria-label", example.actionTitle);
       sequence.dataset.choice = key;
+      // A new choice is an explicit request to watch it.
+      const state = videoStates.get(action);
+      if (state) state.manuallyPaused = false;
       action.play().catch(() => {});
     });
   }

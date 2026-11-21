@@ -67,7 +67,7 @@
         "start": 5.5,
         "hold": 1.8,
         "label": "Goal 1",
-        "text": "Move the blue toy to the right tray.",
+        "text": "Put the toy that started on the left in the right tray.",
         "evidence": "assets/real-world/toy-evidence-1.jpg?v=story-13",
         "evidenceTitle": "Blue toy identity",
         "evidenceText": "The first view shows the blue toy before it is gathered with the chick in the left tray."
