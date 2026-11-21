@@ -25,9 +25,9 @@
   <link rel="canonical" href="https://yoondol.github.io/reusemem/">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
   <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=evidence-efficiency-15">
+  <link rel="stylesheet" href="style.css?v=evidence-timeline-16">
   <link rel="stylesheet" href="flow.css?v=story-13">
-  <script src="page.js?v=overview-14" defer></script>
+  <script src="page.js?v=evidence-timeline-16" defer></script>
   <script src="flow.js?v=growing-memory-v1" defer></script>
 </head>
 <body>
@@ -193,6 +193,7 @@
                 <track kind="captions" src="assets/captions/video-place-button-sequence.vtt" srclang="en" label="English">
               </video>
               <div class="video-caption" data-caption="video-place-button-sequence"><span class="caption-phase">Goal 1</span><p class="caption-text">Return the cube to its last location before the press.</p><div class="caption-progress" aria-hidden="true"><span></span></div></div>
+              <div class="evidence-guide" data-evidence-guide="video-place-button" hidden></div>
             </figure>
             </div>
           </article>
@@ -226,6 +227,7 @@
                 <track kind="captions" src="assets/captions/video-place-order-sequence.vtt" srclang="en" label="English">
               </video>
               <div class="video-caption" data-caption="video-place-order-sequence"><span class="caption-phase">Goal 1</span><p class="caption-text">Return the cube to the first recorded location.</p><div class="caption-progress" aria-hidden="true"><span></span></div></div>
+              <div class="evidence-guide" data-evidence-guide="video-place-order" hidden></div>
             </figure>
             </div>
           </article>
@@ -259,6 +261,7 @@
                 <track kind="captions" src="assets/captions/video-unmask-swap-sequence.vtt" srclang="en" label="English">
               </video>
               <div class="video-caption" data-caption="video-unmask-swap-sequence"><span class="caption-phase">Goal 1</span><p class="caption-text">Uncover the blue cube.</p><div class="caption-progress" aria-hidden="true"><span></span></div></div>
+              <div class="evidence-guide" data-evidence-guide="video-unmask-swap" hidden></div>
             </figure>
             </div>
           </article>
@@ -292,6 +295,7 @@
                 <track kind="captions" src="assets/captions/pick-highlight-sequence.vtt" srclang="en" label="English">
               </video>
               <div class="video-caption" data-caption="pick-highlight-sequence"><span class="caption-phase">Goal 1</span><p class="caption-text">Bring the first highlighted cube to the front.</p><div class="caption-progress" aria-hidden="true"><span></span></div></div>
+              <div class="evidence-guide" data-evidence-guide="pick-highlight" hidden></div>
             </figure>
             </div>
           </article>
@@ -307,19 +311,13 @@
           <article class="real-scenario" id="real-case" data-real-scenario="case">
             <header class="real-scenario-heading"><span class="scenario-number">01</span><div><h3>Case preparation and return</h3><p>Remember the <strong>contents</strong> to select a case and its <strong>origin</strong> to return it.</p></div></header>
             <div class="real-presentation">
-              <div class="real-demo-layout">
               <figure class="real-continuous-player">
                 <div class="real-media" data-real-slot="case-demo"><img src="assets/real-world/case-demo.jpg?v=story-13" width="1920" height="1080" alt="The USB drive and SD card are visible in their open cases before execution." loading="lazy"></div>
                 <div class="real-request-overlay" aria-hidden="true" hidden><div><span>New instruction</span><strong></strong></div></div>
                 <span class="real-speed" aria-label="Two times speed">2×</span>
                 <figcaption class="real-current-step" data-real-context="case"><span>Observe</span><p>Observe both open cases before their contents are hidden.</p><div class="real-stage-progress" aria-hidden="true"><i></i></div></figcaption>
               </figure>
-              <figure class="real-evidence" aria-label="Task-relevant past view">
-                <img src="assets/real-world/case-evidence-0.jpg?v=story-13" width="960" height="540" alt="Relevant frame from the opening observation" loading="lazy">
-                <h4>Contents and starting positions</h4>
-                <figcaption>Past view from the recording</figcaption>
-              </figure>
-              </div>
+              <div class="evidence-guide" data-evidence-guide="case" hidden></div>
               <div class="real-stage-buttons" role="group" aria-label="Case preparation and return chapters">
                 <button type="button" data-real-stage="0" disabled><span>Start</span><strong>Observe</strong></button>
                 <button type="button" data-real-stage="1" disabled><span>Goal 1</span><strong>Stage USB case</strong></button>
@@ -331,19 +329,13 @@
           <article class="real-scenario" id="real-toy" data-real-scenario="toy">
             <header class="real-scenario-heading"><span class="scenario-number">02</span><div><h3>Toy relocation, cleaning and return</h3><p>The same recorded origin guides <strong>toy selection, brushing and return</strong>.</p></div></header>
             <div class="real-presentation">
-              <div class="real-demo-layout">
               <figure class="real-continuous-player">
                 <div class="real-media" data-real-slot="toy-demo"><img src="assets/real-world/toy-demo.jpg?v=story-13" width="1920" height="1080" alt="The blue dragon and yellow chick at their original desk positions." loading="lazy"></div>
                 <div class="real-request-overlay" aria-hidden="true" hidden><div><span>New instruction</span><strong></strong></div></div>
                 <span class="real-speed" aria-label="Two times speed">2×</span>
                 <figcaption class="real-current-step" data-real-context="toy"><span>Observe</span><p>Observe where both toys start before they are gathered in the left tray.</p><div class="real-stage-progress" aria-hidden="true"><i></i></div></figcaption>
               </figure>
-              <figure class="real-evidence" aria-label="Task-relevant past view">
-                <img src="assets/real-world/toy-evidence-0.jpg?v=story-13" width="960" height="540" alt="Relevant frame from the opening observation" loading="lazy">
-                <h4>Original toy layout</h4>
-                <figcaption>Past view from the recording</figcaption>
-              </figure>
-              </div>
+              <div class="evidence-guide" data-evidence-guide="toy" hidden></div>
               <div class="real-stage-buttons" role="group" aria-label="Toy relocation, cleaning and return chapters">
                 <button type="button" data-real-stage="0" disabled><span>Start</span><strong>Observe</strong></button>
                 <button type="button" data-real-stage="1" disabled><span>Goal 1</span><strong>Move blue toy</strong></button>
@@ -601,5 +593,13 @@
   </main>
   <footer class="site-footer"><div class="wrap"><a class="back-to-top" href="#main">Back to top ↑</a><a href="https://arxiv.org/abs/2611.21115">arXiv ↗</a></div></footer>
 <script id="video-cue-data" type="application/json">{"video-place-button-observation":[{"start":0.0,"end":3.389,"phase":"Observation","text":"Watch the cube placements."},{"start":3.389,"end":5.667,"phase":"Observation","text":"Last placement before the press."},{"start":5.667,"end":8.222,"phase":"Observation","text":"The button is pressed."},{"start":8.222,"end":13.556,"phase":"Observation","text":"First placement after the press."},{"start":13.556,"end":22.5,"phase":"Observation","text":"Remember the two locations."}],"video-place-button-sequence":[{"start":0.0,"end":10.75,"phase":"Goal 1","text":"Return the cube to its last location before the press."},{"start":10.75,"end":19.85,"phase":"Goal 2","text":"Return the cube to its first location after the press."}],"video-place-order-observation":[{"start":0.0,"end":3.389,"phase":"Observation","text":"Watch the order of the placements."},{"start":3.389,"end":8.167,"phase":"Observation","text":"First recorded location."},{"start":8.167,"end":13.278,"phase":"Observation","text":"Second recorded location."},{"start":13.278,"end":22.722,"phase":"Observation","text":"Remember which location came first."}],"video-place-order-sequence":[{"start":0.0,"end":11.8,"phase":"Goal 1","text":"Return the cube to the first recorded location."},{"start":11.8,"end":21.0,"phase":"Goal 2","text":"Return the cube to the second recorded location."}],"video-unmask-swap-observation":[{"start":0.0,"end":1.4,"phase":"Observation","text":"See both cubes."},{"start":1.4,"end":3.2,"phase":"Observation","text":"The cubes are covered."},{"start":3.2,"end":5.7,"phase":"Observation","text":"The covers swap positions."},{"start":5.7,"end":8.1,"phase":"Observation","text":"Remember where each cube is hidden."}],"video-unmask-swap-sequence":[{"start":0.0,"end":11.4,"phase":"Goal 1","text":"Uncover the blue cube."},{"start":11.4,"end":23.45,"phase":"Goal 2","text":"Uncover the red cube."}],"pick-highlight-observation":[{"start":0.0,"end":3.0,"phase":"Observation","text":"First highlighted cube."},{"start":3.0,"end":4.8,"phase":"Observation","text":"Second highlighted cube."},{"start":4.8,"end":7.6,"phase":"Observation","text":"The highlights disappear."}],"pick-highlight-sequence":[{"start":0.0,"end":12.35,"phase":"Goal 1","text":"Bring the first highlighted cube to the front."},{"start":12.35,"end":28.2,"phase":"Goal 2","text":"Bring the second highlighted cube to the front."}]}</script>
+<script id="evidence-guide-data" type="application/json">{
+  "video-place-button": {"frames": [[1.6, "Cube on the table"], [5.15, "Last placement before"], [6.8, "Button press"], [12.3, "First placement after"]], "goals": [["The last placement before the press sets the destination.", [[1, 59, 59], [2, 46, 82]]], ["The first placement after the press sets a different destination.", [[2, 46, 82], [3, 67, 61]]]]},
+  "video-place-order": {"frames": [[1.6, "Starting scene"], [7.6, "First placement"], [12.8, "Second placement"], [19.4, "Cube moved again"]], "goals": [["The first recorded placement sets the destination.", [[1, 60, 78]]], ["The second recorded placement sets the next destination.", [[2, 59, 59]]]]},
+  "video-unmask-swap": {"frames": [[0.75, "Colors visible"], [2.8, "Cubes covered"], [4.65, "Covers switch"], [7.1, "Final cover positions"]], "goals": [["Start with the blue cube’s location, then follow its cover.", [[0, 49, 74], [2], [3]]], ["Start with the red cube’s location, then follow its cover.", [[0, 58, 66], [2], [3]]]]},
+  "pick-highlight": {"frames": [[1.4, "First highlight"], [3.9, "Second highlight"], [5.4, "Lights disappear"], [7.1, "Scene at request"]], "goals": [["The first flash identifies which cube to pick.", [[0, 54, 65]]], ["The second flash identifies a different cube.", [[1, 49, 43]]]]},
+  "case": {"frames": [[0.55, "Cases open"], [3.75, "Lids closed"], [20.8, "USB case moved"], [39.8, "Both cases on trays"]], "observe": "The open lids reveal both the contents and the starting positions.", "goals": [["The earlier view identifies the case that holds the USB drive.", [[0, 66, 85]]], ["The earlier view shows the SD card in the silver case.", [[0, 75, 60]]], ["The opening view gives the destination. The later view shows the case in the tray.", [[0, 61, 80], [3, 38, 63]]]]},
+  "toy": {"frames": [[0.45, "Original layout"], [5.2, "Toys together"], [22.1, "Blue toy moved"], [38.9, "Spot brushed"]], "observe": "The opening view shows where each toy started.", "goals": [["The opening view shows the blue toy before both toys are gathered.", [[0, 57, 81]]], ["The blue toy’s original position tells the robot where to brush.", [[0, 57, 81]]], ["The original position remains the destination. The toy is now in the tray.", [[0, 57, 81], [3]]]]}
+}</script>
 </body>
 </html>

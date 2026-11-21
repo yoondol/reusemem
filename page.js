@@ -1,3 +1,109 @@
+const motionPreference = matchMedia("(prefers-reduced-motion: reduce)");
+const guideData = JSON.parse(document.querySelector("#evidence-guide-data").textContent);
+
+function makeEvidenceGuide(mount, video, goalStarts = []) {
+  const key = mount.dataset.evidenceGuide;
+  const definition = guideData[key];
+  const header = document.createElement("div");
+  header.className = "evidence-guide-header";
+  const title = document.createElement("h4");
+  title.textContent = "Evidence timeline";
+  header.append(title);
+
+  const goalButtons = [];
+  if (goalStarts.length) {
+    const controls = document.createElement("div");
+    controls.className = "evidence-guide-goals";
+    controls.setAttribute("role", "group");
+    controls.setAttribute("aria-label", "Jump to a request in the continuous sequence");
+    goalStarts.forEach((start, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = `Goal ${index + 1}`;
+      button.addEventListener("click", () => {
+        video.currentTime = start;
+        video.play().catch(() => {});
+        update(index + 1);
+      });
+      controls.append(button);
+      goalButtons.push(button);
+    });
+    header.append(controls);
+  }
+
+  const caption = document.createElement("p");
+  caption.className = "evidence-guide-caption";
+  const strip = document.createElement("ol");
+  strip.className = "evidence-frames";
+  strip.tabIndex = 0;
+  strip.setAttribute("aria-label", "Illustrative task evidence in recording order");
+  const frames = definition.frames.map(([seconds, label], index) => {
+    const item = document.createElement("li");
+    item.className = "evidence-frame";
+    const image = document.createElement("div");
+    image.className = "evidence-image";
+    const thumb = document.createElement("img");
+    thumb.src = `assets/evidence/${key}-${index + 1}.webp`;
+    thumb.width = 432;
+    thumb.height = 243;
+    thumb.loading = "lazy";
+    thumb.alt = "";
+    const mark = document.createElement("i");
+    mark.hidden = true;
+    mark.setAttribute("aria-hidden", "true");
+    image.append(thumb, mark);
+    const text = document.createElement("div");
+    text.className = "evidence-frame-meta";
+    const clock = document.createElement("small");
+    clock.textContent = `${Math.floor(seconds / 60)}:${(seconds % 60).toFixed(1).padStart(4, "0")}`;
+    const name = document.createElement("strong");
+    name.textContent = label;
+    text.append(clock, name);
+    item.append(image, text);
+    strip.append(item);
+    return { item, mark, seconds, label };
+  });
+  mount.append(header, caption, strip);
+  mount.hidden = false;
+
+  let activeGoal;
+  function update(goal, presentedUntil = Infinity) {
+    const [description, picks] = definition.goals[goal - 1] ?? [definition.observe, []];
+    const changed = activeGoal !== goal;
+    if (changed) {
+      activeGoal = goal;
+      caption.textContent = description;
+      goalButtons.forEach((button, index) => {
+        button.setAttribute("aria-pressed", String(index + 1 === goal));
+      });
+    }
+    for (const [index, frame] of frames.entries()) {
+      const available = frame.seconds <= presentedUntil;
+      const pick = available && picks.find(([frameIndex]) => frameIndex === index);
+      const relevant = Boolean(pick);
+      frame.item.classList.toggle("is-future", !available);
+      frame.item.classList.toggle("is-relevant", relevant);
+      if (changed) {
+        frame.item.setAttribute("aria-label", relevant ? `${frame.label}, relevant to this request` : frame.label);
+        frame.mark.hidden = !pick || pick.length < 3;
+        if (pick && pick.length === 3) {
+          frame.mark.style.setProperty("--point-x", `${pick[1]}%`);
+          frame.mark.style.setProperty("--point-y", `${pick[2]}%`);
+        }
+      }
+    }
+    if (changed && picks.length && strip.scrollWidth > strip.clientWidth) {
+      const focus = frames[picks[0][0]].item;
+      const first = focus.offsetLeft - strip.firstElementChild.offsetLeft;
+      const last = first + focus.offsetWidth;
+      if (first < strip.scrollLeft || last > strip.scrollLeft + strip.clientWidth) {
+        strip.scrollTo({left: first, behavior: motionPreference.matches ? "instant" : "smooth"});
+      }
+    }
+  }
+  return update;
+}
+
 // Newly supplied real videos join the same viewport-aware playback system.
 let registerGalleryVideo = video => { video.muted = video.defaultMuted = true; video.loop = true; };
 
@@ -12,7 +118,6 @@ async function loadRealWorldMedia() {
       const poster = media.querySelector('img');
       const scenario = media.closest('[data-real-scenario]');
       const panel = scenario.querySelector('[data-real-context]');
-      const evidence = scenario.querySelector('.real-evidence');
       const request = scenario.querySelector('.real-request-overlay');
       let displayedGoal = null;
       const buttons = [...scenario.querySelectorAll('[data-real-stage]')];
@@ -28,6 +133,8 @@ async function loadRealWorldMedia() {
         track.kind = 'captions'; track.srclang = 'en'; track.label = 'English';
         track.src = clip.captions; video.append(track);
       }
+      const guide = scenario.querySelector("[data-evidence-guide]");
+      const updateEvidence = makeEvidenceGuide(guide, video);
       const update = () => {
         const active = chapters.filter(c => c.start <= video.currentTime).pop();
         if (!active) return;
@@ -43,10 +150,8 @@ async function loadRealWorldMedia() {
           panel.querySelector('p').textContent = active.text;
           request.querySelector('span').textContent = active.label + ' instruction';
           request.querySelector('strong').textContent = active.text;
-          evidence.querySelector('img').src = active.evidence;
-          evidence.querySelector('img').alt = active.evidenceTitle;
-          evidence.querySelector('h4').textContent = active.evidenceTitle;
         }
+        updateEvidence(active.goal, video.currentTime);
         request.hidden = active.goal === 0 || video.currentTime >= active.start + active.hold;
         const next = chapters.find(c => c.start > active.start);
         const end = next ? next.start : video.duration;
@@ -69,6 +174,7 @@ async function loadRealWorldMedia() {
       video.addEventListener('seeked', update);
       video.addEventListener('error', () => {
         video.replaceWith(poster);
+        guide.hidden = true;
         request.hidden = true;
         for (const b of buttons) {b.disabled=true;b.classList.remove('is-current');b.removeAttribute('aria-current');}
       }, {once:true});
@@ -110,6 +216,8 @@ if (cueSource) {
   for (const video of document.querySelectorAll("video[data-caption-id]")) {
     const cues = cueData[video.dataset.captionId];
     const panel = document.querySelector(`[data-caption="${video.dataset.captionId}"]`);
+    const guide = panel.parentElement.querySelector("[data-evidence-guide]");
+    const updateEvidence = guide && makeEvidenceGuide(guide, video, cues.map(cue => cue.start));
     for (const track of video.textTracks) track.mode = "hidden";
     video.addEventListener("loadedmetadata", () => {
       for (const track of video.textTracks) track.mode = "hidden";
@@ -117,6 +225,7 @@ if (cueSource) {
     function updateContext() {
       const cue = cues.find(c => video.currentTime >= c.start && video.currentTime < c.end) || cues[cues.length - 1];
       panel.querySelector(".caption-phase").textContent = cue.phase;
+      if (updateEvidence) updateEvidence(cues.indexOf(cue) + 1);
       panel.querySelector(".caption-text").textContent = cue.text;
       const progress = Math.max(0, Math.min(1, (video.currentTime - cue.start) / (cue.end - cue.start)));
       panel.querySelector(".caption-progress span").style.width = (progress * 100) + "%";
@@ -128,7 +237,6 @@ if (cueSource) {
 }
 
 const autoplayControl = document.querySelector("#autoplay-control");
-const motionPreference = matchMedia("(prefers-reduced-motion: reduce)");
 const galleryVideos = document.querySelectorAll("#real-world video, #simulation video");
 
 if (autoplayControl && "IntersectionObserver" in window) {
