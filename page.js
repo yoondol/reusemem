@@ -1,107 +1,178 @@
 const motionPreference = matchMedia("(prefers-reduced-motion: reduce)");
 const guideData = JSON.parse(document.querySelector("#evidence-guide-data").textContent);
 
-function makeEvidenceGuide(mount, video, goalStarts = []) {
+function makeEvidenceGuide(mount, video, chapters) {
   const key = mount.dataset.evidenceGuide;
   const definition = guideData[key];
+
   const header = document.createElement("div");
   header.className = "evidence-guide-header";
   const title = document.createElement("h4");
-  title.textContent = "Evidence timeline";
-  header.append(title);
+  title.textContent = "Replay timeline";
+  const clock = document.createElement("span");
+  clock.className = "evidence-clock";
+  header.append(title, clock);
 
-  const goalButtons = [];
-  if (goalStarts.length) {
-    const controls = document.createElement("div");
-    controls.className = "evidence-guide-goals";
-    controls.setAttribute("role", "group");
-    controls.setAttribute("aria-label", "Jump to a request in the continuous sequence");
-    goalStarts.forEach((start, index) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.textContent = `Goal ${index + 1}`;
-      button.addEventListener("click", () => {
-        video.currentTime = start;
-        video.play().catch(() => {});
-        update(index + 1);
-      });
-      controls.append(button);
-      goalButtons.push(button);
+  const rail = document.createElement("div");
+  rail.className = "evidence-rail";
+  const progress = document.createElement("div");
+  progress.className = "evidence-progress";
+  progress.setAttribute("aria-hidden", "true");
+  const slider = document.createElement("input");
+  slider.type = "range";
+  slider.min = 0;
+  slider.step = 0.033;
+  slider.value = 0;
+  slider.disabled = true;
+  slider.setAttribute("aria-label", `Seek in ${video.getAttribute("aria-label")}`);
+  rail.append(progress, slider);
+
+  const checkpoints = document.createElement("div");
+  checkpoints.className = "evidence-checkpoints";
+  checkpoints.setAttribute("role", "group");
+  checkpoints.setAttribute("aria-label", "Jump to a request");
+  const jumpButtons = chapters.map(({goal, start}) => {
+    if (!goal) return null;
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = `G${goal}`;
+    button.setAttribute("aria-label", `Play Goal ${goal}`);
+    button.addEventListener("click", () => {
+      video.currentTime = start;
+      video.play().catch(() => {});
     });
-    header.append(controls);
-  }
-
-  const caption = document.createElement("p");
-  caption.className = "evidence-guide-caption";
-  const strip = document.createElement("ol");
-  strip.className = "evidence-frames";
-  strip.tabIndex = 0;
-  strip.setAttribute("aria-label", "Illustrative task evidence in recording order");
-  const frames = definition.frames.map(([seconds, label], index) => {
-    const item = document.createElement("li");
-    item.className = "evidence-frame";
-    const image = document.createElement("div");
-    image.className = "evidence-image";
-    const thumb = document.createElement("img");
-    thumb.src = `assets/evidence/${key}-${index + 1}.webp`;
-    thumb.width = 432;
-    thumb.height = 243;
-    thumb.loading = "lazy";
-    thumb.alt = "";
-    const mark = document.createElement("i");
-    mark.hidden = true;
-    mark.setAttribute("aria-hidden", "true");
-    image.append(thumb, mark);
-    const text = document.createElement("div");
-    text.className = "evidence-frame-meta";
-    const clock = document.createElement("small");
-    clock.textContent = `${Math.floor(seconds / 60)}:${(seconds % 60).toFixed(1).padStart(4, "0")}`;
-    const name = document.createElement("strong");
-    name.textContent = label;
-    text.append(clock, name);
-    item.append(image, text);
-    strip.append(item);
-    return { item, mark, seconds, label };
+    checkpoints.append(button);
+    return button;
   });
-  mount.append(header, caption, strip);
+
+  const marks = definition.frames.map(([seconds]) => {
+    const mark = document.createElement("i");
+    mark.className = "evidence-tick";
+    mark.setAttribute("aria-hidden", "true");
+    rail.insertBefore(mark, slider);
+    return { element: mark, seconds };
+  });
+
+  const preview = document.createElement("div");
+  preview.className = "evidence-preview";
+  const thumbnail = document.createElement("img");
+  thumbnail.width = 432;
+  thumbnail.height = 243;
+  thumbnail.alt = "";
+  const details = document.createElement("div");
+  const previewTitle = document.createElement("strong");
+  const caption = document.createElement("p");
+  details.append(previewTitle, caption);
+  preview.append(thumbnail, details);
+
+  mount.append(header, rail, checkpoints, preview);
   mount.hidden = false;
 
-  let activeGoal;
-  function update(goal, presentedUntil = Infinity) {
-    const [description, picks] = definition.goals[goal - 1] ?? [definition.observe, []];
-    const changed = activeGoal !== goal;
-    if (changed) {
-      activeGoal = goal;
+  const timestamp = seconds => {
+    const whole = Math.max(0, Math.floor(seconds));
+    return `${Math.floor(whole / 60)}:${String(whole % 60).padStart(2, "0")}`;
+  };
+  const position = seconds => `${Math.max(0, Math.min(100, seconds / video.duration * 100))}%`;
+  let renderedGoal;
+  let renderedCue;
+  let renderedClock;
+  let frameRequest = 0;
+  let isScrubbing = false;
+  let resume = false;
+
+  function update() {
+    const seconds = video.currentTime;
+    const hasDuration = Number.isFinite(video.duration) && video.duration > 0;
+    if (hasDuration) {
+      rail.style.setProperty("--elapsed", position(seconds));
+      slider.value = seconds;
+    }
+    const timeText = hasDuration ? `${timestamp(seconds)} / ${timestamp(video.duration)}` : "0:00";
+    if (timeText !== renderedClock) {
+      clock.textContent = renderedClock = timeText;
+      slider.setAttribute("aria-valuetext", timeText);
+    }
+
+    const phase = chapters.findLast(({start}) => start <= seconds)?.goal ?? 0;
+    const [description, cues] = definition.goals[phase - 1] ?? [definition.observe, []];
+    const available = marks.findLastIndex(mark => mark.seconds <= seconds);
+    const cueIndex = cues.find(index => index <= available) ?? available;
+    if (phase !== renderedGoal) {
+      for (const [index, button] of jumpButtons.entries()) {
+        if (!button) continue;
+        if (chapters[index].goal === phase) button.setAttribute("aria-current", "step");
+        else button.removeAttribute("aria-current");
+      }
       caption.textContent = description;
-      goalButtons.forEach((button, index) => {
-        button.setAttribute("aria-pressed", String(index + 1 === goal));
-      });
+      renderedGoal = phase;
+      renderedCue = undefined;
     }
-    for (const [index, frame] of frames.entries()) {
-      const available = frame.seconds <= presentedUntil;
-      const pick = available && picks.find(([frameIndex]) => frameIndex === index);
-      const relevant = Boolean(pick);
-      frame.item.classList.toggle("is-future", !available);
-      frame.item.classList.toggle("is-relevant", relevant);
-      if (changed) {
-        frame.item.setAttribute("aria-label", relevant ? `${frame.label}, relevant to this request` : frame.label);
-        frame.mark.hidden = !pick || pick.length < 3;
-        if (pick && pick.length === 3) {
-          frame.mark.style.setProperty("--point-x", `${pick[1]}%`);
-          frame.mark.style.setProperty("--point-y", `${pick[2]}%`);
-        }
-      }
+    for (const [index, mark] of marks.entries()) {
+      mark.element.classList.toggle("is-seen", mark.seconds <= seconds);
+      mark.element.classList.toggle("is-evidence", cues.includes(index) && index <= available);
     }
-    if (changed && picks.length && strip.scrollWidth > strip.clientWidth) {
-      const focus = frames[picks[0][0]].item;
-      const first = focus.offsetLeft - strip.firstElementChild.offsetLeft;
-      const last = first + focus.offsetWidth;
-      if (first < strip.scrollLeft || last > strip.scrollLeft + strip.clientWidth) {
-        strip.scrollTo({left: first, behavior: motionPreference.matches ? "instant" : "smooth"});
+    if (cueIndex !== renderedCue) {
+      thumbnail.hidden = cueIndex < 0;
+      if (cueIndex < 0) {
+        previewTitle.textContent = "Observation";
+      } else {
+        const [time, label] = definition.frames[cueIndex];
+        thumbnail.src = `assets/evidence/${key}-${cueIndex + 1}.webp`;
+        previewTitle.textContent = `${phase ? "Earlier cue" : "Observation"} ${timestamp(time)} / ${label}`;
       }
+      renderedCue = cueIndex;
     }
   }
-  return update;
+
+  function setDuration() {
+    const hasDuration = Number.isFinite(video.duration) && video.duration > 0;
+    slider.disabled = !hasDuration;
+    if (hasDuration) {
+      slider.max = video.duration;
+      chapters.forEach(({start}, index) => {
+        jumpButtons[index]?.style.setProperty("--position", position(start));
+      });
+      for (const { element, seconds } of marks) {
+        element.style.setProperty("--position", position(seconds));
+      }
+    }
+    update();
+  }
+
+  function animate() {
+    update();
+    frameRequest = video.paused || video.ended ? 0 : requestAnimationFrame(animate);
+  }
+
+  function startAnimation() {
+    if (!frameRequest) frameRequest = requestAnimationFrame(animate);
+  }
+
+  function finishScrub() {
+    if (!isScrubbing) return;
+    isScrubbing = false;
+    if (resume) video.play().catch(() => {});
+  }
+
+  slider.addEventListener("pointerdown", event => {
+    isScrubbing = true;
+    resume = !video.paused;
+    video.pause();
+    slider.setPointerCapture(event.pointerId);
+  });
+  slider.addEventListener("input", () => {
+    video.currentTime = slider.valueAsNumber;
+    update();
+  });
+  slider.addEventListener("pointerup", finishScrub);
+  slider.addEventListener("pointercancel", finishScrub);
+  slider.addEventListener("lostpointercapture", finishScrub);
+  for (const event of ["loadedmetadata", "durationchange"]) video.addEventListener(event, setDuration);
+  for (const event of ["timeupdate", "seeking", "seeked", "pause"]) video.addEventListener(event, update);
+  video.addEventListener("play", startAnimation);
+  video.addEventListener("error", () => { mount.hidden = true; }, {once: true});
+  if (!video.paused) startAnimation();
+  setDuration();
 }
 
 // Newly supplied real videos join the same viewport-aware playback system.
@@ -120,7 +191,6 @@ async function loadRealWorldMedia() {
       const panel = scenario.querySelector('[data-real-context]');
       const request = scenario.querySelector('.real-request-overlay');
       let displayedGoal = null;
-      const buttons = [...scenario.querySelectorAll('[data-real-stage]')];
       const chapters = (Array.isArray(clip.chapters) ? clip.chapters : [])
         .filter(c => [0,1,2,3].includes(c.goal) && Number.isFinite(c.start) && c.start >= 0)
         .sort((a,b) => a.start-b.start);
@@ -134,41 +204,19 @@ async function loadRealWorldMedia() {
         track.src = clip.captions; video.append(track);
       }
       const guide = scenario.querySelector("[data-evidence-guide]");
-      const updateEvidence = makeEvidenceGuide(guide, video);
+      makeEvidenceGuide(guide, video, chapters);
       const update = () => {
         const active = chapters.filter(c => c.start <= video.currentTime).pop();
         if (!active) return;
         if (active.goal !== displayedGoal) {
           displayedGoal = active.goal;
-          for (const button of buttons) {
-            const current = Number(button.dataset.realStage) === active.goal;
-            button.classList.toggle('is-current', current);
-            if (current) button.setAttribute('aria-current', 'step');
-            else button.removeAttribute('aria-current');
-          }
           panel.querySelector('span').textContent = active.label;
           panel.querySelector('p').textContent = active.text;
           request.querySelector('span').textContent = active.label + ' instruction';
           request.querySelector('strong').textContent = active.text;
         }
-        updateEvidence(active.goal, video.currentTime);
         request.hidden = active.goal === 0 || video.currentTime >= active.start + active.hold;
-        const next = chapters.find(c => c.start > active.start);
-        const end = next ? next.start : video.duration;
-        const progress = Number.isFinite(end) && end > active.start ? (video.currentTime-active.start)/(end-active.start) : 0;
-        panel.querySelector('i').style.width = `${Math.max(0,Math.min(1,progress))*100}%`;
       };
-      for (const button of buttons) {
-        const chapter = chapters.find(c => c.goal === Number(button.dataset.realStage));
-        if (!chapter) continue;
-        button.disabled = false;
-        button.setAttribute('aria-label', `Play ${chapter.label}: ${chapter.text}`);
-        button.addEventListener('click', () => {
-          video.currentTime = chapter.start;
-          video.play().catch(()=>{});
-          update();
-        });
-      }
       video.addEventListener('loadedmetadata', update);
       video.addEventListener('timeupdate', update);
       video.addEventListener('seeked', update);
@@ -176,7 +224,6 @@ async function loadRealWorldMedia() {
         video.replaceWith(poster);
         guide.hidden = true;
         request.hidden = true;
-        for (const b of buttons) {b.disabled=true;b.classList.remove('is-current');b.removeAttribute('aria-current');}
       }, {once:true});
       video.src = clip.src;
       poster.replaceWith(video); registerGalleryVideo(video); update();
@@ -216,8 +263,12 @@ if (cueSource) {
   for (const video of document.querySelectorAll("video[data-caption-id]")) {
     const cues = cueData[video.dataset.captionId];
     const panel = document.querySelector(`[data-caption="${video.dataset.captionId}"]`);
+    const progress = panel.querySelector(".caption-progress span");
     const guide = panel.parentElement.querySelector("[data-evidence-guide]");
-    const updateEvidence = guide && makeEvidenceGuide(guide, video, cues.map(cue => cue.start));
+    if (guide) {
+      const chapters = cues.filter((cue, index) => index === 0 || cue.phase !== cues[index - 1].phase);
+      makeEvidenceGuide(guide, video, chapters.map((cue, goal) => ({goal, start: cue.start})));
+    }
     for (const track of video.textTracks) track.mode = "hidden";
     video.addEventListener("loadedmetadata", () => {
       for (const track of video.textTracks) track.mode = "hidden";
@@ -225,10 +276,11 @@ if (cueSource) {
     function updateContext() {
       const cue = cues.find(c => video.currentTime >= c.start && video.currentTime < c.end) || cues[cues.length - 1];
       panel.querySelector(".caption-phase").textContent = cue.phase;
-      if (updateEvidence) updateEvidence(cues.indexOf(cue) + 1);
       panel.querySelector(".caption-text").textContent = cue.text;
-      const progress = Math.max(0, Math.min(1, (video.currentTime - cue.start) / (cue.end - cue.start)));
-      panel.querySelector(".caption-progress span").style.width = (progress * 100) + "%";
+      if (progress) {
+        const fraction = Math.max(0, Math.min(1, (video.currentTime - cue.start) / (cue.end - cue.start)));
+        progress.style.width = `${fraction * 100}%`;
+      }
     }
     video.addEventListener("timeupdate", updateContext);
     video.addEventListener("seeked", updateContext);
