@@ -4,7 +4,7 @@ const videoStates = new Map();
 // Start muted when a player enters view. A viewer's manual pause stays in effect.
 function updatePlayback(video) {
   const state = videoStates.get(video);
-  if (state.visible && !state.manuallyPaused && !motionPreference.matches) {
+  if (state.visible && !video.closest("[hidden]") && !state.manuallyPaused && !motionPreference.matches) {
     if (!video.ended) video.play().catch(() => {});
   } else if (!video.paused && !video.seeking) {
     state.sitePaused = true;
@@ -14,8 +14,9 @@ function updatePlayback(video) {
 
 const videoObserver = "IntersectionObserver" in window ? new IntersectionObserver(entries => {
   for (const entry of entries) {
-    videoStates.get(entry.target).visible = entry.isIntersecting && entry.intersectionRatio >= 0.25;
-    updatePlayback(entry.target);
+    const video = entry.target.matches("video") ? entry.target : entry.target.querySelector("video");
+    videoStates.get(video).visible = entry.isIntersecting && entry.intersectionRatio >= 0.25;
+    updatePlayback(video);
   }
 }, {threshold: 0.25}) : null;
 
@@ -28,7 +29,7 @@ for (const video of document.querySelectorAll("video[controls]")) {
     state.sitePaused = false;
   });
   video.addEventListener("play", () => { state.manuallyPaused = false; });
-  if (videoObserver) videoObserver.observe(video);
+  if (videoObserver) videoObserver.observe(video.closest(".demo-screen") ?? video);
   else updatePlayback(video);
 }
 motionPreference.addEventListener("change", () => {
@@ -37,38 +38,156 @@ motionPreference.addEventListener("change", () => {
 
 const demoData = JSON.parse(document.querySelector("#demo-data").textContent);
 for (const panel of document.querySelectorAll("[data-demo]")) {
-  const stages = demoData[panel.dataset.demo];
+  const {stages, history: savedFrames} = demoData[panel.dataset.demo];
   const video = panel.querySelector("video");
-  const context = panel.querySelector("[data-demo-context]");
-  const image = context.querySelector("[data-demo-image]");
-  const marker = context.querySelector("[data-demo-marker]");
   const phase = panel.querySelector("[data-demo-phase]");
+  const request = panel.querySelector("[data-demo-request]");
+  const replay = panel.querySelector("[data-demo-replay]");
+  const image = panel.querySelector("[data-demo-image]");
+  const cue = panel.querySelector("[data-demo-cue]");
+  const cueFrame = panel.querySelector("[data-recall-frame]");
+  const marker = panel.querySelector("[data-demo-marker]");
+  const target = panel.querySelector("[data-live-target]");
+  const events = [...panel.querySelectorAll("[data-memory-event]")];
+  const rail = panel.querySelector(".memory-events");
+  const status = panel.querySelector("[data-memory-status]");
   let currentStage;
-  function showStage() {
-    const stage = stages.findLast(item => item.start <= video.currentTime);
-    if (stage === currentStage) return;
-    currentStage = stage;
-    const isObservation = stage.start === 0;
-    phase.textContent = stage.label;
-    phase.classList.toggle("is-request", !isObservation);
-    context.dataset.observing = String(isObservation);
-    context.querySelector("[data-demo-cue-label]").textContent = isObservation ? "Recording" : "Earlier clue";
-    context.querySelector("[data-demo-cue]").textContent = stage.idea;
-    context.querySelector("[data-demo-request-label]").textContent = isObservation ? "Observation" : "Current request";
-    context.querySelector("[data-demo-request]").textContent = stage.request;
-    image.src = stage.image;
-    marker.hidden = !stage.point;
-    if (stage.point) {
-      const [x, y] = stage.point;
-      marker.style.setProperty("--marker-x", `${x}%`);
-      marker.style.setProperty("--marker-y", `${y}%`);
+  let currentMode;
+  let lastFrame = -2;
+
+  function setPoint(element, point) {
+    element.hidden = !point;
+    if (!point) return;
+    element.style.setProperty("--marker-x", `${point[0]}%`);
+    element.style.setProperty("--marker-y", `${point[1]}%`);
+  }
+
+  function flyFromMemory(stage) {
+    const first = stage.reads?.find(index => events[index].classList.contains("is-saved"));
+    if (motionPreference.matches || panel.hidden || first === undefined || !Element.prototype.animate) return;
+    const thumbnail = events[first].querySelector("img");
+    const origin = thumbnail.getBoundingClientRect();
+    const container = panel.getBoundingClientRect();
+    const screen = panel.querySelector(".demo-screen").getBoundingClientRect();
+    if (!origin.width || !screen.width) return;
+
+    panel.querySelector(".recall-flight")?.remove();
+    const flight = document.createElement("img");
+    flight.className = "recall-flight";
+    flight.src = thumbnail.currentSrc || thumbnail.src;
+    flight.alt = "";
+    flight.setAttribute("aria-hidden", "true");
+    Object.assign(flight.style, {
+      left: `${origin.left - container.left}px`,
+      top: `${origin.top - container.top}px`,
+      width: `${origin.width}px`,
+      height: `${origin.height}px`
+    });
+    panel.append(flight);
+    const x = screen.left + screen.width * .042 - origin.left;
+    const y = screen.top + screen.height * .5 - cueFrame.offsetHeight / 2 - origin.top;
+    const scale = cueFrame.offsetWidth / origin.width;
+    const move = flight.animate([
+      {transform: "translate(0, 0) scale(1)", opacity: .94},
+      {transform: `translate(${x}px, ${y}px) scale(${scale})`, opacity: .2}
+    ], {duration: 410, easing: "cubic-bezier(.24,.77,.33,1)"});
+    move.finished.then(() => flight.remove(), () => flight.remove());
+  }
+
+  function showMoment() {
+    const time = video.currentTime;
+    const stage = stages.findLast(item => item.start <= time);
+    const elapsed = time - stage.start;
+    const mode = stage.start === 0 ? "observe" : elapsed < 2.9 ? "recall" : "act";
+    const mostRecent = savedFrames.findLastIndex(frame => frame.at <= time);
+    const displayedTarget = stage.target && elapsed < (stage.targetSeconds ?? 4.7) ? stage.target : null;
+
+    if (stage !== currentStage) {
+      currentStage = stage;
+      phase.textContent = stage.label;
+      request.textContent = stage.request;
+      cue.textContent = stage.idea;
+      if (stage.start > 0) image.src = stage.image;
+      setPoint(marker, stage.point);
+      for (const [index, item] of events.entries()) {
+        item.classList.toggle("is-read", stage.reads?.includes(index) ?? false);
+      }
+    }
+    if (mostRecent !== lastFrame) {
+      lastFrame = mostRecent;
+      rail.style.setProperty("--memory-depth", Math.max(0, mostRecent) / (events.length - 1));
+      for (const [index, item] of events.entries()) {
+        item.classList.toggle("is-saved", index <= mostRecent);
+        item.classList.toggle("is-writeback", savedFrames[index].duringAction);
+      }
+    }
+    if (mode !== currentMode) {
+      currentMode = mode;
+      panel.dataset.view = mode;
+      cueFrame.setAttribute("aria-hidden", String(mode !== "recall"));
+      replay.hidden = mode !== "act";
+      status.textContent = {observe: "Before any request", recall: "Recalling for this request", act: "Still recording during action"}[mode];
+      if (mode === "recall") flyFromMemory(stage);
+    }
+    setPoint(target, displayedTarget);
+  }
+
+  replay.addEventListener("click", () => {
+    if (!currentStage || !currentStage.start) return;
+    video.currentTime = currentStage.start + .1;
+    video.play().catch(() => {});
+  });
+  for (const eventName of ["loadedmetadata", "timeupdate", "seeking", "seeked"]) {
+    video.addEventListener(eventName, showMoment);
+  }
+  showMoment();
+}
+
+const groups = [...document.querySelectorAll("[data-demo-switcher]")].map(group => {
+  const tabs = [...group.querySelectorAll("[data-demo-tab]")];
+  const panels = tabs.map(tab => document.getElementById(tab.getAttribute("aria-controls")));
+  function select(index, writeHash = false) {
+    tabs.forEach((tab, i) => {
+      const active = index === i;
+      tab.setAttribute("aria-selected", String(active));
+      tab.tabIndex = active ? 0 : -1;
+      panels[i].hidden = !active;
+      if (!active) {
+        const video = panels[i].querySelector("video");
+        videoStates.get(video).visible = false;
+        updatePlayback(video);
+      }
+    });
+    if (writeHash) window.history.replaceState(null, "", `#${panels[index].id}`);
+  }
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => select(i, true));
+    tab.addEventListener("keydown", event => {
+      const neighbors = {ArrowLeft: (i + tabs.length - 1) % tabs.length, ArrowRight: (i + 1) % tabs.length,
+                         Home: 0, End: tabs.length - 1};
+      if (!(event.key in neighbors)) return;
+      event.preventDefault();
+      const next = neighbors[event.key];
+      select(next, true);
+      tabs[next].focus();
+    });
+  });
+  return {panels, select};
+});
+
+function selectFromHash() {
+  const id = location.hash.slice(1);
+  for (const {panels, select} of groups) {
+    const index = panels.findIndex(panel => panel.id === id || panel.dataset.demo === id);
+    if (index >= 0) {
+      select(index);
+      requestAnimationFrame(() => panels[index].scrollIntoView({block: "start"}));
+      break;
     }
   }
-  for (const eventName of ["loadedmetadata", "timeupdate", "seeking", "seeked"]) {
-    video.addEventListener(eventName, showStage);
-  }
-  showStage();
 }
+selectFromHash();
+window.addEventListener("hashchange", selectFromHash);
 
 const outcomes = document.querySelector("#outcome-data");
 if (outcomes) {

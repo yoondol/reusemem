@@ -25,9 +25,9 @@
   <link rel="canonical" href="https://yoondol.github.io/reusemem/">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
   <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=from-memory-18">
+  <link rel="stylesheet" href="style.css?v=memory-in-action-19">
   <link rel="stylesheet" href="flow.css?v=story-13">
-  <script src="page.js?v=from-memory-18" defer></script>
+  <script src="page.js?v=memory-in-action-19" defer></script>
   <script src="flow.js?v=growing-memory-v1" defer></script>
 </head>
 <body>
@@ -50,11 +50,11 @@
     <section class="wrap section research-film" id="research-video" aria-labelledby="research-film-title">
       <div class="research-film-heading">
         <h2 id="research-film-title">Overview</h2>
-        <p>By the time you ask a robot for something, the clue it needs may be gone. <strong>ReuseMem learns to find the right detail in one visual memory and use it for different requests as the scene changes.</strong></p>
+        <p>A robot may see something useful long before anyone asks for it. <strong>ReuseMem learns what to retrieve from the same experience for different requests, even after the scene changes.</strong></p>
       </div>
-      <video controls muted playsinline preload="none" poster="assets/reusemem-project-film-poster.jpg" aria-label="ReuseMem research overview video">
-        <source src="assets/reusemem-project-film.mp4" type="video/mp4">
-        <a href="assets/reusemem-project-film.mp4">Download the research overview</a>
+      <video controls muted playsinline preload="none" poster="assets/reusemem-project-film-poster.jpg?v=memory-in-action-19" aria-label="ReuseMem research overview video">
+        <source src="assets/reusemem-project-film.mp4?v=memory-in-action-19" type="video/mp4">
+        <a href="assets/reusemem-project-film.mp4?v=memory-in-action-19">Download the research overview</a>
       </video>
       <div class="overview-results" aria-label="Overview of measured outcomes">
         <a href="#results">
@@ -63,9 +63,9 @@
           <small>121 of 200 simulated recordings</small>
         </a>
         <a href="#efficiency">
-          <strong>175 <b>ms</b></strong>
-          <span>New request to first command</span>
-          <small>6.4× faster than MemER in our setup</small>
+          <strong class="speed-factor">6.4×</strong>
+          <span>Faster first command</span>
+          <small>175 ms vs. 1,112 ms for MemER</small>
         </a>
         <a href="#efficiency">
           <strong>33.7%</strong>
@@ -76,10 +76,22 @@
     </section>
 
 
+    <section class="wrap memory-challenge" id="memory-challenge" aria-labelledby="challenge-title">
+      <header>
+        <h2 id="challenge-title">What should a robot remember?</h2>
+        <p>A later request might depend on which object was there, where it started, or what happened first. The robot sees these details before it knows which ones will matter.</p>
+      </header>
+      <ol>
+        <li><strong>Before a request</strong><span>Keep facts that may matter later.</span></li>
+        <li><strong>When it arrives</strong><span>Find the clue specific to that request.</span></li>
+        <li><strong>When acting</strong><span>Use that clue in the scene as it is now.</span></li>
+      </ol>
+    </section>
+
     <section class="wrap section recall-demo" id="memory-example" data-recall-demo aria-labelledby="recall-title">
       <header class="recall-heading">
-        <h2 id="recall-title">What should a robot remember?</h2>
-        <p>The robot sees the open cases before it hears a request. Once the lids close and the cases move, the same earlier view can answer two different questions.</p>
+        <h2 id="recall-title">One earlier view, two requests</h2>
+        <p>The open cases show both what is inside and where each case started. Try the two requests to see which detail matters.</p>
       </header>
       <div class="recall-choices" role="group" aria-label="Choose a request">
         <button type="button" data-recall-choice="select" aria-pressed="true">Move the USB case</button>
@@ -160,78 +172,207 @@
           <h2 id="sim-title">Simulation</h2>
           <p>Four <a href="https://robomme.github.io/">RoboMME</a> tasks. Two later goals per recording.</p>
         </header>
-        <div class="demo-grid-view">
-
-          <article class="demo-panel" id="video-place-button-sequence" data-demo="video-place-button">
-            <header class="demo-panel-heading">
-              <h3>VideoPlaceButton</h3>
+        <div class="demo-switcher" data-demo-switcher>
+          <div class="demo-tabs" role="tablist" aria-label="Choose a simulation task">
+          <button type="button" role="tab" id="tab-video-place-button" data-demo-tab aria-controls="video-place-button-sequence" aria-selected="true" tabindex="0">VideoPlaceButton</button>
+          <button type="button" role="tab" id="tab-video-place-order" data-demo-tab aria-controls="video-place-order-sequence" aria-selected="false" tabindex="-1">VideoPlaceOrder</button>
+          <button type="button" role="tab" id="tab-video-unmask-swap" data-demo-tab aria-controls="video-unmask-swap-sequence" aria-selected="false" tabindex="-1">VideoUnmaskSwap</button>
+          <button type="button" role="tab" id="tab-pick-highlight" data-demo-tab aria-controls="pick-highlight-sequence" aria-selected="false" tabindex="-1">PickHighlight</button>
+          </div>
+          <article class="demo-panel demo-reel" id="video-place-button-sequence" role="tabpanel" aria-labelledby="tab-video-place-button" data-demo="video-place-button" data-view="observe" >
+            <header class="demo-requestbar">
               <span class="demo-phase" data-demo-phase>Observe</span>
+              <p data-demo-request>Watch the cube around the button press.</p>
+              <button type="button" class="cue-replay" data-demo-replay hidden>Show clue</button>
             </header>
-            <video controls muted playsinline loop preload="none" poster="assets/simulation/video-place-button-observation.jpg" aria-label="VideoPlaceButton demonstration">
+            <div class="demo-screen">
+              <div class="demo-live">
+                <video controls muted playsinline loop preload="none" poster="assets/simulation/video-place-button-observation.jpg" aria-label="VideoPlaceButton demonstration">
               <source src="assets/simulation/video-place-button-full-sequence.mp4" type="video/mp4">
               <track kind="captions" src="assets/captions/video-place-button-full-sequence.vtt" srclang="en" label="English">
             </video>
-            <div class="demo-context" data-demo-context data-observing="true">
-              <figure class="demo-cue">
-                <div class="demo-cue-view"><img data-demo-image src="assets/evidence/video-place-button-1.webp" width="432" height="243" alt="" loading="lazy"><i data-demo-marker aria-hidden="true" hidden></i></div>
-                <figcaption><span data-demo-cue-label>Earlier view</span><strong data-demo-cue>Before any request</strong></figcaption>
+
+                <i class="live-target" data-live-target aria-hidden="true" hidden></i>
+              </div>
+              <figure class="demo-recall" data-recall-frame aria-hidden="true">
+                <span class="demo-recall-image"><img data-demo-image width="384" height="216" alt=""><i data-demo-marker aria-hidden="true" hidden></i></span>
+                <figcaption><span>Earlier clue</span><strong data-demo-cue></strong></figcaption>
               </figure>
-              <div class="demo-request"><span data-demo-request-label>Observation</span><p data-demo-request>Watch the cube around the button press.</p></div>
+              <svg class="cue-link" viewBox="0 0 100 42" aria-hidden="true"><path d="M3 21h86m-15-15 15 15-15 15" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span class="demo-now">Current scene</span>
             </div>
+            <section class="memory-board" aria-label="Illustrated memory of this experience">
+              <header><strong>Experience memory</strong><span data-memory-status>Recording</span></header>
+              <ol class="memory-events" style="--slots:5">
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/video-place-button-1.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Cube placed</span>
+                </li>
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/video-place-button-2.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Before press</span>
+                </li>
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/video-place-button-3.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Button press</span>
+                </li>
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/video-place-button-4.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">After press</span>
+                </li>
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/video-place-button-after-first.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Goal 1 result</span>
+                </li>
+              </ol>
+            </section>
           </article>
-          <article class="demo-panel" id="video-place-order-sequence" data-demo="video-place-order">
-            <header class="demo-panel-heading">
-              <h3>VideoPlaceOrder</h3>
+          <article class="demo-panel demo-reel" id="video-place-order-sequence" role="tabpanel" aria-labelledby="tab-video-place-order" data-demo="video-place-order" data-view="observe" hidden>
+            <header class="demo-requestbar">
               <span class="demo-phase" data-demo-phase>Observe</span>
+              <p data-demo-request>Watch where the cube goes first and second.</p>
+              <button type="button" class="cue-replay" data-demo-replay hidden>Show clue</button>
             </header>
-            <video controls muted playsinline loop preload="none" poster="assets/simulation/video-place-order-observation.jpg" aria-label="VideoPlaceOrder demonstration">
+            <div class="demo-screen">
+              <div class="demo-live">
+                <video controls muted playsinline loop preload="none" poster="assets/simulation/video-place-order-observation.jpg" aria-label="VideoPlaceOrder demonstration">
               <source src="assets/simulation/video-place-order-full-sequence.mp4" type="video/mp4">
               <track kind="captions" src="assets/captions/video-place-order-full-sequence.vtt" srclang="en" label="English">
             </video>
-            <div class="demo-context" data-demo-context data-observing="true">
-              <figure class="demo-cue">
-                <div class="demo-cue-view"><img data-demo-image src="assets/evidence/video-place-order-1.webp" width="432" height="243" alt="" loading="lazy"><i data-demo-marker aria-hidden="true" hidden></i></div>
-                <figcaption><span data-demo-cue-label>Earlier view</span><strong data-demo-cue>Before any request</strong></figcaption>
+
+                <i class="live-target" data-live-target aria-hidden="true" hidden></i>
+              </div>
+              <figure class="demo-recall" data-recall-frame aria-hidden="true">
+                <span class="demo-recall-image"><img data-demo-image width="384" height="216" alt=""><i data-demo-marker aria-hidden="true" hidden></i></span>
+                <figcaption><span>Earlier clue</span><strong data-demo-cue></strong></figcaption>
               </figure>
-              <div class="demo-request"><span data-demo-request-label>Observation</span><p data-demo-request>Watch where the cube goes first and second.</p></div>
+              <svg class="cue-link" viewBox="0 0 100 42" aria-hidden="true"><path d="M3 21h86m-15-15 15 15-15 15" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span class="demo-now">Current scene</span>
             </div>
+            <section class="memory-board" aria-label="Illustrated memory of this experience">
+              <header><strong>Experience memory</strong><span data-memory-status>Recording</span></header>
+              <ol class="memory-events" style="--slots:5">
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/video-place-order-1.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Starting scene</span>
+                </li>
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/video-place-order-2.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">First location</span>
+                </li>
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/video-place-order-3.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Second location</span>
+                </li>
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/video-place-order-4.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Cube moves</span>
+                </li>
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/video-place-order-after-first.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Goal 1 result</span>
+                </li>
+              </ol>
+            </section>
           </article>
-          <article class="demo-panel" id="video-unmask-swap-sequence" data-demo="video-unmask-swap">
-            <header class="demo-panel-heading">
-              <h3>VideoUnmaskSwap</h3>
+          <article class="demo-panel demo-reel" id="video-unmask-swap-sequence" role="tabpanel" aria-labelledby="tab-video-unmask-swap" data-demo="video-unmask-swap" data-view="observe" hidden>
+            <header class="demo-requestbar">
               <span class="demo-phase" data-demo-phase>Observe</span>
+              <p data-demo-request>Watch the covers swap places.</p>
+              <button type="button" class="cue-replay" data-demo-replay hidden>Show clue</button>
             </header>
-            <video controls muted playsinline loop preload="none" poster="assets/simulation/video-unmask-swap-observation.jpg" aria-label="VideoUnmaskSwap demonstration">
+            <div class="demo-screen">
+              <div class="demo-live">
+                <video controls muted playsinline loop preload="none" poster="assets/simulation/video-unmask-swap-observation.jpg" aria-label="VideoUnmaskSwap demonstration">
               <source src="assets/simulation/video-unmask-swap-full-sequence.mp4" type="video/mp4">
               <track kind="captions" src="assets/captions/video-unmask-swap-full-sequence.vtt" srclang="en" label="English">
             </video>
-            <div class="demo-context" data-demo-context data-observing="true">
-              <figure class="demo-cue">
-                <div class="demo-cue-view"><img data-demo-image src="assets/evidence/video-unmask-swap-1.webp" width="432" height="243" alt="" loading="lazy"><i data-demo-marker aria-hidden="true" hidden></i></div>
-                <figcaption><span data-demo-cue-label>Earlier view</span><strong data-demo-cue>Before any request</strong></figcaption>
+
+                <i class="live-target" data-live-target aria-hidden="true" hidden></i>
+              </div>
+              <figure class="demo-recall" data-recall-frame aria-hidden="true">
+                <span class="demo-recall-image"><img data-demo-image width="384" height="216" alt=""><i data-demo-marker aria-hidden="true" hidden></i></span>
+                <figcaption><span>Earlier clue</span><strong data-demo-cue></strong></figcaption>
               </figure>
-              <div class="demo-request"><span data-demo-request-label>Observation</span><p data-demo-request>Watch the covers swap places.</p></div>
+              <svg class="cue-link" viewBox="0 0 100 42" aria-hidden="true"><path d="M3 21h86m-15-15 15 15-15 15" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span class="demo-now">Current scene</span>
             </div>
+            <section class="memory-board" aria-label="Illustrated memory of this experience">
+              <header><strong>Experience memory</strong><span data-memory-status>Recording</span></header>
+              <ol class="memory-events" style="--slots:5">
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/video-unmask-swap-1.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Colors visible</span>
+                </li>
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/video-unmask-swap-2.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Covered</span>
+                </li>
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/video-unmask-swap-3.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Covers swap</span>
+                </li>
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/video-unmask-swap-4.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">New positions</span>
+                </li>
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/video-unmask-swap-after-first.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Goal 1 result</span>
+                </li>
+              </ol>
+            </section>
           </article>
-          <article class="demo-panel" id="pick-highlight-sequence" data-demo="pick-highlight">
-            <header class="demo-panel-heading">
-              <h3>PickHighlight</h3>
+          <article class="demo-panel demo-reel" id="pick-highlight-sequence" role="tabpanel" aria-labelledby="tab-pick-highlight" data-demo="pick-highlight" data-view="observe" hidden>
+            <header class="demo-requestbar">
               <span class="demo-phase" data-demo-phase>Observe</span>
+              <p data-demo-request>Watch which cubes light up, and in what order.</p>
+              <button type="button" class="cue-replay" data-demo-replay hidden>Show clue</button>
             </header>
-            <video controls muted playsinline loop preload="none" poster="assets/simulation/pick-highlight-observation.jpg" aria-label="PickHighlight demonstration">
+            <div class="demo-screen">
+              <div class="demo-live">
+                <video controls muted playsinline loop preload="none" poster="assets/simulation/pick-highlight-observation.jpg" aria-label="PickHighlight demonstration">
               <source src="assets/simulation/pick-highlight-full-sequence.mp4" type="video/mp4">
               <track kind="captions" src="assets/captions/pick-highlight-full-sequence.vtt" srclang="en" label="English">
             </video>
-            <div class="demo-context" data-demo-context data-observing="true">
-              <figure class="demo-cue">
-                <div class="demo-cue-view"><img data-demo-image src="assets/evidence/pick-highlight-1.webp" width="432" height="243" alt="" loading="lazy"><i data-demo-marker aria-hidden="true" hidden></i></div>
-                <figcaption><span data-demo-cue-label>Earlier view</span><strong data-demo-cue>Before any request</strong></figcaption>
+
+                <i class="live-target" data-live-target aria-hidden="true" hidden></i>
+              </div>
+              <figure class="demo-recall" data-recall-frame aria-hidden="true">
+                <span class="demo-recall-image"><img data-demo-image width="384" height="216" alt=""><i data-demo-marker aria-hidden="true" hidden></i></span>
+                <figcaption><span>Earlier clue</span><strong data-demo-cue></strong></figcaption>
               </figure>
-              <div class="demo-request"><span data-demo-request-label>Observation</span><p data-demo-request>Watch which cubes light up, and in what order.</p></div>
+              <svg class="cue-link" viewBox="0 0 100 42" aria-hidden="true"><path d="M3 21h86m-15-15 15 15-15 15" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span class="demo-now">Current scene</span>
             </div>
+            <section class="memory-board" aria-label="Illustrated memory of this experience">
+              <header><strong>Experience memory</strong><span data-memory-status>Recording</span></header>
+              <ol class="memory-events" style="--slots:5">
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/pick-highlight-1.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">First flash</span>
+                </li>
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/pick-highlight-2.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Second flash</span>
+                </li>
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/pick-highlight-3.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Lights off</span>
+                </li>
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/pick-highlight-4.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Before the request</span>
+                </li>
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/pick-highlight-after-first.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Goal 1 result</span>
+                </li>
+              </ol>
+            </section>
           </article>
         </div>
-        <p class="media-note">Scripted task demonstrations.</p>
+        <p class="media-note">Scripted task demonstrations. Highlighted frames illustrate the clues for each request.</p>
       </section>
     </div>
 
@@ -241,47 +382,98 @@
           <h2 id="real-title">Real World</h2>
           <p>Three requests per scene, carried out in one continuous run.</p>
         </header>
-        <div class="demo-grid-view">
-
-          <article class="demo-panel" id="real-case" data-demo="case">
-            <header class="demo-panel-heading">
-              <h3>Case preparation and return</h3>
+        <div class="demo-switcher" data-demo-switcher>
+          <div class="demo-tabs" role="tablist" aria-label="Choose a real-world scenario">
+          <button type="button" role="tab" id="tab-case" data-demo-tab aria-controls="real-case" aria-selected="true" tabindex="0">Case preparation and return</button>
+          <button type="button" role="tab" id="tab-toy" data-demo-tab aria-controls="real-toy" aria-selected="false" tabindex="-1">Toy relocation, cleaning and return</button>
+          </div>
+          <article class="demo-panel demo-reel" id="real-case" role="tabpanel" aria-labelledby="tab-case" data-demo="case" data-view="observe" >
+            <header class="demo-requestbar">
               <span class="demo-phase" data-demo-phase>Observe</span>
+              <p data-demo-request>The contents and starting spots are visible.</p>
+              <button type="button" class="cue-replay" data-demo-replay hidden>Show clue</button>
             </header>
-            <div class="demo-frame">
-              <video controls muted playsinline loop preload="none" poster="assets/real-world/case-demo.jpg" aria-label="Case preparation and return demonstration">
+            <div class="demo-screen">
+              <div class="demo-live">
+                <video controls muted playsinline loop preload="none" poster="assets/real-world/case-demo.jpg" aria-label="Case preparation and return demonstration">
                 <source src="assets/real-world/case-guided.mp4?v=story-13" type="video/mp4">
                 <track kind="captions" src="assets/real-world/case-guided.vtt?v=story-13" srclang="en" label="English">
               </video>
-              <span class="demo-speed">2×</span>
-            </div>
-            <div class="demo-context" data-demo-context data-observing="true">
-              <figure class="demo-cue">
-                <div class="demo-cue-view"><img data-demo-image src="assets/real-world/case-evidence-0.jpg?v=story-13" width="432" height="243" alt="" loading="lazy"><i data-demo-marker aria-hidden="true" hidden></i></div>
-                <figcaption><span data-demo-cue-label>Earlier view</span><strong data-demo-cue>Cases open</strong></figcaption>
+                <span class="demo-speed" aria-label="Two times playback speed">2×</span>
+                <i class="live-target" data-live-target aria-hidden="true" hidden></i>
+              </div>
+              <figure class="demo-recall" data-recall-frame aria-hidden="true">
+                <span class="demo-recall-image"><img data-demo-image width="384" height="216" alt=""><i data-demo-marker aria-hidden="true" hidden></i></span>
+                <figcaption><span>Earlier clue</span><strong data-demo-cue></strong></figcaption>
               </figure>
-              <div class="demo-request"><span data-demo-request-label>Observation</span><p data-demo-request>The contents and starting spots are visible.</p></div>
+              <svg class="cue-link" viewBox="0 0 100 42" aria-hidden="true"><path d="M3 21h86m-15-15 15 15-15 15" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span class="demo-now">Current scene</span>
             </div>
+            <section class="memory-board" aria-label="Illustrated memory of this experience">
+              <header><strong>Experience memory</strong><span data-memory-status>Recording</span></header>
+              <ol class="memory-events" style="--slots:4">
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/case-1.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Cases open</span>
+                </li>
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/case-2.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Lids closed</span>
+                </li>
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/case-3.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">USB case placed</span>
+                </li>
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/case-4.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Both cases placed</span>
+                </li>
+              </ol>
+            </section>
           </article>
-          <article class="demo-panel" id="real-toy" data-demo="toy">
-            <header class="demo-panel-heading">
-              <h3>Toy relocation, cleaning and return</h3>
+          <article class="demo-panel demo-reel" id="real-toy" role="tabpanel" aria-labelledby="tab-toy" data-demo="toy" data-view="observe" hidden>
+            <header class="demo-requestbar">
               <span class="demo-phase" data-demo-phase>Observe</span>
+              <p data-demo-request>Watch where the blue toy starts.</p>
+              <button type="button" class="cue-replay" data-demo-replay hidden>Show clue</button>
             </header>
-            <div class="demo-frame">
-              <video controls muted playsinline loop preload="none" poster="assets/real-world/toy-demo.jpg" aria-label="Toy relocation, cleaning and return demonstration">
+            <div class="demo-screen">
+              <div class="demo-live">
+                <video controls muted playsinline loop preload="none" poster="assets/real-world/toy-demo.jpg" aria-label="Toy relocation, cleaning and return demonstration">
                 <source src="assets/real-world/toy-guided.mp4?v=story-13" type="video/mp4">
-                <track kind="captions" src="assets/real-world/toy-guided.vtt?v=from-memory-18" srclang="en" label="English">
+                <track kind="captions" src="assets/real-world/toy-guided.vtt?v=memory-in-action-19" srclang="en" label="English">
               </video>
-              <span class="demo-speed">2×</span>
-            </div>
-            <div class="demo-context" data-demo-context data-observing="true">
-              <figure class="demo-cue">
-                <div class="demo-cue-view"><img data-demo-image src="assets/real-world/toy-evidence-0.jpg?v=story-13" width="432" height="243" alt="" loading="lazy"><i data-demo-marker aria-hidden="true" hidden></i></div>
-                <figcaption><span data-demo-cue-label>Earlier view</span><strong data-demo-cue>The toys at their starting spots</strong></figcaption>
+                <span class="demo-speed" aria-label="Two times playback speed">2×</span>
+                <i class="live-target" data-live-target aria-hidden="true" hidden></i>
+              </div>
+              <figure class="demo-recall" data-recall-frame aria-hidden="true">
+                <span class="demo-recall-image"><img data-demo-image width="384" height="216" alt=""><i data-demo-marker aria-hidden="true" hidden></i></span>
+                <figcaption><span>Earlier clue</span><strong data-demo-cue></strong></figcaption>
               </figure>
-              <div class="demo-request"><span data-demo-request-label>Observation</span><p data-demo-request>Watch where the blue toy starts.</p></div>
+              <svg class="cue-link" viewBox="0 0 100 42" aria-hidden="true"><path d="M3 21h86m-15-15 15 15-15 15" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span class="demo-now">Current scene</span>
             </div>
+            <section class="memory-board" aria-label="Illustrated memory of this experience">
+              <header><strong>Experience memory</strong><span data-memory-status>Recording</span></header>
+              <ol class="memory-events" style="--slots:4">
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/toy-1.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Starting spots</span>
+                </li>
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/toy-2.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Toys gathered</span>
+                </li>
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/toy-3.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Toy moved</span>
+                </li>
+                <li class="memory-event" data-memory-event>
+                  <span class="event-window"><img src="assets/evidence/toy-4.webp" width="384" height="216" alt="" loading="lazy"></span>
+                  <i aria-hidden="true"></i><span class="event-label">Spot brushed</span>
+                </li>
+              </ol>
+            </section>
           </article>
         </div>
       </section>
@@ -377,7 +569,7 @@
           <div class="efficiency-grid">
 <figure class="resource-chart efficiency-chart" data-cost-axis="response">
               <figcaption><span>Success vs. response time</span></figcaption>
-              <div class="cost-highlight"><strong>6.4×</strong><span>175 ms vs. 1,112 ms for MemER (RoboMME)</span></div>
+              <div class="cost-highlight"><strong class="speed-factor">6.4×</strong><span>175 ms vs. 1,112 ms for MemER (RoboMME)</span></div>
               <p class="plot-y-title"><span class="cost-metric-name">All-goal success</span> (%)</p>
               <div class="cost-plot">
                 <div class="plot-y" aria-hidden="true"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div>
@@ -482,12 +674,12 @@
 
 <script id="demo-data" type="application/json">
 {
-  "video-place-button": [{"start": 0, "label": "Observe", "request": "Watch the cube around the button press.", "image": "assets/evidence/video-place-button-1.webp", "idea": "Before any request"}, {"start": 22.5, "label": "Goal 1", "request": "Return the cube to the last spot before the press.", "image": "assets/evidence/video-place-button-clue-1.webp", "idea": "Last spot before the press"}, {"start": 33.25, "label": "Goal 2", "request": "Return it to the first spot after the press.", "image": "assets/evidence/video-place-button-clue-2.webp", "idea": "First spot after the press"}],
-  "video-place-order": [{"start": 0, "label": "Observe", "request": "Watch where the cube goes first and second.", "image": "assets/evidence/video-place-order-1.webp", "idea": "Before any request"}, {"start": 22.7333, "label": "Goal 1", "request": "Return the cube to its first recorded spot.", "image": "assets/evidence/video-place-order-clue-1.webp", "idea": "First recorded spot"}, {"start": 34.5333, "label": "Goal 2", "request": "Return it to its second recorded spot.", "image": "assets/evidence/video-place-order-clue-2.webp", "idea": "Second recorded spot"}],
-  "video-unmask-swap": [{"start": 0, "label": "Observe", "request": "Watch the covers swap places.", "image": "assets/evidence/video-unmask-swap-1.webp", "idea": "Before any request"}, {"start": 8.1, "label": "Goal 1", "request": "Uncover the blue cube.", "image": "assets/evidence/video-unmask-swap-clue.webp", "idea": "Blue cube before cover swap", "point": [40.24, 64.63]}, {"start": 19.5, "label": "Goal 2", "request": "Uncover the red cube.", "image": "assets/evidence/video-unmask-swap-clue.webp", "idea": "Red cube before cover swap", "point": [62.2, 45.12]}],
-  "pick-highlight": [{"start": 0, "label": "Observe", "request": "Watch which cubes light up, and in what order.", "image": "assets/evidence/pick-highlight-1.webp", "idea": "Before any request"}, {"start": 7.6, "label": "Goal 1", "request": "Bring the first highlighted cube to the front.", "image": "assets/evidence/pick-highlight-clue-1.webp", "idea": "First highlighted cube"}, {"start": 19.95, "label": "Goal 2", "request": "Bring the second highlighted cube to the front.", "image": "assets/evidence/pick-highlight-clue-2.webp", "idea": "Second highlighted cube"}],
-  "case": [{"start": 0, "label": "Observe", "request": "The contents and starting spots are visible.", "image": "assets/real-world/case-evidence-0.jpg?v=story-13", "idea": "Cases open"}, {"start": 4.0, "label": "Goal 1", "request": "Move the USB case to the left tray.", "image": "assets/evidence/case-clue-1.webp", "idea": "USB drive inside"}, {"start": 21.8, "label": "Goal 2", "request": "Move the SD card case to the right tray.", "image": "assets/evidence/case-clue-2.webp", "idea": "SD card inside"}, {"start": 40.6, "label": "Goal 3", "request": "Return the USB case to its original spot.", "image": "assets/evidence/case-clue-3.webp", "idea": "USB case’s starting spot"}],
-  "toy": [{"start": 0, "label": "Observe", "request": "Watch where the blue toy starts.", "image": "assets/real-world/toy-evidence-0.jpg?v=story-13", "idea": "The toys at their starting spots"}, {"start": 5.5, "label": "Goal 1", "request": "Put the toy that started on the left in the right tray.", "image": "assets/evidence/toy-clue.webp", "idea": "Blue toy started on the left"}, {"start": 22.8, "label": "Goal 2", "request": "Brush its original spot, then put the brush back.", "image": "assets/evidence/toy-clue.webp", "idea": "The blue toy’s starting spot"}, {"start": 39.6, "label": "Goal 3", "request": "Return the blue toy to its original spot.", "image": "assets/evidence/toy-clue.webp", "idea": "The blue toy’s starting spot"}]
+  "video-place-button": {"history": [{"at": 1.6, "label": "Cube placed", "image": "assets/evidence/video-place-button-1.webp", "duringAction": false}, {"at": 5.15, "label": "Before press", "image": "assets/evidence/video-place-button-2.webp", "duringAction": false}, {"at": 6.8, "label": "Button press", "image": "assets/evidence/video-place-button-3.webp", "duringAction": false}, {"at": 12.3, "label": "After press", "image": "assets/evidence/video-place-button-4.webp", "duringAction": false}, {"at": 32.95, "label": "Goal 1 result", "image": "assets/evidence/video-place-button-after-first.webp", "duringAction": true}], "stages": [{"start": 0, "label": "Observe", "request": "Watch the cube around the button press.", "image": "assets/evidence/video-place-button-1.webp", "idea": "Before any request"}, {"start": 22.5, "label": "Goal 1", "request": "Return the cube to the last spot before the press.", "image": "assets/evidence/video-place-button-clue-1.webp", "idea": "Last spot before the press", "reads": [1, 2], "target": [59.7, 56.4]}, {"start": 33.25, "label": "Goal 2", "request": "Return it to the first spot after the press.", "image": "assets/evidence/video-place-button-clue-2.webp", "idea": "First spot after the press", "reads": [3, 2], "target": [64.6, 64.0]}]},
+  "video-place-order": {"history": [{"at": 1.6, "label": "Starting scene", "image": "assets/evidence/video-place-order-1.webp", "duringAction": false}, {"at": 7.6, "label": "First location", "image": "assets/evidence/video-place-order-2.webp", "duringAction": false}, {"at": 12.8, "label": "Second location", "image": "assets/evidence/video-place-order-3.webp", "duringAction": false}, {"at": 19.4, "label": "Cube moves", "image": "assets/evidence/video-place-order-4.webp", "duringAction": false}, {"at": 34.233, "label": "Goal 1 result", "image": "assets/evidence/video-place-order-after-first.webp", "duringAction": true}], "stages": [{"start": 0, "label": "Observe", "request": "Watch where the cube goes first and second.", "image": "assets/evidence/video-place-order-1.webp", "idea": "Before any request"}, {"start": 22.7333, "label": "Goal 1", "request": "Return the cube to its first recorded spot.", "image": "assets/evidence/video-place-order-clue-1.webp", "idea": "First recorded spot", "reads": [1], "target": [59.7, 68.0]}, {"start": 34.5333, "label": "Goal 2", "request": "Return it to its second recorded spot.", "image": "assets/evidence/video-place-order-clue-2.webp", "idea": "Second recorded spot", "reads": [2], "target": [59.7, 56.4]}]},
+  "video-unmask-swap": {"history": [{"at": 0.75, "label": "Colors visible", "image": "assets/evidence/video-unmask-swap-1.webp", "duringAction": false}, {"at": 2.8, "label": "Covered", "image": "assets/evidence/video-unmask-swap-2.webp", "duringAction": false}, {"at": 4.65, "label": "Covers swap", "image": "assets/evidence/video-unmask-swap-3.webp", "duringAction": false}, {"at": 7.1, "label": "New positions", "image": "assets/evidence/video-unmask-swap-4.webp", "duringAction": false}, {"at": 19.2, "label": "Goal 1 result", "image": "assets/evidence/video-unmask-swap-after-first.webp", "duringAction": true}], "stages": [{"start": 0, "label": "Observe", "request": "Watch the covers swap places.", "image": "assets/evidence/video-unmask-swap-1.webp", "idea": "Before any request"}, {"start": 8.1, "label": "Goal 1", "request": "Uncover the blue cube.", "image": "assets/evidence/video-unmask-swap-clue.webp", "idea": "Blue cube before cover swap", "point": [40.24, 64.63], "reads": [0, 2], "target": [58.6, 61.4]}, {"start": 19.5, "label": "Goal 2", "request": "Uncover the red cube.", "image": "assets/evidence/video-unmask-swap-clue.webp", "idea": "Red cube before cover swap", "point": [62.2, 45.12], "reads": [0, 2], "target": [52, 67]}]},
+  "pick-highlight": {"history": [{"at": 1.4, "label": "First flash", "image": "assets/evidence/pick-highlight-1.webp", "duringAction": false}, {"at": 3.9, "label": "Second flash", "image": "assets/evidence/pick-highlight-2.webp", "duringAction": false}, {"at": 5.4, "label": "Lights off", "image": "assets/evidence/pick-highlight-3.webp", "duringAction": false}, {"at": 7.1, "label": "Before the request", "image": "assets/evidence/pick-highlight-4.webp", "duringAction": false}, {"at": 19.65, "label": "Goal 1 result", "image": "assets/evidence/pick-highlight-after-first.webp", "duringAction": true}], "stages": [{"start": 0, "label": "Observe", "request": "Watch which cubes light up, and in what order.", "image": "assets/evidence/pick-highlight-1.webp", "idea": "Before any request"}, {"start": 7.6, "label": "Goal 1", "request": "Bring the first highlighted cube to the front.", "image": "assets/evidence/pick-highlight-clue-1.webp", "idea": "First highlighted cube", "reads": [0], "target": [55.7, 61.4]}, {"start": 19.95, "label": "Goal 2", "request": "Bring the second highlighted cube to the front.", "image": "assets/evidence/pick-highlight-clue-2.webp", "idea": "Second highlighted cube", "reads": [1], "target": [52.3, 45.2]}]},
+  "case": {"history": [{"at": 0.55, "label": "Cases open", "image": "assets/evidence/case-1.webp", "duringAction": false}, {"at": 3.75, "label": "Lids closed", "image": "assets/evidence/case-2.webp", "duringAction": false}, {"at": 20.8, "label": "USB case placed", "image": "assets/evidence/case-3.webp", "duringAction": true}, {"at": 39.8, "label": "Both cases placed", "image": "assets/evidence/case-4.webp", "duringAction": true}], "stages": [{"start": 0, "label": "Observe", "request": "The contents and starting spots are visible.", "image": "assets/real-world/case-evidence-0.jpg?v=story-13", "idea": "Cases open"}, {"start": 4.0, "label": "Goal 1", "request": "Move the USB case to the left tray.", "image": "assets/evidence/case-clue-1.webp", "idea": "USB drive inside", "reads": [0], "target": [52.3, 80.8], "targetSeconds": 3.2}, {"start": 21.8, "label": "Goal 2", "request": "Move the SD card case to the right tray.", "image": "assets/evidence/case-clue-2.webp", "idea": "SD card inside", "reads": [0], "target": [69, 42.3], "targetSeconds": 3.2}, {"start": 40.6, "label": "Goal 3", "request": "Return the USB case to its original spot.", "image": "assets/evidence/case-clue-3.webp", "idea": "USB case’s starting spot", "reads": [0], "target": [61.7, 80.2]}]},
+  "toy": {"history": [{"at": 0.45, "label": "Starting spots", "image": "assets/evidence/toy-1.webp", "duringAction": false}, {"at": 5.2, "label": "Toys gathered", "image": "assets/evidence/toy-2.webp", "duringAction": false}, {"at": 22.1, "label": "Toy moved", "image": "assets/evidence/toy-3.webp", "duringAction": true}, {"at": 38.9, "label": "Spot brushed", "image": "assets/evidence/toy-4.webp", "duringAction": true}], "stages": [{"start": 0, "label": "Observe", "request": "Watch where the blue toy starts.", "image": "assets/real-world/toy-evidence-0.jpg?v=story-13", "idea": "The toys at their starting spots"}, {"start": 5.5, "label": "Goal 1", "request": "Put the toy that started on the left in the right tray.", "image": "assets/evidence/toy-clue.webp", "idea": "Blue toy started on the left", "reads": [0], "target": [43, 60], "targetSeconds": 3.2}, {"start": 22.8, "label": "Goal 2", "request": "Brush its original spot, then put the brush back.", "image": "assets/evidence/toy-clue.webp", "idea": "The blue toy’s starting spot", "reads": [0], "target": [56, 82]}, {"start": 39.6, "label": "Goal 3", "request": "Return the blue toy to its original spot.", "image": "assets/evidence/toy-clue.webp", "idea": "The blue toy’s starting spot", "reads": [0], "target": [56, 82]}]}
 }
 </script>
 </body>
