@@ -15,7 +15,10 @@ function updatePlayback(video) {
 const videoObserver = "IntersectionObserver" in window ? new IntersectionObserver(entries => {
   for (const entry of entries) {
     const video = entry.target.matches("video") ? entry.target : entry.target.querySelector("video");
-    videoStates.get(video).visible = entry.isIntersecting && entry.intersectionRatio >= 0.25;
+    const visible = entry.isIntersecting && entry.intersectionRatio >= 0.25;
+    videoStates.get(video).visible = visible;
+    const panel = video.closest("[data-demo]");
+    if (visible && panel) warmClues(panel);
     updatePlayback(video);
   }
 }, {threshold: 0.25}) : null;
@@ -37,6 +40,21 @@ motionPreference.addEventListener("change", () => {
 });
 
 const demoData = JSON.parse(document.querySelector("#demo-data").textContent);
+const cluePreloads = new Map();
+
+function warmClues(panel) {
+  const key = panel.dataset.demo;
+  if (cluePreloads.has(key)) return;
+  const urls = new Set(demoData[key].stages.slice(1).map(stage => stage.image));
+  const images = new Map();
+  for (const url of urls) {
+    const image = new Image();
+    image.src = url;
+    images.set(url, image);
+  }
+  cluePreloads.set(key, images);
+}
+
 for (const panel of document.querySelectorAll("[data-demo]")) {
   const {stages, history: savedFrames} = demoData[panel.dataset.demo];
   const video = panel.querySelector("video");
@@ -60,6 +78,24 @@ for (const panel of document.querySelectorAll("[data-demo]")) {
     if (!point) return;
     element.style.setProperty("--marker-x", `${point[0]}%`);
     element.style.setProperty("--marker-y", `${point[1]}%`);
+  }
+
+  function showClue(stage) {
+    warmClues(panel);
+    const preferred = cluePreloads.get(panel.dataset.demo).get(stage.image);
+    const showPreferred = () => {
+      if (currentStage !== stage) return;
+      image.src = stage.image;
+      setPoint(marker, stage.point);
+    };
+    if (preferred.complete && preferred.naturalWidth) {
+      showPreferred();
+      return;
+    }
+    const saved = events[stage.reads[0]].querySelector("img");
+    image.src = saved.currentSrc || saved.src;
+    setPoint(marker, null);
+    preferred.addEventListener("load", showPreferred, {once: true});
   }
 
   function flyFromMemory(stage) {
@@ -107,8 +143,8 @@ for (const panel of document.querySelectorAll("[data-demo]")) {
       phase.textContent = stage.label;
       request.textContent = stage.request;
       cue.textContent = stage.idea;
-      if (stage.start > 0) image.src = stage.image;
-      setPoint(marker, stage.point);
+      if (stage.start > 0) showClue(stage);
+      else setPoint(marker, null);
       for (const [index, item] of events.entries()) {
         item.classList.toggle("is-read", stage.reads?.includes(index) ?? false);
       }
@@ -152,6 +188,7 @@ const groups = [...document.querySelectorAll("[data-demo-switcher]")].map(group 
       tab.setAttribute("aria-selected", String(active));
       tab.tabIndex = active ? 0 : -1;
       panels[i].hidden = !active;
+      if (active && writeHash) warmClues(panels[i]);
       if (!active) {
         const video = panels[i].querySelector("video");
         videoStates.get(video).visible = false;
