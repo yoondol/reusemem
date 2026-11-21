@@ -25,9 +25,9 @@
   <link rel="canonical" href="https://yoondol.github.io/reusemem/">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
   <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=request-clips-21">
+  <link rel="stylesheet" href="style.css?v=overview-v11">
   <link rel="stylesheet" href="flow.css?v=story-13">
-  <script src="page.js?v=request-clips-21" defer></script>
+  <script src="page.js?v=overview-v11" defer></script>
   <script src="flow.js?v=growing-memory-v1" defer></script>
 </head>
 <body>
@@ -50,69 +50,84 @@
         <h2 id="research-film-title">Overview</h2>
         <p>A robot may see something useful long before anyone asks for it. <strong>ReuseMem learns what to retrieve from the same experience for different requests, even after the scene changes.</strong></p>
       </div>
-      <video controls muted playsinline preload="none" poster="assets/reusemem-project-film-poster.jpg?v=request-clips-21" aria-label="ReuseMem research overview video">
-        <source src="assets/reusemem-project-film.mp4?v=request-clips-21" type="video/mp4">
-        <a href="assets/reusemem-project-film.mp4?v=request-clips-21">Download the research overview</a>
+      <video controls muted playsinline preload="none" poster="assets/reusemem-project-film-poster.jpg?v=film-v11" aria-label="ReuseMem research overview video">
+        <source src="assets/reusemem-project-film.mp4?v=film-v11" type="video/mp4">
+        <a href="assets/reusemem-project-film.mp4?v=film-v11">Download the research overview</a>
       </video>
-      <div class="overview-results" aria-label="Overview of measured outcomes">
-        <a href="#results">
-          <strong>60.5%</strong>
-          <span>Both simulation goals succeed</span>
-          <small>121 of 200 simulated recordings</small>
-        </a>
-        <a href="#efficiency">
-          <strong>6.4×</strong>
-          <span>Faster first command</span>
-          <small>175 ms vs. 1,112 ms for MemER</small>
-        </a>
-        <a href="#efficiency">
-          <strong>33.7%</strong>
-          <span>Less retained memory</span>
-          <small>With shared visual features</small>
-        </a>
-      </div>
+      <dl class="overview-results" aria-label="Measured outcomes">
+        <div>
+          <dt>All-goal success</dt>
+          <dd class="result-figure"><a href="#results"><strong>+24.5</strong> percentage points</a></dd>
+          <dd class="result-compare">over Uniform-Memory, both requests succeeding</dd>
+          <dd class="result-detail">60.5% vs. 36.0% of simulated recordings</dd>
+        </div>
+        <div>
+          <dt>Response time</dt>
+          <dd class="result-figure"><a href="#efficiency"><strong>6.4×</strong> faster</a></dd>
+          <dd class="result-compare">than MemER, new request to first command</dd>
+          <dd class="result-detail">175 ms vs. 1,112 ms</dd>
+        </div>
+        <div>
+          <dt>Memory storage</dt>
+          <dd class="result-figure"><a href="#efficiency"><strong>33.7%</strong> smaller</a></dd>
+          <dd class="result-compare">than without feature sharing, same number of entries</dd>
+          <dd class="result-detail">43.98 MiB vs. 66.38 MiB</dd>
+        </div>
+      </dl>
     </section>
 
-
-    <section class="wrap memory-challenge" id="memory-challenge" aria-labelledby="challenge-title">
-      <header>
-        <h2 id="challenge-title">What should a robot remember?</h2>
-        <p>A later request might depend on which object was there, where it started, or what happened first. The robot sees these details before it knows which ones will matter.</p>
-      </header>
-      <ol>
-        <li><strong>Before a request</strong><span>Keep facts that may matter later.</span></li>
-        <li><strong>When it arrives</strong><span>Find the clue specific to that request.</span></li>
-        <li><strong>When acting</strong><span>Use that clue in the scene as it is now.</span></li>
-      </ol>
-    </section>
-
-    <section class="wrap section recall-demo" id="memory-example" data-recall-demo aria-labelledby="recall-title">
-      <header class="recall-heading">
-        <h2 id="recall-title">One earlier view, two requests</h2>
-        <p>The open cases show both what is inside and where each case started. Try the two requests to see which detail matters.</p>
-      </header>
-      <div class="recall-choices" role="group" aria-label="Choose a request">
-        <button type="button" data-recall-choice="select" aria-pressed="true">Move the USB case</button>
-        <button type="button" data-recall-choice="return" aria-pressed="false">Put it back where it started</button>
-      </div>
-      <div class="recall-sequence" data-choice="select">
-        <figure class="recall-past">
-          <figcaption><span>Earlier view</span><strong data-recall-cue>Which case?</strong></figcaption>
-          <img data-recall-past src="assets/real-world/case-evidence-1.jpg?v=overview-14" width="960" height="540" alt="The USB drive is visible in the black case." loading="lazy">
-        </figure>
-        <figure class="recall-current">
-          <figcaption><span>Current view</span><strong data-recall-present-title>Closed on the desk</strong></figcaption>
-          <div class="recall-current-view">
-            <img data-recall-present src="assets/method/case-select-present.jpg" width="768" height="432" alt="The black case is closed and sits on the desk." loading="lazy">
-            <i aria-hidden="true"></i>
+    <section class="wrap section case-contrast" id="memory-example" aria-labelledby="contrast-title">
+      <div class="contrast-top">
+        <header class="contrast-heading">
+          <h2 id="contrast-title">One recording, two different requests</h2>
+          <p>Before any request, the robot’s camera sees both cases open. Then the lids close and a person moves the cases. Each later instruction needs a different fact from that one recording, and the robot has to act on the case where it is now.</p>
+          <ul class="contrast-key" aria-label="What the numbered outlines mark">
+            <li><i aria-hidden="true">1</i>What was inside</li>
+            <li><i aria-hidden="true">2</i>Where the case started</li>
+          </ul>
+        </header>
+        <figure class="contrast-record">
+          <div class="record-frame">
+            <img src="assets/real-world/case-evidence-0.jpg" width="960" height="540" alt="Robot camera frame before any request: the black case lies open with a USB drive inside, and the white case lies open with an SD card inside. Two trays stand empty next to the robot." loading="lazy">
+            <span class="callout callout-origin" aria-hidden="true"></span>
+            <span class="callout callout-inside" aria-hidden="true"></span>
+            <i class="callout-num num-inside" aria-hidden="true">1</i>
+            <i class="callout-num num-origin" aria-hidden="true">2</i>
           </div>
-        </figure>
-        <figure class="recall-motion">
-          <figcaption><span>Action</span><strong data-recall-action-title>Place it in the left tray</strong></figcaption>
-          <video data-recall-action src="assets/method/case-select-action.mp4" poster="assets/method/case-select-action.jpg" width="768" height="432" muted playsinline controls loop preload="none" aria-label="Place the USB case in the left tray"></video>
+          <figcaption><strong>Robot camera, real recording</strong>, before any request. Outlines are explanatory, not model output.</figcaption>
         </figure>
       </div>
-      <p class="recall-takeaway" data-recall-takeaway>The earlier view identifies the case. The current view tells the robot where to pick it up.</p>
+      <ol class="contrast-requests">
+        <li class="contrast-card" data-key="1">
+          <p class="contrast-when">Goal 1 of the recorded run</p>
+          <p class="contrast-say"><span class="say-avatar" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="8.3" r="4.1"/><path d="M4.2 21c.7-4.4 3.9-7 7.8-7s7.1 2.6 7.8 7z"/></svg></span><span class="say-text"><span class="sr-only">Instruction: </span>Move the case containing the USB drive to the left tray.</span></p>
+          <dl class="contrast-needs">
+            <div class="need-past"><dt><i aria-hidden="true">1</i>From the recording</dt><dd>Which case holds the USB drive</dd></div>
+            <div class="need-now"><dt>From the current view</dt><dd>Where that closed case lies on the desk</dd></div>
+          </dl>
+          <div class="clip-media">
+            <video controls muted playsinline loop preload="none" width="960" height="540" poster="assets/real-world/parts/case-goal-1.jpg" aria-label="Real execution of Goal 1 at 2× speed: the robot picks up the closed black case from the desk and places it in the left tray.">
+              <source src="assets/real-world/parts/case-goal-1.mp4" type="video/mp4">
+            </video>
+            <span class="clip-speed" aria-hidden="true">2×</span>
+          </div>
+        </li>
+        <li class="contrast-card" data-key="2">
+          <p class="contrast-when">Goal 3 of the same run</p>
+          <p class="contrast-say"><span class="say-avatar" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="8.3" r="4.1"/><path d="M4.2 21c.7-4.4 3.9-7 7.8-7s7.1 2.6 7.8 7z"/></svg></span><span class="say-text"><span class="sr-only">Instruction: </span>Return the USB case to its original position.</span></p>
+          <dl class="contrast-needs">
+            <div class="need-past"><dt><i aria-hidden="true">2</i>From the recording</dt><dd>Where the USB case started</dd></div>
+            <div class="need-now"><dt>From the current view</dt><dd>The case, now inside the left tray</dd></div>
+          </dl>
+          <div class="clip-media">
+            <video controls muted playsinline loop preload="none" width="960" height="540" poster="assets/real-world/parts/case-goal-3.jpg" aria-label="Real execution of Goal 3 at 2× speed: the robot lifts the black case out of the left tray and sets it down at its original spot on the desk.">
+              <source src="assets/real-world/parts/case-goal-3.mp4" type="video/mp4">
+            </video>
+            <span class="clip-speed" aria-hidden="true">2×</span>
+          </div>
+        </li>
+      </ol>
+      <p class="contrast-next">Neither instruction had been given while the robot recorded. The method below shows how ReuseMem handles this.</p>
     </section>
 
     <section class="wrap section" id="method" aria-labelledby="method-title">

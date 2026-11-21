@@ -264,55 +264,7 @@ if (physicalSource) {
   });
 }
 
-const recall = document.querySelector("[data-recall-demo]");
-if (recall) {
-  const choices = [...recall.querySelectorAll("[data-recall-choice]")];
-  const action = recall.querySelector("[data-recall-action]");
-  const present = recall.querySelector("[data-recall-present]");
-  const past = recall.querySelector("[data-recall-past]");
-  const sequence = recall.querySelector(".recall-sequence");
-  const examples = {
-    select: {
-      cue: "Which case?",
-      pastImage: "case-evidence-1.jpg?v=overview-14",
-      pastAlt: "The USB drive is visible in the black case.",
-      presentTitle: "Closed on the desk",
-      presentAlt: "The closed black case sits on the desk.",
-      actionTitle: "Place it in the left tray",
-      takeaway: "The earlier view identifies the case. The current view tells the robot where to pick it up."
-    },
-    return: {
-      cue: "Where did it start?",
-      pastImage: "case-evidence-3.jpg",
-      pastAlt: "The earlier view marks the USB case’s original spot on the desk.",
-      presentTitle: "Now in the left tray",
-      presentAlt: "The black case now sits in the left tray.",
-      actionTitle: "Put it back on the desk",
-      takeaway: "The current view tells the robot where to grasp. The earlier view tells it where to put the case back."
-    }
-  };
-  for (const choice of choices) {
-    choice.addEventListener("click", () => {
-      if (choice.getAttribute("aria-pressed") === "true") return;
-      const key = choice.dataset.recallChoice;
-      const example = examples[key];
-      for (const button of choices) button.setAttribute("aria-pressed", String(button === choice));
-      recall.querySelector("[data-recall-cue]").textContent = example.cue;
-      recall.querySelector("[data-recall-present-title]").textContent = example.presentTitle;
-      recall.querySelector("[data-recall-action-title]").textContent = example.actionTitle;
-      recall.querySelector("[data-recall-takeaway]").textContent = example.takeaway;
-      past.src = `assets/real-world/${example.pastImage}`;
-      past.alt = example.pastAlt;
-      present.src = `assets/method/case-${key}-present.jpg`;
-      present.alt = example.presentAlt;
-      action.poster = `assets/method/case-${key}-action.jpg`;
-      action.src = `assets/method/case-${key}-action.mp4`;
-      action.setAttribute("aria-label", example.actionTitle);
-      sequence.dataset.choice = key;
-      // A new choice is an explicit request to watch it.
-      const state = videoStates.get(action);
-      if (state) state.manuallyPaused = false;
-      action.play().catch(() => {});
-    });
-  }
-}
+// The case example under the overview shows both requests side by side (two real
+// clips with native controls), so it needs no script beyond the shared autoplay
+// above. Pointing at or focusing one request card emphasises its outline on the
+// shared recording frame; this is CSS only (:has), so nothing breaks without it.
