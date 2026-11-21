@@ -71,9 +71,8 @@ use 10.05, 10.4, 19.25 and 19.6 s. The first and second pair each share one
 appearance. Each observation is strictly earlier than the current checkpoint
 when its writing begins. Existing Recent sources remain strictly past as well.
 
-Frames come from the existing native scripted simulator sequence. Feature
-admission, key glyphs and retrieval selections are explanatory illustrations,
-not logged model outputs. Quantitative results are unchanged. The PDF button
+Frames come from the RoboMME sequence. Feature admission, key glyphs and
+retrieval selections illustrate the architecture. Quantitative results are unchanged. The PDF button
 serves the latest v52 manuscript as `assets/ReuseMem.pdf`; Paper links to arXiv.
 
 The full timeline supports dragging and resumes from the selected point. The
@@ -85,8 +84,8 @@ Mobile uses an internal viewport. The v52 architecture is expandable below.
 
 The public page uses quantitative plots for comparisons. It does not include
 baseline comparison footage in either simulation or the physical scenarios.
-The archived `unmask-choice-preview.mp4` is a scripted illustration and is no
-longer embedded or loaded. Keep it separate from model evaluation rollouts.
+The archived `unmask-choice-preview.mp4` was a comparison preview. The public
+page uses the simulation gallery and the quantitative results.
 
 ## Editorial design
 
@@ -138,9 +137,8 @@ Time compression and editorial holds do not change the sequence of actions.
 
 ## Research overview
 
-The 102-second Overview in `assets/reusemem-efficiency-film.mp4` starts with
-the physical case setup and explains how one recording supports both target
-identity and a remembered destination. Animated examples show appearance
+The Overview in `assets/reusemem-project-film.mp4` introduces how one recording
+supports both target identity and a remembered destination. Animated examples show appearance
 sharing, action-guided retrieval, and within-call memory projections.
 Dedicated result scenes show the evidence intervention, retained bank size,
 response to a new request and the continuing-goal cache control. The site

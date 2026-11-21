@@ -1,5 +1,5 @@
 /* One causal archive before and during execution; Recent is a separate input.
-   Native scripted clips explain the method, not logged Reader traces. */
+   RoboMME frames illustrate the method. */
 (() => {
   const root=document.getElementById('memory-flow'); if(!root)return;
   const $=id=>document.getElementById(id);
