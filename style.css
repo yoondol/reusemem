@@ -256,7 +256,7 @@ html{scroll-padding-top:0}
 .research-film{max-width:1040px;padding-block:2.6rem 3.3rem}
 .research-film>h2{margin-bottom:1.25rem;text-align:center;font-size:clamp(1.55rem,3vw,2.35rem);color:#203f74;letter-spacing:-.035em;font-weight:750}
 .research-film video{box-shadow:0 14px 38px #143c7d12}
-.film-frame{position:relative;max-width:58rem;margin-inline:auto}
+.film-frame{position:relative;max-width:55rem;margin-inline:auto}
 .research-film-lede{max-width:68ch;margin:1.6rem auto 0;text-align:center;color:#3f5679;font-size:1.1rem;line-height:1.65;text-wrap:pretty}
 .research-film-lede strong{display:block;margin-top:.2rem;color:#1f4790;font-weight:700}
 @media(max-width:540px){.research-film>h2{margin-bottom:1rem}.research-film-lede{margin-top:1.25rem;font-size:.98rem}}
@@ -584,7 +584,7 @@ html{scroll-padding-top:0}
 .clip-sequence .clip-kind { font-size: .8rem; }
 .clip-sequence figcaption p { margin-top: .35rem; color: #4c6486; font-size: 1rem; font-weight: 500; line-height: 1.6; }
 @media (min-width: 641px) {
-  .clip-sequence > .clip-media { width: 90%; justify-self: center; }
+  .clip-sequence > .clip-media { width: 85%; justify-self: center; }
 }
 .demo-gallery .media-note { margin-top: 1.6rem; }
 
