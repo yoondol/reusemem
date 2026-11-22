@@ -176,7 +176,7 @@ nav{gap:2.6rem;font-size:.88rem}
 .plot-point.ours .plot-label{font-size:1.1rem;color:#1c4da8}
 .plot-point.ours .plot-label small{font-size:.75rem;font-weight:550}
 .plot-point.variant .plot-mark::before{background:#fff;border-color:#879bb9}
-.cost-highlight>span{color:#526a8c;font-size:.86rem}
+.cost-highlight>span{color:#526a8c;font-size:.86rem;max-width:17rem}
 .evidence-chart{--label-width:13rem}
 .chart-rows li{font-size:.85rem;color:#4f6382}
 .chart-rows strong{font-size:.95rem;font-weight:650;color:#274879}
@@ -236,21 +236,12 @@ html{scroll-padding-top:0}
 
 /* Research overview and paper details. */
 .research-film{max-width:940px;padding-block:3.2rem}
-.research-film-heading{text-align:center;margin-bottom:1.5rem}
-.research-film-heading h2{font-size:clamp(1.55rem,3vw,2.35rem);color:#203f74;letter-spacing:-.035em;font-weight:750}
-.research-film-heading p{max-width:63ch;margin:.75rem auto 0;color:#526a8b;line-height:1.65}
 .research-film video{display:block;width:100%;aspect-ratio:16/9;background:#172b4b;border:1px solid #bed0ee;border-radius:10px}
 #method{padding-top:clamp(2.25rem,5vh,4rem)}
 #method .chapter-intro{margin-bottom:1.55rem}
 #method .section-symbol{display:none}
 #method .chapter-intro h2{font-size:clamp(2.4rem,4vw,3.3rem)}
-.method-learning p{font-size:.96rem;line-height:1.65;color:#435d80}
-.method-detail-disclosure{margin-top:1rem;border:1px solid #d2def0;border-radius:8px;background:#fff}
-.method-detail-disclosure summary{padding:1rem 1.2rem;font-weight:700;color:#284f8d;cursor:pointer}
-.method-learning{display:grid;grid-template-columns:2fr 1fr;align-items:center;gap:1.5rem;padding:0 1.2rem 1.2rem}
 .task-select button{overflow-wrap:anywhere}
-
-@media(max-width:800px){.method-learning{grid-template-columns:1fr}}
 /* Front page and the shared-memory example. */
 .hero{padding-block:clamp(3.1rem,6vw,5.65rem) clamp(2.65rem,4.3vw,4rem)}
 .hero h1{background:none;color:#163d88;font-size:inherit;line-height:1;letter-spacing:normal}
@@ -263,9 +254,21 @@ html{scroll-padding-top:0}
 .hero .authors span{white-space:nowrap}
 .hero .affiliation{margin-top:.25rem;line-height:1.55}
 .research-film{max-width:1040px;padding-block:2.6rem 3.3rem}
-.research-film-heading p{max-width:72ch}
-.research-film-heading p strong{color:#234e98}
+.research-film>h2{margin-bottom:1.25rem;text-align:center;font-size:clamp(1.55rem,3vw,2.35rem);color:#203f74;letter-spacing:-.035em;font-weight:750}
 .research-film video{box-shadow:0 14px 38px #143c7d12}
+.film-frame{position:relative}
+.research-film-lede{max-width:68ch;margin:1.6rem auto 0;text-align:center;color:#3f5679;font-size:1.1rem;line-height:1.65;text-wrap:pretty}
+.research-film-lede strong{display:block;margin-top:.2rem;color:#1f4790;font-weight:700}
+@media(max-width:540px){.research-film>h2{margin-bottom:1rem}.research-film-lede{margin-top:1.25rem;font-size:.98rem}}
+
+/* Click or tap on the picture of a native player toggles playback. The layer
+   leaves the native control strip uncovered (and, on touch screens, the top edge
+   where some browsers place fullscreen and picture-in-picture buttons). */
+.player-frame{position:relative}
+.video-hit{position:absolute;z-index:1;inset:0 0 56px 0;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.player-frame .request,.player-frame .clip-speed{z-index:2}
+@media(pointer:coarse){.video-hit{inset:48px 0 64px 0}}
+:fullscreen .video-hit{display:none}
 .overview-takeaways{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.45rem;margin-top:1.45rem}
 .overview-takeaways>div{border-left:2px solid #adc7f5;padding:.06rem .85rem}
 .overview-takeaways strong{color:#224a89;font-size:.96rem}

@@ -2,24 +2,37 @@ const motionPreference = matchMedia("(prefers-reduced-motion: reduce)");
 const videoStates = new Map();
 const VISIBLE_SHARE = 0.35;
 
-// Every player with native controls plays muted and inline while it is in view
-// and pauses off screen. A viewer's own pause holds until they press play again.
-// Players inside a hidden simulation tab never run.
+// Every player with native controls plays muted and inline once at least 35% of
+// it is in view, and pauses when it leaves the viewport, sits in a hidden
+// simulation tab or the browser tab is hidden. A viewer's own pause holds across
+// scrolling until they play it again. With reduced motion nothing starts on its
+// own, but a player the viewer started resumes when it comes back into view.
 function updatePlayback(video) {
   const state = videoStates.get(video);
-  const wanted = state.visible && !video.closest("[hidden]") && !state.manuallyPaused && !motionPreference.matches;
+  const allowed = state.visible && !document.hidden && !video.closest("[hidden]");
+  const wanted = allowed && !state.manuallyPaused && (!motionPreference.matches || state.viewerStarted);
   if (wanted) {
-    if (video.paused && !video.ended) video.play().catch(() => {});
+    if (video.paused && !video.ended) {
+      state.sitePlaying = true;
+      video.play().catch(() => { state.sitePlaying = false; });
+    }
   } else if (!video.paused) {
     state.sitePaused = true;
     video.pause();
   }
 }
 
+function visibleShare(element) {
+  const box = element.getBoundingClientRect();
+  if (box.height <= 0 || box.width <= 0) return 0;
+  const shownY = Math.min(box.bottom, innerHeight) - Math.max(box.top, 0);
+  const shownX = Math.min(box.right, innerWidth) - Math.max(box.left, 0);
+  if (shownY <= 0 || shownX <= 0) return 0;
+  return Math.min(1, shownY / Math.min(box.height, innerHeight));
+}
+
 function measureVisibility(video) {
-  const box = video.getBoundingClientRect();
-  const shown = Math.min(box.bottom, innerHeight) - Math.max(box.top, 0);
-  videoStates.get(video).visible = box.height > 0 && shown >= box.height * VISIBLE_SHARE;
+  videoStates.get(video).visible = visibleShare(video) >= VISIBLE_SHARE;
   updatePlayback(video);
 }
 
@@ -30,8 +43,23 @@ const videoObserver = "IntersectionObserver" in window ? new IntersectionObserve
   }
 }, {threshold: [0, VISIBLE_SHARE]}) : null;
 
+// The viewer's own play or pause, from any source: native controls, the picture,
+// the Space key or the system media controls.
+function toggleVideo(video) {
+  const state = videoStates.get(video);
+  if (video.paused) {
+    state.manuallyPaused = false;
+    state.viewerStarted = true;
+    video.play().catch(() => {});
+  } else {
+    video.pause();
+  }
+}
+
+let lastPlayer = null;
+
 for (const video of document.querySelectorAll("video[controls]")) {
-  const state = {visible: !videoObserver, manuallyPaused: false, sitePaused: false};
+  const state = {visible: !videoObserver, manuallyPaused: false, sitePaused: false, sitePlaying: false, viewerStarted: false};
   videoStates.set(video, state);
   video.muted = true;
   video.playsInline = true;
@@ -39,12 +67,89 @@ for (const video of document.querySelectorAll("video[controls]")) {
     if (!state.sitePaused && !video.ended && !video.seeking) state.manuallyPaused = true;
     state.sitePaused = false;
   });
-  video.addEventListener("play", () => { state.manuallyPaused = false; });
+  video.addEventListener("play", () => {
+    if (!state.sitePlaying) state.viewerStarted = true;
+    state.sitePlaying = false;
+    state.manuallyPaused = false;
+  });
+
+  // Click or tap on the picture toggles playback. A transparent layer covers the
+  // picture only: the native control strip stays uncovered, so the browser's own
+  // play button, seek bar, volume and fullscreen keep working, and the browser's
+  // built-in click-to-pause never fires alongside this one. Request cards and
+  // speed badges sit above it without catching the pointer.
+  const frame = video.parentElement;
+  frame.classList.add("player-frame");
+  const hit = document.createElement("span");
+  hit.className = "video-hit";
+  hit.setAttribute("aria-hidden", "true");
+  video.after(hit);
+  hit.addEventListener("click", () => {
+    lastPlayer = video;
+    toggleVideo(video);
+  });
+  // Using the native controls also makes this the player Space acts on.
+  frame.addEventListener("pointerdown", () => { lastPlayer = video; });
+
   if (videoObserver) videoObserver.observe(video);
   else updatePlayback(video);
 }
 motionPreference.addEventListener("change", () => {
   for (const video of videoStates.keys()) updatePlayback(video);
+});
+document.addEventListener("visibilitychange", () => {
+  for (const video of videoStates.keys()) updatePlayback(video);
+});
+
+// Space plays or pauses one player. Focus on a native control, link, button,
+// disclosure summary, tab, chart control, slider or text field keeps its usual
+// Space behavior. Otherwise Space acts on the player last clicked, tapped or
+// operated, while it is still in view; failing that, on the visible player
+// nearest the centre of the viewport. The Method animation counts as a player:
+// Space presses its own Play/Pause button, so it keeps a single clock.
+const methodFlow = document.querySelector("#memory-flow");
+const methodPlay = document.querySelector("#flow-play");
+if (methodFlow) methodFlow.addEventListener("pointerdown", () => { lastPlayer = methodFlow; });
+
+const KEEP_SPACE = 'a[href], button, summary, input, select, textarea, label, video, audio, iframe, ' +
+  '[contenteditable]:not([contenteditable="false"]), [role="button"], [role="tab"], [role="slider"], ' +
+  '[role="checkbox"], [role="radio"], [role="switch"], [role="menuitem"], [role="option"], [role="link"], [role="textbox"]';
+
+function isPlayerAvailable(player) {
+  if (!player || !player.isConnected || player.closest("[hidden]")) return false;
+  return visibleShare(player) >= VISIBLE_SHARE;
+}
+
+function centredPlayer() {
+  let best = null;
+  let bestDistance = Infinity;
+  const players = [...videoStates.keys()];
+  if (methodFlow && methodPlay) players.push(methodFlow);
+  for (const player of players) {
+    if (!isPlayerAvailable(player)) continue;
+    const box = player.getBoundingClientRect();
+    const distance = Math.hypot((box.left + box.right) / 2 - innerWidth / 2, (box.top + box.bottom) / 2 - innerHeight / 2);
+    if (distance < bestDistance) {
+      best = player;
+      bestDistance = distance;
+    }
+  }
+  return best;
+}
+
+document.addEventListener("keydown", event => {
+  if (event.key !== " " && event.code !== "Space") return;
+  if (event.defaultPrevented || event.isComposing || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+  const target = event.target instanceof Element ? event.target : null;
+  if (target && target.closest(KEEP_SPACE)) return;
+  const focusedFlow = target && methodFlow && methodFlow.contains(target) ? methodFlow : null;
+  const player = focusedFlow || (isPlayerAvailable(lastPlayer) ? lastPlayer : centredPlayer());
+  if (!player) return;
+  event.preventDefault();
+  if (event.repeat) return;
+  lastPlayer = player;
+  if (player === methodFlow) methodPlay.click();
+  else toggleVideo(player);
 });
 
 // Request cards. Each player lists its requests in data-requests as
@@ -265,6 +370,6 @@ if (physicalSource) {
 }
 
 // The case example under the overview shows both requests side by side (two real
-// clips with native controls), so it needs no script beyond the shared autoplay
+// clips with native controls), so it needs no script beyond the shared playback
 // above. Pointing at or focusing one request card emphasises its outline on the
 // shared recording frame; this is CSS only (:has), so nothing breaks without it.

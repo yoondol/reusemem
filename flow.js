@@ -43,7 +43,7 @@
   }
   function story(phase,goal,recording,complete,writing){
     let title,copy,label;
-    if(recording){label='Observe';title='Observe before goals are known.';copy='Similar views share features. Time and keys remain distinct.';}
+    if(recording){label='Observe';title='Observe before any goal is known.';copy='Similar views share features. Each moment keeps its own time and key.';}
     else if(complete){label='Done';title='Sequence complete.';copy='New experience joins the same memory. No reset.';}
     else{label={query:'Goal',retrieve:'Read',fuse:'Fuse',action:writing?'Write':'Act'}[phase];
       title=goal===0?'Goal 1 — last location before the press.':'Goal 2 — first location after the press.';
@@ -105,7 +105,6 @@
     text('flow-timeline-clock',`${formatTime(time)} / ${formatTime(T.end)}`);
     attr(timeline,'aria-valuetext',`${recording?'Observe':complete?'Complete':`Goal ${goal+1}`}, ${formatTime(time)} of ${formatTime(T.end)}`);
     for(const b of chapters)attr(b,'aria-pressed',b.dataset.flowChapter===chapter);
-    text('flow-mobile-status',recording?'Future goals unknown.':'Goal 1 → Goal 2. No reset.');
     flights.forEach(n=>attr(n,'opacity',0));alpha('flow-encoding',0);attr(root.querySelector('.writer-module text'),'opacity',1);
     const completed=writes.filter(w=>time>=w.end).length,active=writes.find(w=>time>=w.start&&time<w.end);
     let appearanceCount=4+Math.ceil(completed/2),entryCount=6+completed,admitting=-1,pan=phase;
@@ -181,6 +180,9 @@
   $('flow-similar').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();jump('similar');}});
   $('flow-restart').addEventListener('click',()=>jump('record'));
   $('flow-play').addEventListener('click',()=>{playing=!playing;if(playing){inspecting=false;if(time>=T.end)time=0;}previous=0;forceVideoSync=true;controls();render();});
+  // The small result video is part of the animation, not a separate player: clicking
+  // or tapping its picture uses the same Play/Pause as the keyboard-accessible button.
+  $('flow-outcome').addEventListener('click',()=>$('flow-play').click());
   reduced.addEventListener('change',e=>{playing=!e.matches;previous=0;controls();render();});
   if('IntersectionObserver'in window)new IntersectionObserver(e=>{visible=e[0].isIntersecting;previous=0;controls();},{threshold:0.16}).observe(root);else visible=true;
   function tick(now){if(playing&&visible&&!document.hidden){if(previous)time+=Math.min(100,now-previous);if(time>=T.end){time=0;lastSync=-1000;}render();}previous=now;requestAnimationFrame(tick);}

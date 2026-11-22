@@ -25,10 +25,10 @@
   <link rel="canonical" href="https://yoondol.github.io/reusemem/">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
   <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=overview-v11">
-  <link rel="stylesheet" href="flow.css?v=story-13">
-  <script src="page.js?v=overview-v11" defer></script>
-  <script src="flow.js?v=growing-memory-v1" defer></script>
+  <link rel="stylesheet" href="style.css?v=page-v18">
+  <link rel="stylesheet" href="flow.css?v=page-v18">
+  <script src="page.js?v=page-v18" defer></script>
+  <script src="flow.js?v=page-v18" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -46,31 +46,31 @@
     </section>
 
     <section class="wrap section research-film" id="research-video" aria-labelledby="research-film-title">
-      <div class="research-film-heading">
-        <h2 id="research-film-title">Overview</h2>
-        <p>A robot may see something useful long before anyone asks for it. <strong>ReuseMem learns what to retrieve from the same experience for different requests, even after the scene changes.</strong></p>
+      <h2 id="research-film-title">Overview</h2>
+      <div class="film-frame">
+        <video controls muted playsinline preload="none" poster="assets/reusemem-project-film-poster.jpg?v=film-v18" aria-label="ReuseMem research overview video">
+          <source src="assets/reusemem-project-film.mp4?v=film-v18" type="video/mp4">
+          <a href="assets/reusemem-project-film.mp4?v=film-v18">Download the research overview</a>
+        </video>
       </div>
-      <video controls muted playsinline preload="none" poster="assets/reusemem-project-film-poster.jpg?v=film-v17" aria-label="ReuseMem research overview video">
-        <source src="assets/reusemem-project-film.mp4?v=film-v17" type="video/mp4">
-        <a href="assets/reusemem-project-film.mp4?v=film-v17">Download the research overview</a>
-      </video>
+      <p class="research-film-lede">A robot often sees something useful long before anyone asks for it. <strong>ReuseMem learns what to retrieve from one recorded experience for different later requests, even after the scene has changed.</strong></p>
       <dl class="overview-results" aria-label="Measured outcomes">
         <div>
           <dt>All-goal success</dt>
           <dd class="result-figure"><a href="#results"><strong>+24.5</strong> percentage points</a></dd>
-          <dd class="result-compare">over Uniform-Memory, both requests succeeding</dd>
-          <dd class="result-detail">60.5% vs. 36.0% of simulated recordings</dd>
+          <dd class="result-compare">over Uniform-Memory, with both requests succeeding</dd>
+          <dd class="result-detail">60.5% vs. 36.0% in simulation</dd>
         </div>
         <div>
           <dt>Response time</dt>
           <dd class="result-figure"><a href="#efficiency"><strong>6.4×</strong> faster</a></dd>
-          <dd class="result-compare">than MemER, new request to first command</dd>
+          <dd class="result-compare">than MemER, from new request to first command</dd>
           <dd class="result-detail">175 ms vs. 1,112 ms</dd>
         </div>
         <div>
           <dt>Memory storage</dt>
           <dd class="result-figure"><a href="#efficiency"><strong>33.7%</strong> smaller</a></dd>
-          <dd class="result-compare">than without feature sharing, same number of entries</dd>
+          <dd class="result-compare">than without feature sharing, at the same number of entries</dd>
           <dd class="result-detail">43.98 MiB vs. 66.38 MiB</dd>
         </div>
       </dl>
@@ -80,7 +80,7 @@
       <div class="contrast-top">
         <header class="contrast-heading">
           <h2 id="contrast-title">One recording, two different requests</h2>
-          <p>Before any request, the robot’s camera sees both cases open. Then the lids close and a person moves the cases. Each later instruction needs a different fact from that one recording, and the robot has to act on the case where it is now.</p>
+          <p>Before any request, the robot’s camera sees both cases open. Then the lids close and a person moves the cases. Each later instruction needs a different fact from that one recording, and the robot must act on the case where it lies now.</p>
           <ul class="contrast-key" aria-label="What the numbered outlines mark">
             <li><i aria-hidden="true">1</i>What was inside</li>
             <li><i aria-hidden="true">2</i>Where the case started</li>
@@ -94,7 +94,7 @@
             <i class="callout-num num-inside" aria-hidden="true">1</i>
             <i class="callout-num num-origin" aria-hidden="true">2</i>
           </div>
-          <figcaption><strong>Robot camera, real recording</strong>, before any request. Outlines are explanatory, not model output.</figcaption>
+          <figcaption><strong>Robot camera</strong>, before the requests. The outlines mark the clues each request needs.</figcaption>
         </figure>
       </div>
       <ol class="contrast-requests">
@@ -127,14 +127,13 @@
           </div>
         </li>
       </ol>
-      <p class="contrast-next">Neither instruction had been given while the robot recorded. The method below shows how ReuseMem handles this.</p>
     </section>
 
     <section class="wrap section" id="method" aria-labelledby="method-title">
 <div class="section-intro chapter-intro"><span class="section-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="11" width="7" height="10" rx="2"/><rect x="23" y="11" width="7" height="10" rx="2"/><path d="M9 16h14m-4-4 4 4-4 4M16 5v5m0 12v5"/></svg></span><h2 id="method-title">Method</h2><p>Record what the robot sees. Read the clues each request needs. Update the same memory as it acts.</p></div>
       <div class="memory-flow" id="memory-flow" data-playing="true" data-phase="record" data-goal="none">
-        <div class="flow-toolbar"><div class="flow-chapters" role="group" aria-label="Explore the sequence"><button type="button" data-flow-chapter="record" aria-pressed="true">1 <span>Observe</span></button><button type="button" data-flow-chapter="goal1" aria-pressed="false">2 <span>Goal 1</span></button><button type="button" data-flow-chapter="goal2" aria-pressed="false">3 <span>Goal 2</span></button></div></div>
-        <p class="flow-mobile-hint" id="flow-mobile-status">Future goals unknown. Swipe to follow the flow.</p>
+        <div class="flow-toolbar"><div class="flow-chapters" role="group" aria-label="Explore the sequence"><button type="button" data-flow-chapter="record" aria-pressed="true"><span>Observe</span></button><button type="button" data-flow-chapter="goal1" aria-pressed="false"><span>Goal 1</span></button><button type="button" data-flow-chapter="goal2" aria-pressed="false"><span>Goal 2</span></button></div></div>
+        <p class="flow-mobile-hint">Swipe sideways to follow the whole flow.</p>
         <div class="flow-transition" id="flow-transition" aria-hidden="true"><strong id="flow-transition-title">Goal 1</strong><span id="flow-transition-copy">Last location before the press</span></div>
         <div class="flow-viewport" tabindex="0" aria-label="Animated memory and continuous execution flow"><div class="flow-scene"><svg viewBox="0 0 1360 765" role="group" aria-labelledby="flow-svg-title flow-svg-desc">
 <title id="flow-svg-title">One growing memory, multiple goals</title>
@@ -159,23 +158,28 @@
 <g id="flow-feedback-flight" opacity="0" filter="url(#flow-shadow)"><rect x="-3" y="-3" width="80" height="47" rx="5" fill="#fff" stroke="#c6a86e" /><svg x="0" y="0" width="74" height="41" viewBox="760 380 780 520" preserveAspectRatio="xMidYMid slice" overflow="hidden"><image id="flow-feedback-image" href="assets/flow-button/execution-1.jpg" width="1920" height="1080" /></svg></g>
 <g id="flow-entry-flight" opacity="0"><rect width="39" height="43" rx="5" fill="#fff" stroke="#b6a8d0" /><text x="7" y="15" class="flow-time" id="flow-entry-time">t1</text><path d="M9 26H29M9 30H23M9 34H26" stroke="#7aa678" stroke-width="2.5" /></g>
 <circle id="flow-query-pulse" r="5" fill="#5577b9" opacity="0" /><circle id="flow-key-pulse" r="5" fill="#6f9f70" opacity="0" /><circle id="flow-past-pulse" r="5.5" fill="#a08bcb" opacity="0" /><circle id="flow-current-pulse" r="5.5" fill="#bd9b52" opacity="0" /><circle id="flow-recent-pulse" r="5.5" fill="#bd9b52" opacity="0" /><circle id="flow-action-pulse" r="5.5" fill="#5577b9" opacity="0" />
-<g id="flow-recent" class="recent-context"><text x="240" y="654" class="recent-title">Recent frames</text><rect x="230" y="668" width="90" height="58" rx="5" fill="none" stroke="#d8dce4" stroke-width="1" opacity="0.35" /><rect x="285" y="672" width="90" height="58" rx="5" fill="none" stroke="#d8dce4" stroke-width="1" opacity="0.35" /><rect x="340" y="676" width="90" height="58" rx="5" fill="none" stroke="#d8dce4" stroke-width="1" opacity="0.35" /><g class="recent-card" data-recent-card="0" opacity="0"><rect x="230" y="668" width="90" height="58" rx="5" fill="#fff" stroke="#c7b88e" stroke-width="1.3" /><svg x="234" y="672" width="82" height="50" viewBox="760 380 780 520" preserveAspectRatio="xMidYMid slice" overflow="hidden"><image id="flow-recent-image-0" href="assets/flow-button/recent-1.jpg" width="1920" height="1080" /></svg></g><g class="recent-card" data-recent-card="1" opacity="0"><rect x="285" y="672" width="90" height="58" rx="5" fill="#fff" stroke="#c7b88e" stroke-width="1.3" /><svg x="289" y="676" width="82" height="50" viewBox="760 380 780 520" preserveAspectRatio="xMidYMid slice" overflow="hidden"><image id="flow-recent-image-1" href="assets/flow-button/recent-2.jpg" width="1920" height="1080" /></svg></g><g class="recent-card" data-recent-card="2" opacity="0"><rect x="340" y="676" width="90" height="58" rx="5" fill="#fff" stroke="#c7b88e" stroke-width="1.3" /><svg x="344" y="680" width="82" height="50" viewBox="760 380 780 520" preserveAspectRatio="xMidYMid slice" overflow="hidden"><image id="flow-recent-image-2" href="assets/flow-button/recent-3.jpg" width="1920" height="1080" /></svg></g></g></svg><div class="flow-outcome" id="flow-outcome" hidden><video id="flow-sequence-video" muted playsinline preload="metadata" aria-label="Continuous button-press task: Goal 1 then Goal 2, without a scene reset"><source src="assets/simulation/video-place-button-full-sequence.mp4" type="video/mp4"></video></div></div></div>
+<g id="flow-recent" class="recent-context"><text x="240" y="654" class="recent-title">Recent frames</text><rect x="230" y="668" width="90" height="58" rx="5" fill="none" stroke="#d8dce4" stroke-width="1" opacity="0.35" /><rect x="285" y="672" width="90" height="58" rx="5" fill="none" stroke="#d8dce4" stroke-width="1" opacity="0.35" /><rect x="340" y="676" width="90" height="58" rx="5" fill="none" stroke="#d8dce4" stroke-width="1" opacity="0.35" /><g class="recent-card" data-recent-card="0" opacity="0"><rect x="230" y="668" width="90" height="58" rx="5" fill="#fff" stroke="#c7b88e" stroke-width="1.3" /><svg x="234" y="672" width="82" height="50" viewBox="760 380 780 520" preserveAspectRatio="xMidYMid slice" overflow="hidden"><image id="flow-recent-image-0" href="assets/flow-button/recent-1.jpg" width="1920" height="1080" /></svg></g><g class="recent-card" data-recent-card="1" opacity="0"><rect x="285" y="672" width="90" height="58" rx="5" fill="#fff" stroke="#c7b88e" stroke-width="1.3" /><svg x="289" y="676" width="82" height="50" viewBox="760 380 780 520" preserveAspectRatio="xMidYMid slice" overflow="hidden"><image id="flow-recent-image-1" href="assets/flow-button/recent-2.jpg" width="1920" height="1080" /></svg></g><g class="recent-card" data-recent-card="2" opacity="0"><rect x="340" y="676" width="90" height="58" rx="5" fill="#fff" stroke="#c7b88e" stroke-width="1.3" /><svg x="344" y="680" width="82" height="50" viewBox="760 380 780 520" preserveAspectRatio="xMidYMid slice" overflow="hidden"><image id="flow-recent-image-2" href="assets/flow-button/recent-3.jpg" width="1920" height="1080" /></svg></g></g></svg><div class="flow-outcome" id="flow-outcome" title="Pause or play the animation" hidden><video id="flow-sequence-video" muted playsinline preload="metadata" aria-label="Continuous button-press task: Goal 1 then Goal 2, without a scene reset"><source src="assets/simulation/video-place-button-full-sequence.mp4" type="video/mp4"></video></div></div></div>
         <div class="flow-timeline">
           <button type="button" id="flow-play" aria-label="Pause" title="Pause" aria-pressed="true"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path class="flow-play-glyph" d="M8 5L19 12L8 19Z" fill="currentColor"/><g class="flow-pause-glyph" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></g></svg></button>
           <div class="flow-timeline-labels" aria-hidden="true"><span data-timeline-stage="record">Observe</span><span data-timeline-stage="goal1">Goal 1</span><span data-timeline-stage="goal2">Goal 2</span></div>
           <span class="flow-timeline-clock" id="flow-timeline-clock" aria-hidden="true">0:00 / 0:45</span>
           <div class="flow-timeline-track"><label for="flow-timeline" class="sr-only">Explore the animation from Observe through Goal 2</label><input id="flow-timeline" type="range" min="0" max="45900" step="100" value="0" aria-valuetext="Observe, 0:00 of 0:45"></div>
         </div>
-        <div class="flow-story"><span class="flow-phase-label" id="flow-phase-label">Record</span><div><h3 id="flow-story-title">Observe before goals are known.</h3><p id="flow-story-copy">Similar views share features. Time and keys remain distinct.</p></div><button type="button" id="flow-restart" aria-label="Restart the animation">Replay ↻</button></div>
+        <div class="flow-story"><span class="flow-phase-label" id="flow-phase-label">Observe</span><div><h3 id="flow-story-title">Observe before any goal is known.</h3><p id="flow-story-copy">Similar views share features. Each moment keeps its own time and key.</p></div><button type="button" id="flow-restart" aria-label="Restart the animation">Replay ↻</button></div>
       </div>
-      <details class="full-architecture"><summary>Full model architecture</summary><a href="assets/architecture.png?v=52" target="_blank" rel="noopener"><img src="assets/architecture.png?v=52" width="1480" height="960" alt="Full ReuseMem Writer, memory bank, Reader, fusion and action-expert architecture." loading="lazy"></a></details>
-        <details class="method-detail-disclosure">
-          <summary>What the Reader learns</summary>
-          <div class="method-learning">
-            <img src="assets/method/training.png" alt="Expert-action prediction supervises retrieval before training the action interface on the chosen evidence." loading="lazy">
-            <p>The Reader learns which past observations help predict an expert’s next action across different current scenes.</p>
-          </div>
-        </details>
+      <details class="full-architecture">
+        <summary>Full model architecture</summary>
+        <div class="disclosure-body">
+          <a href="assets/architecture.png?v=52" target="_blank" rel="noopener"><img src="assets/architecture.png?v=52" width="1480" height="960" alt="Full ReuseMem architecture: the Writer records observations into an append-only memory bank; the Reader selects historical entries for each request; fusion combines them with recent frames, and the action expert uses this memory with the current observation to produce actions." loading="lazy"></a>
+        </div>
+      </details>
+      <details class="full-architecture">
+        <summary>What the Reader learns</summary>
+        <div class="disclosure-body method-learning">
+          <img src="assets/method/training.png" width="1500" height="922" alt="Training in two stages. Retrieval supervision: the Reader scores candidate memory selections and is trained toward those that give a fixed policy a lower action loss against expert targets. Action supervision: fusion and a small modulation of the frozen action expert are trained on the updated Reader’s selection." loading="lazy">
+          <p>The Reader learns which past observations help predict an expert’s next action across different current scenes.</p>
+        </div>
+      </details>
     </section>
 
 
@@ -183,7 +187,7 @@
       <section class="wrap section demo-gallery" id="simulation" aria-labelledby="sim-title">
         <header class="section-intro chapter-intro">
           <h2 id="sim-title">Simulation</h2>
-          <p>Four <a href="https://robomme.github.io/">RoboMME</a> tasks. One observation, then two later goals that depend on it.</p>
+          <p>Four <a href="https://robomme.github.io/">RoboMME</a> tasks. Both goal clips start from the same scene after the observation.</p>
         </header>
         <div class="task-tabs" role="tablist" aria-label="Choose a simulation task">
           <button type="button" role="tab" id="tab-video-place-button" aria-controls="sim-video-place-button" aria-selected="true" tabindex="0">VideoPlaceButton</button>
@@ -347,7 +351,6 @@
             </div>
           </figure>
         </article>
-        <p class="media-note">Both goal clips start from the scene left by the observation; the sequence continues without a reset. The first frame of each request is held for 1.6&nbsp;s so the instruction can be read.</p>
       </section>
     </div>
 
@@ -355,7 +358,7 @@
       <section class="wrap section demo-gallery" id="real-world" aria-labelledby="real-title">
         <header class="section-intro chapter-intro">
           <h2 id="real-title">Real World</h2>
-          <p>Three requests per scene, carried out in one continuous run. Recordings play at 2×; the scene holds briefly as each request arrives.</p>
+          <p>Two real scenes. In each, the robot observes once, then carries out three requests in one continuous run. Videos play at 2× speed.</p>
         </header>
 
         <article class="scenario" id="real-case" aria-labelledby="real-case-title">
@@ -380,7 +383,7 @@
             <p class="parts-title" id="real-case-parts">Observation and each request</p>
             <div class="parts-row">
               <figure class="clip">
-                <figcaption><span class="clip-kind">Observation</span><p>Observe both open cases before their contents are hidden.</p></figcaption>
+                <figcaption><span class="clip-kind">Observation</span><p>Watch both open cases before the lids close.</p></figcaption>
                 <div class="clip-media">
                   <video controls muted playsinline loop preload="none" width="960" height="540" poster="assets/real-world/parts/case-observation.jpg" aria-label="Case scenario observation, 2× speed">
                     <source src="assets/real-world/parts/case-observation.mp4" type="video/mp4">
@@ -437,7 +440,7 @@
             <p class="parts-title" id="real-toy-parts">Observation and each request</p>
             <div class="parts-row">
               <figure class="clip">
-                <figcaption><span class="clip-kind">Observation</span><p>Observe where both toys start before they are gathered in the left tray.</p></figcaption>
+                <figcaption><span class="clip-kind">Observation</span><p>Watch where both toys start before they are gathered in the left tray.</p></figcaption>
                 <div class="clip-media">
                   <video controls muted playsinline loop preload="none" width="960" height="540" poster="assets/real-world/parts/toy-observation.jpg" aria-label="Toy scenario observation, 2× speed">
                     <source src="assets/real-world/parts/toy-observation.mp4" type="video/mp4">
@@ -564,7 +567,7 @@
           <div class="efficiency-grid">
 <figure class="resource-chart efficiency-chart" data-cost-axis="response">
               <figcaption><span>Success vs. response time</span></figcaption>
-              <div class="cost-highlight"><strong>6.4×</strong><span>175 ms vs. 1,112 ms for MemER (RoboMME)</span></div>
+              <div class="cost-highlight"><strong>6.4×</strong><span>faster than MemER: 175 ms vs. 1,112 ms</span></div>
               <p class="plot-y-title"><span class="cost-metric-name">All-goal success</span> (%)</p>
               <div class="cost-plot">
                 <div class="plot-y" aria-hidden="true"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div>
@@ -596,7 +599,7 @@
             </figure>
 <figure class="resource-chart efficiency-chart" data-cost-axis="storage">
               <figcaption><span>Success vs. memory storage</span></figcaption>
-              <div class="cost-highlight"><strong>33.7%</strong><span>43.98 MiB vs. 66.38 MiB without feature sharing</span></div>
+              <div class="cost-highlight"><strong>33.7%</strong><span>smaller than without feature sharing: 43.98 MiB vs. 66.38 MiB</span></div>
               <p class="plot-y-title"><span class="cost-metric-name">All-goal success</span> (%)</p>
               <div class="cost-plot">
                 <div class="plot-y" aria-hidden="true"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div>

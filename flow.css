@@ -255,3 +255,28 @@
  #method .flow-story h3{font-size:1rem}
  #method .flow-story p{font-size:.85rem}
 }
+
+/* Two matching disclosures under the explainer: Full model architecture and
+   What the Reader learns. Native <details>/<summary>, so Enter and Space open
+   and close them from the keyboard; the whole summary row is the target. */
+.full-architecture{margin-top:1rem;border:1px solid #b8cbed;border-radius:8px;background:#f8fbff;overflow:hidden}
+.full-architecture+.full-architecture{margin-top:.75rem}
+.full-architecture>summary{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:3.4rem;padding:.8rem 1rem .8rem 1.2rem;list-style:none;color:#2c5aab;font-size:.98rem;font-weight:700;letter-spacing:-.01em;cursor:pointer;transition:background 150ms}
+.full-architecture>summary::-webkit-details-marker{display:none}
+.full-architecture>summary::after{content:"";flex:none;width:2rem;height:2rem;border:1px solid #adc6ef;border-radius:50%;background:#e9f1ff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%232458ba' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/1rem no-repeat;transition:transform 200ms,background-color 150ms}
+.full-architecture[open]>summary::after{transform:rotate(180deg)}
+.full-architecture>summary:hover{background:#edf3ff;color:#1f4c9e}
+.full-architecture>summary:hover::after{background-color:#dce8ff}
+.full-architecture>summary:focus-visible{outline:2px solid #2c5fd1;outline-offset:-2px;border-radius:8px}
+.full-architecture[open]>summary{border-bottom:1px solid #d3e0f4}
+.disclosure-body{padding:1rem 1.2rem 1.2rem;background:#fff}
+.full-architecture .disclosure-body img{display:block;width:100%;height:auto;padding:0;background:#fff}
+.full-architecture .disclosure-body>a{display:block}
+.method-learning{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);align-items:center;gap:1.5rem}
+.method-learning p{max-width:40ch;color:#3f5679;font-size:1rem;line-height:1.65}
+@media(max-width:800px){.method-learning{grid-template-columns:1fr;gap:1rem}.method-learning p{max-width:65ch}}
+@media(max-width:760px){.full-architecture>summary{min-height:3.1rem;padding:.7rem .8rem .7rem 1rem;font-size:.92rem}.disclosure-body{padding:.75rem}.method-learning p{font-size:.93rem}}
+@media(prefers-reduced-motion:reduce){.full-architecture>summary,.full-architecture>summary::after{transition:none}}
+
+/* The small result video inside the animation shares the Play/Pause button. */
+.flow-outcome{cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
