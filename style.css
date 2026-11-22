@@ -286,9 +286,10 @@ html{scroll-padding-top:0}
 }
 
 /* Measured outcomes under the film: the same three figures and metric names as
-   the film's closing card, each with what it is compared to and its raw values. */
+   the film's closing card, each with what it is compared to. Raw values live in
+   Results and Efficiency. */
 .overview-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:1.35rem 0 0;border-block:1px solid #cbdaf0;background:#edf4ff}
-.overview-results>div{display:flex;flex-direction:column;gap:.22rem;min-width:0;padding:1.15rem 1.35rem 1.3rem}
+.overview-results>div{display:flex;flex-direction:column;gap:.22rem;min-width:0;padding:1.15rem 1.35rem 1.2rem}
 .overview-results>div+div{border-left:1px solid #cbdaf0}
 .overview-results dt{color:#4b6286;font-size:.72rem;font-weight:750;letter-spacing:.11em;text-transform:uppercase}
 .overview-results dd{margin:0}
@@ -296,22 +297,19 @@ html{scroll-padding-top:0}
 .result-figure strong{color:#225abb;font-size:clamp(2rem,3.4vw,2.6rem);line-height:1.08;letter-spacing:-.04em;font-weight:800;font-variant-numeric:tabular-nums}
 .result-figure a:hover strong,.result-figure a:focus-visible strong{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.16em}
 .result-compare{color:#1f3b68;font-size:.95rem;font-weight:650;line-height:1.42;text-wrap:pretty}
-.result-detail{margin-top:auto!important;padding-top:.45rem;color:#4f678a;font-size:.82rem;line-height:1.48;text-wrap:pretty}
 #efficiency .section-intro p{max-width:65ch;margin:.6rem 0 0}
 @media(max-width:860px){
  .overview-results{grid-template-columns:1fr}
- .overview-results>div{display:grid;grid-template-columns:minmax(8.5rem,.4fr) minmax(0,1fr);grid-template-areas:"name compare" "figure detail";align-items:start;column-gap:1.2rem;row-gap:.15rem;padding:1rem 1.1rem}
+ .overview-results>div{display:grid;grid-template-columns:minmax(8.5rem,.4fr) minmax(0,1fr);grid-template-areas:"name compare" "figure compare";align-items:start;column-gap:1.2rem;row-gap:.15rem;padding:1rem 1.1rem}
  .overview-results>div+div{border-left:0;border-top:1px solid #cbdaf0}
  .overview-results dt{grid-area:name;padding-top:.2rem}
  .result-figure{grid-area:figure}
- .result-compare{grid-area:compare}
- .result-detail{grid-area:detail;margin-top:0!important;padding-top:.1rem}
+ .result-compare{grid-area:compare;align-self:center}
 }
 @media(max-width:480px){
- .overview-results>div{display:flex;padding:.95rem .9rem 1.05rem}
+ .overview-results>div{display:flex;padding:.95rem .9rem 1rem}
  .result-figure strong{font-size:1.9rem}
  .result-compare{font-size:.9rem}
- .result-detail{font-size:.78rem}
 }
 
 /* One recording, two requests: the real before-request frame (with outlines drawn

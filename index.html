@@ -25,7 +25,7 @@
   <link rel="canonical" href="https://yoondol.github.io/reusemem/">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
   <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=page-v18">
+  <link rel="stylesheet" href="style.css?v=page-v19">
   <link rel="stylesheet" href="flow.css?v=page-v18">
   <script src="page.js?v=page-v18" defer></script>
   <script src="flow.js?v=page-v18" defer></script>
@@ -48,30 +48,27 @@
     <section class="wrap section research-film" id="research-video" aria-labelledby="research-film-title">
       <h2 id="research-film-title">Overview</h2>
       <div class="film-frame">
-        <video controls muted playsinline preload="none" poster="assets/reusemem-project-film-poster.jpg?v=film-v18" aria-label="ReuseMem research overview video">
-          <source src="assets/reusemem-project-film.mp4?v=film-v18" type="video/mp4">
-          <a href="assets/reusemem-project-film.mp4?v=film-v18">Download the research overview</a>
+        <video controls muted playsinline preload="none" poster="assets/reusemem-project-film-poster.jpg?v=film-v19" aria-label="ReuseMem research overview video">
+          <source src="assets/reusemem-project-film.mp4?v=film-v19" type="video/mp4">
+          <a href="assets/reusemem-project-film.mp4?v=film-v19">Download the research overview</a>
         </video>
       </div>
-      <p class="research-film-lede">A robot often sees something useful long before anyone asks for it. <strong>ReuseMem learns what to retrieve from one recorded experience for different later requests, even after the scene has changed.</strong></p>
+      <p class="research-film-lede">Robots that work alongside people should be able to act on what they have seen when new requests arise. They must record experience before they know what will be asked and later find the evidence each request needs, even as the scene changes. <strong>ReuseMem learns to use one memory for multiple manipulation goals.</strong></p>
       <dl class="overview-results" aria-label="Measured outcomes">
         <div>
           <dt>All-goal success</dt>
           <dd class="result-figure"><a href="#results"><strong>+24.5</strong> percentage points</a></dd>
-          <dd class="result-compare">over Uniform-Memory, with both requests succeeding</dd>
-          <dd class="result-detail">60.5% vs. 36.0% in simulation</dd>
+          <dd class="result-compare">over Uniform-Memory across four simulation tasks</dd>
         </div>
         <div>
           <dt>Response time</dt>
           <dd class="result-figure"><a href="#efficiency"><strong>6.4×</strong> faster</a></dd>
-          <dd class="result-compare">than MemER, from new request to first command</dd>
-          <dd class="result-detail">175 ms vs. 1,112 ms</dd>
+          <dd class="result-compare">than MemER, from request to first command</dd>
         </div>
         <div>
           <dt>Memory storage</dt>
           <dd class="result-figure"><a href="#efficiency"><strong>33.7%</strong> smaller</a></dd>
-          <dd class="result-compare">than without feature sharing, at the same number of entries</dd>
-          <dd class="result-detail">43.98 MiB vs. 66.38 MiB</dd>
+          <dd class="result-compare">than storing separate features for each entry</dd>
         </div>
       </dl>
     </section>
@@ -80,7 +77,7 @@
       <div class="contrast-top">
         <header class="contrast-heading">
           <h2 id="contrast-title">One recording, two different requests</h2>
-          <p>Before any request, the robot’s camera sees both cases open. Then the lids close and a person moves the cases. Each later instruction needs a different fact from that one recording, and the robot must act on the case where it lies now.</p>
+          <p>The robot sees both cases open before any request. After the cases are closed and moved, it recalls which case held the USB drive. When asked to put the case back, it picks it up from the tray and uses the same recording to find where it started.</p>
           <ul class="contrast-key" aria-label="What the numbered outlines mark">
             <li><i aria-hidden="true">1</i>What was inside</li>
             <li><i aria-hidden="true">2</i>Where the case started</li>
@@ -130,7 +127,7 @@
     </section>
 
     <section class="wrap section" id="method" aria-labelledby="method-title">
-<div class="section-intro chapter-intro"><span class="section-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="11" width="7" height="10" rx="2"/><rect x="23" y="11" width="7" height="10" rx="2"/><path d="M9 16h14m-4-4 4 4-4 4M16 5v5m0 12v5"/></svg></span><h2 id="method-title">Method</h2><p>Record what the robot sees. Read the clues each request needs. Update the same memory as it acts.</p></div>
+<div class="section-intro chapter-intro"><span class="section-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="11" width="7" height="10" rx="2"/><rect x="23" y="11" width="7" height="10" rx="2"/><path d="M9 16h14m-4-4 4 4-4 4M16 5v5m0 12v5"/></svg></span><h2 id="method-title">Method</h2><p>A Writer records what the robot sees before any goal is known. For each request, a Reader selects the past views it needs, and the policy acts on them together with the current scene. The same memory keeps growing as the robot works.</p></div>
       <div class="memory-flow" id="memory-flow" data-playing="true" data-phase="record" data-goal="none">
         <div class="flow-toolbar"><div class="flow-chapters" role="group" aria-label="Explore the sequence"><button type="button" data-flow-chapter="record" aria-pressed="true"><span>Observe</span></button><button type="button" data-flow-chapter="goal1" aria-pressed="false"><span>Goal 1</span></button><button type="button" data-flow-chapter="goal2" aria-pressed="false"><span>Goal 2</span></button></div></div>
         <p class="flow-mobile-hint">Swipe sideways to follow the whole flow.</p>
@@ -177,7 +174,7 @@
         <summary>What the Reader learns</summary>
         <div class="disclosure-body method-learning">
           <img src="assets/method/training.png" width="1500" height="922" alt="Training in two stages. Retrieval supervision: the Reader scores candidate memory selections and is trained toward those that give a fixed policy a lower action loss against expert targets. Action supervision: fusion and a small modulation of the frozen action expert are trained on the updated Reader’s selection." loading="lazy">
-          <p>The Reader learns which past observations help predict an expert’s next action across different current scenes.</p>
+          <p>The Reader learns to select past views that help predict expert actions as the scene changes. The policy then learns to act using the Reader’s selections and its current observations.</p>
         </div>
       </details>
     </section>
@@ -187,7 +184,7 @@
       <section class="wrap section demo-gallery" id="simulation" aria-labelledby="sim-title">
         <header class="section-intro chapter-intro">
           <h2 id="sim-title">Simulation</h2>
-          <p>Four <a href="https://robomme.github.io/">RoboMME</a> tasks. Both goal clips start from the same scene after the observation.</p>
+          <p>Four <a href="https://robomme.github.io/">RoboMME</a> tasks, two goals per recording. Each goal clip starts separately from the scene right after the observation.</p>
         </header>
         <div class="task-tabs" role="tablist" aria-label="Choose a simulation task">
           <button type="button" role="tab" id="tab-video-place-button" aria-controls="sim-video-place-button" aria-selected="true" tabindex="0">VideoPlaceButton</button>
@@ -358,7 +355,7 @@
       <section class="wrap section demo-gallery" id="real-world" aria-labelledby="real-title">
         <header class="section-intro chapter-intro">
           <h2 id="real-title">Real World</h2>
-          <p>Two real scenes. In each, the robot observes once, then carries out three requests in one continuous run. Videos play at 2× speed.</p>
+          <p>Two real scenes. In each, the robot observes once, then carries out three requests in one continuous run.</p>
         </header>
 
         <article class="scenario" id="real-case" aria-labelledby="real-case-title">
@@ -556,7 +553,7 @@
           <div class="efficiency-heading">
             <div class="section-intro">
               <h3>Efficiency</h3>
-              <p>ReuseMem keeps the visual memory compact and responds quickly when a new request arrives.</p>
+              <p>Similar views share visual features while keeping their own timestamps. On a new request, the policy retrieves the views it needs from this compact memory.</p>
             </div>
             <div class="cost-controls" role="group" aria-label="Efficiency success metric">
               <button type="button" data-cost-metric="all" aria-pressed="true">All-goal</button>
