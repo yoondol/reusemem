@@ -343,6 +343,7 @@ if (navigator.clipboard) {
       copy.textContent = "Copied";
       document.querySelector("#copy-status").textContent = "BibTeX copied.";
     } catch {
+      copy.closest("#citation").querySelector("details").open = true;
       copy.textContent = "Select BibTeX to copy";
     }
   });

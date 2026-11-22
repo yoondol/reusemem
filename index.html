@@ -25,9 +25,9 @@
   <link rel="canonical" href="https://yoondol.github.io/reusemem/">
   <title>ReuseMem | One Memory, Multiple Goals in Robot Manipulation</title>
   <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=page-v21">
+  <link rel="stylesheet" href="style.css?v=page-v22">
   <link rel="stylesheet" href="flow.css?v=page-v18">
-  <script src="page.js?v=page-v18" defer></script>
+  <script src="page.js?v=page-v22" defer></script>
   <script src="flow.js?v=page-v18" defer></script>
 </head>
 <body>
@@ -647,12 +647,10 @@
       </figure>
     </section>
 
-    <section class="wrap section" id="citation" aria-labelledby="citation-title">
-      <div class="citation-heading">
-        <h2 id="citation-title">Citation</h2>
-        <button id="copy-citation" type="button" hidden>Copy BibTeX</button>
-      </div>
-      <pre id="bibtex"><code>@misc{kang2026reusemem,
+    <section class="wrap" id="citation" aria-label="Citation">
+      <details class="citation-details">
+        <summary>BibTeX</summary>
+        <pre id="bibtex"><code>@misc{kang2026reusemem,
   title         = {ReuseMem: One Memory, Multiple Goals in Robot Manipulation},
   author        = {Yoonseok Kang and Dayeon Jung and Seunghoon Jeon and
                    Wonjib Kim and Dongchul Park},
@@ -662,6 +660,8 @@
   primaryClass  = {cs.RO},
   url           = {https://arxiv.org/abs/2611.21115}
 }</code></pre>
+      </details>
+      <button id="copy-citation" type="button" hidden>Copy BibTeX</button>
       <p id="copy-status" class="sr-only" role="status"></p>
     </section>
   </main>
