@@ -300,13 +300,13 @@ html{scroll-padding-top:0}
 #efficiency .section-intro p{max-width:65ch;margin:.6rem 0 0}
 @media(max-width:860px){
  .overview-results{grid-template-columns:1fr}
- .overview-results>div{display:grid;grid-template-columns:minmax(8.5rem,.4fr) minmax(0,1fr);grid-template-areas:"name compare" "figure compare";align-items:start;column-gap:1.2rem;row-gap:.15rem;padding:1rem 1.1rem}
+ .overview-results>div{display:grid;grid-template-columns:minmax(14.5rem,.5fr) minmax(0,1fr);grid-template-areas:"name compare" "figure compare";align-items:start;column-gap:1.2rem;row-gap:.15rem;padding:1rem 1.1rem}
  .overview-results>div+div{border-left:0;border-top:1px solid #cbdaf0}
  .overview-results dt{grid-area:name;padding-top:.2rem}
  .result-figure{grid-area:figure}
  .result-compare{grid-area:compare;align-self:center}
 }
-@media(max-width:480px){
+@media(max-width:620px){
  .overview-results>div{display:flex;padding:.95rem .9rem 1rem}
  .result-figure strong{font-size:1.9rem}
  .result-compare{font-size:.9rem}
