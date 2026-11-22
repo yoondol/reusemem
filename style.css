@@ -256,7 +256,7 @@ html{scroll-padding-top:0}
 .research-film{max-width:1040px;padding-block:2.6rem 3.3rem}
 .research-film>h2{margin-bottom:1.25rem;text-align:center;font-size:clamp(1.55rem,3vw,2.35rem);color:#203f74;letter-spacing:-.035em;font-weight:750}
 .research-film video{box-shadow:0 14px 38px #143c7d12}
-.film-frame{position:relative}
+.film-frame{position:relative;max-width:58rem;margin-inline:auto}
 .research-film-lede{max-width:68ch;margin:1.6rem auto 0;text-align:center;color:#3f5679;font-size:1.1rem;line-height:1.65;text-wrap:pretty}
 .research-film-lede strong{display:block;margin-top:.2rem;color:#1f4790;font-weight:700}
 @media(max-width:540px){.research-film>h2{margin-bottom:1rem}.research-film-lede{margin-top:1.25rem;font-size:.98rem}}
@@ -288,10 +288,15 @@ html{scroll-padding-top:0}
 /* Measured outcomes under the film: the same three figures and metric names as
    the film's closing card, each with what it is compared to. Raw values live in
    Results and Efficiency. */
-.overview-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:1.35rem 0 0;border-block:1px solid #cbdaf0;background:#edf4ff}
-.overview-results>div{display:flex;flex-direction:column;gap:.22rem;min-width:0;padding:1.15rem 1.35rem 1.2rem}
-.overview-results>div+div{border-left:1px solid #cbdaf0}
-.overview-results dt{color:#4b6286;font-size:.72rem;font-weight:750;letter-spacing:.11em;text-transform:uppercase}
+.overview-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.9rem;margin:1.35rem 0 0}
+.overview-results>div{
+  display:flex;flex-direction:column;gap:.3rem;min-width:0;
+  padding:1.05rem clamp(.85rem,1.75vw,1.3rem) 1.15rem;
+  border:1px solid #c8daf4;border-radius:1.15rem;
+  background:linear-gradient(160deg,#fff,#ebf3ff);
+  box-shadow:0 5px 16px #1b40770d;
+}
+.overview-results dt{color:#25477b;font-size:.9rem;font-weight:750}
 .overview-results dd{margin:0}
 .result-figure a{display:inline-flex;align-items:baseline;gap:.42rem;color:#1d3f78;font-size:1.06rem;font-weight:750;text-decoration:none}
 .result-figure strong{color:#225abb;font-size:clamp(2rem,3.4vw,2.6rem);line-height:1.08;letter-spacing:-.04em;font-weight:800;font-variant-numeric:tabular-nums}
@@ -301,7 +306,6 @@ html{scroll-padding-top:0}
 @media(max-width:860px){
  .overview-results{grid-template-columns:1fr}
  .overview-results>div{display:grid;grid-template-columns:minmax(14.5rem,.5fr) minmax(0,1fr);grid-template-areas:"name compare" "figure compare";align-items:start;column-gap:1.2rem;row-gap:.15rem;padding:1rem 1.1rem}
- .overview-results>div+div{border-left:0;border-top:1px solid #cbdaf0}
  .overview-results dt{grid-area:name;padding-top:.2rem}
  .result-figure{grid-area:figure}
  .result-compare{grid-area:compare;align-self:center}
@@ -309,7 +313,7 @@ html{scroll-padding-top:0}
 @media(max-width:620px){
  .overview-results>div{display:flex;padding:.95rem .9rem 1rem}
  .result-figure strong{font-size:1.9rem}
- .result-compare{font-size:.9rem}
+ .result-compare{align-self:stretch;font-size:.9rem}
 }
 
 /* One recording, two requests: the real before-request frame (with outlines drawn
@@ -499,8 +503,7 @@ html{scroll-padding-top:0}
 }
 
 
-/* Demonstrations: one observation, separate goal clips and one continuous sequence.
-   Footage is never scaled or dimmed; the request card sits in the upper-left corner. */
+/* Demonstrations: one observation, separate goal clips and one continuous sequence. */
 .demo-gallery .chapter-intro { margin-bottom: 2.2rem; }
 .task-tabs {
   display: grid;
@@ -580,6 +583,9 @@ html{scroll-padding-top:0}
 .clip-sequence figcaption { margin: 0; padding-top: .15rem; }
 .clip-sequence .clip-kind { font-size: .8rem; }
 .clip-sequence figcaption p { margin-top: .35rem; color: #4c6486; font-size: 1rem; font-weight: 500; line-height: 1.6; }
+@media (min-width: 641px) {
+  .clip-sequence > .clip-media { width: 90%; justify-self: center; }
+}
 .demo-gallery .media-note { margin-top: 1.6rem; }
 
 /* Real-world scenarios follow one another; no selection is needed. */
